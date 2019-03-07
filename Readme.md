@@ -1,0 +1,1 @@
+# Pelican SEO, a Pelican plugin
