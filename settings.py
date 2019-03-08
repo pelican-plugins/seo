@@ -1,4 +1,4 @@
-""" 
+"""
 Plugin settings : activate or deactivate SEO features
 """
 

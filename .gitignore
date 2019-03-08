@@ -1,1 +1,3 @@
 Pipfile
+.vscode/*
+__pycache__/*
