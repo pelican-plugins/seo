@@ -3,8 +3,8 @@
 class PageDescriptionAnalyzer():
     """ Analyze the page description. """
 
-    def __init__(self, metadata):
-        self.page_description = metadata.get('description', None)
+    def __init__(self, article):
+        self.page_description = getattr(article, 'description', None)
 
     def has_page_description(self):
         """ Return True if there is a page description. """

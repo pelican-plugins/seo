@@ -1,3 +1,6 @@
 Pipfile
+Pipfile.lock
 .vscode/*
 __pycache__/*
+seo_report/__pycache__/*
+seo_report/seo_analyzer/__pycache__/*

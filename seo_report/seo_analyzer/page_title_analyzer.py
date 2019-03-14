@@ -3,8 +3,8 @@
 class PageTitleAnalyzer():
     """ Analyze the page title. """
 
-    def __init__(self, metadata):
-        self.page_title = metadata.get('title', None)
+    def __init__(self, article):
+        self.page_title = getattr(article, 'title', None)
 
     def has_page_title(self):
         """ Return True is there is a page title. """

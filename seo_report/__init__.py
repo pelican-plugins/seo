@@ -16,28 +16,49 @@ class SEOReport():
     def page_title_report(self):
         """ Create report for page title. """
 
+        print("PAGE TITLE REPORT")
+
         if self.seo_analysis.page_title_analysis.has_page_title:
-            print("SEO : You have declared a title. Nice job !")
+            print("You have declared a title. Nice job !")
 
             if self.seo_analysis.page_title_analysis.page_title_length in SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH:
-                print("SEO : Your title has a good longer")
+                print("Your title has a good longer")
             else:
-                print("SEO : Your title is too short or too long. The recommended length is between characters.")
+                print("Your title is too short or too long. The recommended length is between characters.")
 
         else:
-            print("SEO : You need to declare a title to improve SEO")
+            print("You need to declare a title to improve SEO")
 
     def page_description_report(self):
         """ Create report for page description. """
 
+        print("PAGE DESCRIPTION REPORT")
+
         if self.seo_analysis.page_description_analysis.has_page_description():
-            print("SEO : You have declared a description. Nice job !")
+            print("You have declared a description. Nice job !")
 
             if self.seo_analysis.page_description_analysis.page_description_length in SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH:
-                print("SEO : Your description has a good longer")
+                print("Your description has a good longer")
             else:
-                print("SEO : Your description is too short or too long. The recommended length is between characters.")
+                print("Your description is too short or too long. The recommended length is between characters.")
 
         else:
-            print("SEO : You need to declare a description to improve SEO")
+            print("You need to declare a description to improve SEO")
 
+    def content_title_report(self):
+        """ Create report for content title. """
+
+        print("CONTENT TITLE REPORT")
+
+        if self.seo_analysis.content_title_analysis.has_content_title():
+            print("You have declared a content title <h1>. Nice job !")
+
+            if not self.seo_analysis.content_title_analysis.is_content_title_unique():
+                print("But your content title must be unique.")
+        else:
+            print("You're missing a content title <h1>.")
+
+    # def generate(self):
+    #     """ Generate the SEO report. Return string in console. """
+
+    #     self.page_title_report = self._page_title_report()
