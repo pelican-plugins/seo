@@ -10,8 +10,8 @@ class SEOReport():
     PAGE_TITLE_RECOMMENDED_LENGTH = range(70, 76)
     PAGE_DESCRIPTION_RECOMMENDED_LENGTH = range(150, 161)
 
-    def __init__(self, metadata):
-        self.seo_analysis = SEOAnalyzer(metadata)
+    def __init__(self, article):
+        self.seo_analysis = SEOAnalyzer(article)
 
     def page_title_report(self):
         """ Create report for page title. """
@@ -57,6 +57,18 @@ class SEOReport():
                 print("But your content title must be unique.")
         else:
             print("You're missing a content title <h1>.")
+
+    def internal_link_report(self):
+        """ """
+
+        print("INTERNAL LINK REPORT")
+        if self.seo_analysis.internal_link_analysis.has_internal_link():
+            print("You've included internal links. Nice job !")
+
+            print(self.seo_analysis.internal_link_analysis.internal_link_occurence)
+
+        else:
+            print("It's better to include internal links.")
 
     # def generate(self):
     #     """ Generate the SEO report. Return string in console. """

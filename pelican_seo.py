@@ -14,13 +14,19 @@ from .seo_report import SEOReport
 def run_plugin(generators):
 
     for generator in generators:
+
+        if not generator.settings.get('SITEURL'):
+            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')
+
         if isinstance(generator, ArticlesGenerator):
 
             for article in generator.articles:
+
                 seo_report = SEOReport(article)
                 seo_report.page_title_report()
                 seo_report.page_description_report()
                 seo_report.content_title_report()
+                seo_report.internal_link_report()
                 print("--------------------")
 
         #elif isinstance(generator, PagesGenerator):
