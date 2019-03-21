@@ -20,14 +20,14 @@ def run_plugin(generators):
 
         if isinstance(generator, ArticlesGenerator):
 
-            for article in generator.articles:
+            seo_report = SEOReport()
 
-                seo_report = SEOReport(article)
-                seo_report.page_title_report()
-                seo_report.page_description_report()
-                seo_report.content_title_report()
-                seo_report.internal_link_report()
-                print("--------------------")
+            articles_analysis = []
+            for article in generator.articles:
+                analysis = seo_report.launch_analysis(article)
+                articles_analysis.append(analysis)
+
+            seo_report.generate(articles_analysis)
 
         #elif isinstance(generator, PagesGenerator):
         #    for page in generator.pages:
