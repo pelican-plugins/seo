@@ -1,12 +1,12 @@
 """
 Pelican SEO : a Pelican plugin to improve SEO in static files generator.
-Two actions (customizables in plugin settings) : SEO Report and SEO Enhancer.
+Some actions are customizables in plugin settings.
 """
 
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
-from .settings import SEO_REPORT, SEO_ENHANCER
+from .settings import SEO_REPORT, SEO_ENHANCER, ARTICLES_LIMIT
 from .seo_report import SEOReport
 
 
@@ -24,11 +24,10 @@ def run_plugin(generators):
             seo_report = SEOReport()
 
             articles_analysis = []
-            for article in generator.articles:
+
+            for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
 
                 #article_date.append = article.date
-
-            #for 10 articles :
 
                 analysis = seo_report.launch_analysis(article)
                 articles_analysis.append(analysis)
