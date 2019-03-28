@@ -24,7 +24,7 @@ class InternalLinkAnalyzer():
         return False
 
     @property
-    def internal_link_occurence(self):
-        """ Return the internal link occurence. """
+    def internal_link_occurrence(self):
+        """ Return the internal link occurrence. """
 
         return len([link for link in self._links if self._settings['SITEURL'] in link['href']])
