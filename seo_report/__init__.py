@@ -3,8 +3,10 @@ Generate a SEO report by calling SEO analyzers for each content.
 """
 
 import os
+import datetime
 
 from jinja2 import Environment, FileSystemLoader
+from pprint import pprint
 
 from .seo_analyzer import SEOAnalyzer
 
@@ -15,6 +17,12 @@ class SEOReport():
     PAGE_TITLE_RECOMMENDED_LENGTH = range(60, 71)
     PAGE_DESCRIPTION_RECOMMENDED_LENGTH = range(150, 161)
 
+    def _convert_date(self, date):
+        """ Get SafeDate Pelican object and return date in string. """
+
+        date_time = datetime.datetime(date.year, date.month, date.day, date.hour, date.minute)
+        return date_time.strftime("%Y-%m-%d %H:%M")
+
     def launch_analysis(self, article):
         """
         Launch SEO analysis for an article.
@@ -23,7 +31,8 @@ class SEOReport():
 
         seo_analysis = SEOAnalyzer(article)
         article_analysis = {
-            "article": article.url,
+            "url": article.url,
+            "date": self._convert_date(article.date),
             "seo_analysis": {
                 "page_title_analysis": seo_analysis.page_title_analysis,
                 "page_description_analysis": seo_analysis.page_description_analysis,
@@ -187,11 +196,15 @@ class SEOReport():
             article_report = self._launch_report(article_analysis)
 
             articles_reports = {
-                'article_url': article_analysis.get('article'),
+                'url': article_analysis.get('url'),
+                'date': article_analysis.get('date'),
                 'seo_reports': article_report,
                 }
 
             seo_reports.append(articles_reports)
+
+        # Sort articles by publication date, from recent to oldest
+        seo_reports = sorted(seo_reports, key=lambda k: k['date'], reverse=True)
 
         # Get Jinja HTML template
         plugin_path = os.path.dirname(os.path.realpath(__file__))

@@ -25,6 +25,7 @@ def run_plugin(generators):
 
             articles_analysis = []
 
+            # Launch analysis for each articles. User can limit this number.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
 
                 #article_date.append = article.date
