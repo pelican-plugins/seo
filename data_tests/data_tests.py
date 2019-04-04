@@ -8,9 +8,10 @@ from pelican_seo.seo_report import SEOReport
 class FakeArticle():
     """ Mock Pelican Article object. """
 
-    def __init__(self, settings, metadata, url, date, content):
+    def __init__(self, settings, title, description, url, date, content):
         self.settings = settings
-        self.metadata = metadata
+        self.title = title
+        self.description = description
         self.url = url
         self.date = date
         self.content = content
@@ -36,11 +37,8 @@ def fake_article():
     settings = {
         'SITEURL': 'fakesite.com',
     }
-    metadata = {
-        'title': 'Fake Title',
-        'description': 'Fake description',
-        'date': '2019-04-03 23:49',
-    }
+    title = 'Fake Title'
+    description = 'Fake description'
     url = 'fake-title.html'
     date = fake_date
     content = """<html>
@@ -55,7 +53,7 @@ def fake_article():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, metadata, url, date, content)
+    return FakeArticle(settings, title, description, url, date, content)
 
 @pytest.fixture()
 def fake_seo_report():

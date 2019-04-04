@@ -47,3 +47,19 @@ class TestSEOReport():
         """  """
 
         pass
+
+
+class TestPageTitleAnalyzer():
+    """ Units tests for PageTitleAnalyze. """
+
+    def test_has_page_title(self, fake_article):
+        """ Test if has_page_title returns True if fake_article has a title. """
+
+        fake_analysis = PageTitleAnalyzer(fake_article)
+        assert fake_analysis.has_page_title()
+
+    def test_page_title_length(self, fake_article):
+        """ Test if page_title_length returns the good title length. """
+
+        fake_analysis = PageTitleAnalyzer(fake_article)
+        assert fake_analysis.page_title_length == len(fake_article.title)
