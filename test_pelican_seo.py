@@ -121,3 +121,25 @@ class TestContentTitleAnalyzer():
 
         fake_analysis = ContentTitleAnalyzer(fake_article_multiple_elements)
         assert not fake_analysis.is_content_title_unique()
+
+
+class TestInternalLinkAnalyzer():
+    """ Units tests for InternalLinkAnalyzer. """
+
+    def test_has_internal_link(self, fake_article):
+        """ Test if has_internal_link returns True if fake_article has at least one internal link. """
+
+        fake_analysis = InternalLinkAnalyzer(fake_article)
+        assert fake_analysis.has_internal_link()
+
+    def test_has_no_internal_link(self, fake_article_missing_elements):
+        """ Test if has_internal_link returns False if fake_article has no internal link. """
+
+        fake_analysis = InternalLinkAnalyzer(fake_article_missing_elements)
+        assert not fake_analysis.has_internal_link()
+
+    def test_internal_link_occurrence(self, fake_article_multiple_elements):
+        """ Test if internal_link_occurrence returns the rigth length. """
+
+        fake_analysis = InternalLinkAnalyzer(fake_article_multiple_elements)
+        assert fake_analysis.internal_link_occurrence == 2

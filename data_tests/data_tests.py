@@ -49,7 +49,7 @@ def fake_article():
                     <body>
                         <h1>Fake content title</h1>
                         <p>Fake content</p>
-                        <a href=''>Fake internal link</a>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
                     </body>
                 </html>"""
 
@@ -100,6 +100,9 @@ def fake_article_multiple_elements():
                         <h1>Content title</h1>
                         <p>Fake content</p>
                         <h1>Multiple content title</h1>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
+                        <a href='https://www.test.com'>Fake external link</a>
+                        <a href='www.fakesite.com/test/'>Fake internal link with path</a>
                     </body>
                 </html>"""
 
