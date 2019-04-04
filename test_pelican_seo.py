@@ -3,6 +3,7 @@
 from .data_tests import (
     fake_article,
     fake_seo_report,
+    fake_article_missing_elements,
 )
 from .seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
@@ -57,6 +58,12 @@ class TestPageTitleAnalyzer():
 
         fake_analysis = PageTitleAnalyzer(fake_article)
         assert fake_analysis.has_page_title()
+    
+    def test_has_no_page_title(self, fake_article_missing_elements):
+        """ Test if has_page_title returns False if fake_article has no title. """
+
+        fake_analysis = PageTitleAnalyzer(fake_article)
+        assert not fake_analysis.has_page_title()
 
     def test_page_title_length(self, fake_article):
         """ Test if page_title_length returns the good title length. """
@@ -73,6 +80,12 @@ class TestPageDescriptionAnalyzer():
 
         fake_analysis = PageDescriptionAnalyzer(fake_article)
         assert fake_analysis.has_page_description()
+
+    def test_has_no_page_description(self, fake_article_missing_elements):
+        """ Test if has_page_description returns False if fake_article has no description. """
+
+        fake_analysis = PageDescriptionAnalyzer(fake_article)
+        assert not fake_analysis.has_page_description()
 
     def test_page_description_length(self, fake_article):
         """ Test if page_description_length returns the good description length. """
