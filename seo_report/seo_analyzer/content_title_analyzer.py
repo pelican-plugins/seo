@@ -6,8 +6,8 @@ class ContentTitleAnalyzer():
     """ Analyze the content title. """
 
     def __init__(self, article):
-        content = getattr(article, 'content', None)
-        self.content_soup = BeautifulSoup(content, features="html.parser")
+        _content = getattr(article, 'content', None)
+        self.content_soup = BeautifulSoup(_content, features="html.parser")
 
     def has_content_title(self):
         """ Return True is there is a content title. """

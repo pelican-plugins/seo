@@ -79,6 +79,34 @@ def fake_article_missing_elements():
     return FakeArticle(settings, title, description, url, date, content)
 
 @pytest.fixture()
+def fake_article_multiple_elements():
+    """ Create a fake article with multiple elements. """
+
+    fake_date = FakeDate('2019', '04', '03', '23', '49')
+
+    settings = {
+        'SITEURL': 'fakesite.com',
+    }
+    title = 'Fake Title'
+    description = 'Fake description'
+    url = 'fake-title.html'
+    date = fake_date
+    content = """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta name='description' content='Fake description' />
+                    </head>
+                    <body>
+                        <h1>Content title</h1>
+                        <p>Fake content</p>
+                        <h1>Multiple content title</h1>
+                    </body>
+                </html>"""
+
+    return FakeArticle(settings, title, description, url, date, content)
+
+
+@pytest.fixture()
 def fake_seo_report():
     """ Create a fake seo report instance. """
 

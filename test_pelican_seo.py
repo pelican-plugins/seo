@@ -4,6 +4,7 @@ from .data_tests import (
     fake_article,
     fake_seo_report,
     fake_article_missing_elements,
+    fake_article_multiple_elements
 )
 from .seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
@@ -58,11 +59,11 @@ class TestPageTitleAnalyzer():
 
         fake_analysis = PageTitleAnalyzer(fake_article)
         assert fake_analysis.has_page_title()
-    
+
     def test_has_no_page_title(self, fake_article_missing_elements):
         """ Test if has_page_title returns False if fake_article has no title. """
 
-        fake_analysis = PageTitleAnalyzer(fake_article)
+        fake_analysis = PageTitleAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_page_title()
 
     def test_page_title_length(self, fake_article):
@@ -84,7 +85,7 @@ class TestPageDescriptionAnalyzer():
     def test_has_no_page_description(self, fake_article_missing_elements):
         """ Test if has_page_description returns False if fake_article has no description. """
 
-        fake_analysis = PageDescriptionAnalyzer(fake_article)
+        fake_analysis = PageDescriptionAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_page_description()
 
     def test_page_description_length(self, fake_article):
@@ -92,3 +93,31 @@ class TestPageDescriptionAnalyzer():
 
         fake_analysis = PageDescriptionAnalyzer(fake_article)
         assert fake_analysis.page_description_length == len(fake_article.description)
+
+
+class TestContentTitleAnalyzer():
+    """ Units tests for ContentTitleAnalyzer. """
+
+    def test_has_content_description(self, fake_article):
+        """ Test if has_content_description returns True if fake_article has a content title. """
+
+        fake_analysis = ContentTitleAnalyzer(fake_article)
+        assert fake_analysis.has_content_title()
+
+    def test_has_no_content_title(self, fake_article_missing_elements):
+        """ Test if has_content_title returns False if fake_article has no content title. """
+
+        fake_analysis = ContentTitleAnalyzer(fake_article_missing_elements)
+        assert not fake_analysis.has_content_title()
+
+    def test_content_title_is_unique(self, fake_article):
+        """ Test if is_content_title_unique returns True if content title is unique. """
+
+        fake_analysis = ContentTitleAnalyzer(fake_article)
+        assert fake_analysis.is_content_title_unique
+
+    def test_content_title_is_not_unique(self, fake_article_multiple_elements):
+        """ Test if is_content_title_unique returns False if content title is not unique. """
+
+        fake_analysis = ContentTitleAnalyzer(fake_article_multiple_elements)
+        assert not fake_analysis.is_content_title_unique()
