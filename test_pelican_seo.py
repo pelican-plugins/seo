@@ -63,3 +63,19 @@ class TestPageTitleAnalyzer():
 
         fake_analysis = PageTitleAnalyzer(fake_article)
         assert fake_analysis.page_title_length == len(fake_article.title)
+
+
+class TestPageDescriptionAnalyzer():
+    """ Units tests for PageDescriptionAnalyzer. """
+
+    def test_has_page_description(self, fake_article):
+        """ Test if has_page_description returns True if fake_article has a description. """
+
+        fake_analysis = PageDescriptionAnalyzer(fake_article)
+        assert fake_analysis.has_page_description()
+
+    def test_page_description_length(self, fake_article):
+        """ Test if page_description_length returns the good description length. """
+
+        fake_analysis = PageDescriptionAnalyzer(fake_article)
+        assert fake_analysis.page_description_length == len(fake_article.description)
