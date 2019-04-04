@@ -54,19 +54,19 @@ class TestSEOReport():
 class TestPageTitleAnalyzer():
     """ Units tests for PageTitleAnalyze. """
 
-    def test_has_page_title(self, fake_article):
+    def test_article_has_page_title(self, fake_article):
         """ Test if has_page_title returns True if fake_article has a title. """
 
         fake_analysis = PageTitleAnalyzer(fake_article)
         assert fake_analysis.has_page_title()
 
-    def test_has_no_page_title(self, fake_article_missing_elements):
+    def test_article_has_no_page_title(self, fake_article_missing_elements):
         """ Test if has_page_title returns False if fake_article has no title. """
 
         fake_analysis = PageTitleAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_page_title()
 
-    def test_page_title_length(self, fake_article):
+    def test_article_page_title_length(self, fake_article):
         """ Test if page_title_length returns the good title length. """
 
         fake_analysis = PageTitleAnalyzer(fake_article)
@@ -76,19 +76,19 @@ class TestPageTitleAnalyzer():
 class TestPageDescriptionAnalyzer():
     """ Units tests for PageDescriptionAnalyzer. """
 
-    def test_has_page_description(self, fake_article):
+    def test_article_has_page_description(self, fake_article):
         """ Test if has_page_description returns True if fake_article has a description. """
 
         fake_analysis = PageDescriptionAnalyzer(fake_article)
         assert fake_analysis.has_page_description()
 
-    def test_has_no_page_description(self, fake_article_missing_elements):
+    def test_article_has_no_page_description(self, fake_article_missing_elements):
         """ Test if has_page_description returns False if fake_article has no description. """
 
         fake_analysis = PageDescriptionAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_page_description()
 
-    def test_page_description_length(self, fake_article):
+    def test_article_page_description_length(self, fake_article):
         """ Test if page_description_length returns the good description length. """
 
         fake_analysis = PageDescriptionAnalyzer(fake_article)
@@ -98,25 +98,25 @@ class TestPageDescriptionAnalyzer():
 class TestContentTitleAnalyzer():
     """ Units tests for ContentTitleAnalyzer. """
 
-    def test_has_content_description(self, fake_article):
+    def test_article_has_content_description(self, fake_article):
         """ Test if has_content_description returns True if fake_article has a content title. """
 
         fake_analysis = ContentTitleAnalyzer(fake_article)
         assert fake_analysis.has_content_title()
 
-    def test_has_no_content_title(self, fake_article_missing_elements):
+    def test_article_has_no_content_title(self, fake_article_missing_elements):
         """ Test if has_content_title returns False if fake_article has no content title. """
 
         fake_analysis = ContentTitleAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_content_title()
 
-    def test_content_title_is_unique(self, fake_article):
+    def test_article_content_title_is_unique(self, fake_article):
         """ Test if is_content_title_unique returns True if content title is unique. """
 
         fake_analysis = ContentTitleAnalyzer(fake_article)
         assert fake_analysis.is_content_title_unique
 
-    def test_content_title_is_not_unique(self, fake_article_multiple_elements):
+    def test_article_content_title_is_not_unique(self, fake_article_multiple_elements):
         """ Test if is_content_title_unique returns False if content title is not unique. """
 
         fake_analysis = ContentTitleAnalyzer(fake_article_multiple_elements)
@@ -126,19 +126,19 @@ class TestContentTitleAnalyzer():
 class TestInternalLinkAnalyzer():
     """ Units tests for InternalLinkAnalyzer. """
 
-    def test_has_internal_link(self, fake_article):
+    def test_article_has_internal_link(self, fake_article):
         """ Test if has_internal_link returns True if fake_article has at least one internal link. """
 
         fake_analysis = InternalLinkAnalyzer(fake_article)
         assert fake_analysis.has_internal_link()
 
-    def test_has_no_internal_link(self, fake_article_missing_elements):
+    def test_article_has_no_internal_link(self, fake_article_missing_elements):
         """ Test if has_internal_link returns False if fake_article has no internal link. """
 
         fake_analysis = InternalLinkAnalyzer(fake_article_missing_elements)
         assert not fake_analysis.has_internal_link()
 
-    def test_internal_link_occurrence(self, fake_article_multiple_elements):
+    def test_article_internal_link_occurrence(self, fake_article_multiple_elements):
         """ Test if internal_link_occurrence returns the rigth length. """
 
         fake_analysis = InternalLinkAnalyzer(fake_article_multiple_elements)
