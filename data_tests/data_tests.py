@@ -108,9 +108,20 @@ def fake_article_multiple_elements():
 
     return FakeArticle(settings, title, description, url, date, content)
 
-
 @pytest.fixture()
 def fake_seo_report():
     """ Create a fake seo report instance. """
 
     return SEOReport()
+
+@pytest.fixture()
+def fake_articles_analysis(fake_seo_report, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
+    """ Create a fake articles analysis. """
+
+    articles_analysis = []
+
+    articles_analysis.append(fake_seo_report.launch_analysis(fake_article))
+    articles_analysis.append(fake_seo_report.launch_analysis(fake_article_missing_elements))
+    articles_analysis.append(fake_seo_report.launch_analysis(fake_article_multiple_elements))
+
+    return articles_analysis

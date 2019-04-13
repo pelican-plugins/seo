@@ -6,7 +6,6 @@ import os
 import datetime
 
 from jinja2 import Environment, FileSystemLoader
-from pprint import pprint
 
 from .seo_analyzer import SEOAnalyzer
 

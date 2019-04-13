@@ -4,3 +4,5 @@ Pipfile.lock
 __pycache__/*
 seo_report/__pycache__/*
 seo_report/seo_analyzer/__pycache__/*
+.pytest_cache
+data_tests/__pycache__/*
