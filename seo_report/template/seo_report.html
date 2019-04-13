@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>SEO Report - Pelican SEO</title>
+
+        <link href="{{ css_file }}" rel="stylesheet" media="all" type="text/css"> 
+    </head>
+    <body>
+        <header>
+            <h1>SEO report - {{ site_name }}</h1>
+        </header>
+
+        <section>
+
+            {% for articles in seo_reports %}
+            <article>
+                
+                <div class="article-header">
+                    <h2>{{ articles.url }}</h2>
+                    <span>{{ articles.date }}</span>
+                </div>
+
+                {% for report in articles.seo_reports %}
+
+                    <h3>{{ report.title }}</h3>
+
+                    <table>
+                        {% if report.content.good %}
+                        <tr>  
+                            <th class="green">Good</th>
+                            {% for good_point in report.content.good %}
+                            <td>{{ good_point }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endif %}
+
+                        {% if report.content.to_improve %}
+                        <tr>
+                            <th class="orange">To improve</th>
+                            {% for improvment in report.content.to_improve %}
+                            <td>{{ improvment }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endif %}
+
+                        {% if report.content.problems %}
+                        <tr>
+                            <th class="red">Problems</th>
+                            {% for problem in report.content.problems %}
+                            <td>{{ problem }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endif %}
+                    
+                    </table>
+
+                {% endfor %}
+            
+            </article>
+            {% endfor %}
+
+        </section>
+
+        <footer>
+            <p>Powered by <a href="https://github.com/MaevaBrunelles/pelican-seo">Pelican SEO</a>, a Pelican plugin, with much salt.</p>
+        </footer>
+
+    </body>
+</html>
