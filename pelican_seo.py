@@ -29,7 +29,7 @@ def run_full_plugin(generators):
             seo_enhancer = SEOEnhancer()
             robots_rules = []
 
-            # Launch analysis for each articles. User can limit this number.
+            # Launch analysis and enhancement for each articles. User can limit this number.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(article)
                 articles_analysis.append(analysis)

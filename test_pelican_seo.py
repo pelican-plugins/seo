@@ -1,7 +1,6 @@
 """ Units tests for Pelican SEO plugin. """
 
-from unittest.mock import mock_open, patch, MagicMock
-import builtins
+from unittest.mock import mock_open, patch
 
 from .data_tests import (
     fake_article,
@@ -9,6 +8,8 @@ from .data_tests import (
     fake_article_missing_elements,
     fake_article_multiple_elements,
     fake_articles_analysis,
+    fake_seo_enhancer,
+    fake_robots_rules,
 )
 from .seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
@@ -16,7 +17,7 @@ from .seo_report.seo_analyzer import (
     PageTitleAnalyzer,
     PageDescriptionAnalyzer,
 )
-
+from .seo_enhancer.robots_file_creator import RobotsFileCreator
 
 class TestSEOReport():
     """ Units tests for SEOReport. """
@@ -168,3 +169,59 @@ class TestInternalLinkAnalyzer():
 
         fake_analysis = InternalLinkAnalyzer(fake_article_multiple_elements)
         assert fake_analysis.internal_link_occurrence == 2
+
+
+class TestRobotsFileCreator():
+    """ Units tests for RobotsFileCreator. """
+
+    def test_get_all_robots_rules(self, fake_article):
+        """ Test if get_noindex and get_disallow return True if the article has specific rules. """
+
+        fake_robots = RobotsFileCreator(fake_article.metadata)
+        assert fake_robots.get_noindex
+        assert fake_robots.get_disallow
+    
+    def test_get_one_robots_rule(self, fake_article_missing_elements):
+        """ Test if only get_noindex or get_disallow return True if the article has one specific rule. """
+
+        fake_robots = RobotsFileCreator(fake_article_missing_elements.metadata)
+        assert fake_robots.get_noindex
+        assert not fake_robots.get_disallow
+
+    def test_get_none_robots_rule(self, fake_article_multiple_elements):
+        """ Test if get_noindex and get_disallow return None if the article has no specific rules. """
+
+        fake_robots = RobotsFileCreator(fake_article_multiple_elements.metadata)
+        assert not fake_robots.get_noindex
+        assert not fake_robots.get_disallow
+
+class TestSEOEnhancer():
+    """ Units tests for SEOEnhancer. """
+
+    def test_populate_robots_return_dict_with_rules_for_an_url(self, fake_seo_enhancer, fake_article):
+        """
+        Test that populate_robots return a dict with article_url,
+        noindex and disallow rules.
+        """
+
+        fake_robots_rules = fake_seo_enhancer.populate_robots(fake_article)
+
+        assert fake_robots_rules['article_url']
+        assert fake_robots_rules['noindex']
+        assert fake_robots_rules['disallow']
+
+    def test_generate_robots_file(self, fake_seo_enhancer, fake_robots_rules):
+        """ Test if generate_robots create a robots.txt file by mocking open(). """
+
+        with patch('pelican_seo.seo_enhancer.open', mock_open()) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.generate_robots(fake_robots_rules)
+            mocked_open.assert_called_once_with('output/robots.txt', 'w')
+            mocked_file_handle.write.assert_called()
+            # 4 : 1 fix write + 3 generated write
+            assert len(mocked_file_handle.write.call_args_list) == 4
+
+            args, _ = mocked_file_handle.write.call_args_list[1]
+            fake_rule = args[0]
+            assert "Noindex: fake-title.html" in fake_rule
