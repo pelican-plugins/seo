@@ -3,6 +3,8 @@ Pelican SEO : a Pelican plugin to improve SEO in static files generator.
 Some actions are customizables in plugin settings.
 """
 
+import os
+
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
@@ -83,6 +85,29 @@ def run_seo_enhancer(generators):
 
             seo_enhancer.generate_robots(robots_rules)
 
+# def recursive(path):
+#     if os.path.isdir(path):
+#         for file in os.listdir(path):
+#             if os.path.isdir(path + "/" + file):
+#                 recursive(path + "/" + file)
+                
+#             else:
+#                 print(os.path.join(path + "/", file))
+
+def run_html_enhancer(path, context):
+    """ Run HTML enhancements """
+
+    #path = "./output"
+    #recursive(path)
+
+    if not context.get('SITEURL'):
+        raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')
+
+    if context.get('article'):
+        seo_enhancer = SEOEnhancer()
+        html_enhancements = seo_enhancer.launch_html_enhancer(context['article'])
+        seo_enhancer.add_html_to_file(html_enhancements, path)
+
 
 def register():
     if SEO_REPORT and SEO_ENHANCER:
@@ -98,5 +123,6 @@ def register():
 
     elif SEO_ENHANCER:
         signals.all_generators_finalized.connect(run_seo_enhancer)
+        signals.content_written.connect(run_html_enhancer)
         print("------ SEO Plugin -------")
         print("--- SEO Enhancement : Done ---")
