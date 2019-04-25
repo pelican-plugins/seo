@@ -4,7 +4,7 @@ python:
   - "3.6"
 
 install:
-  - pip3 install pelican pytest
+  - pip3 install pelican pytest bs4
 
 script:
   - pytest
