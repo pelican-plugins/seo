@@ -85,20 +85,8 @@ def run_seo_enhancer(generators):
 
             seo_enhancer.generate_robots(robots_rules)
 
-# def recursive(path):
-#     if os.path.isdir(path):
-#         for file in os.listdir(path):
-#             if os.path.isdir(path + "/" + file):
-#                 recursive(path + "/" + file)
-                
-#             else:
-#                 print(os.path.join(path + "/", file))
-
 def run_html_enhancer(path, context):
     """ Run HTML enhancements """
-
-    #path = "./output"
-    #recursive(path)
 
     if not context.get('SITEURL'):
         raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')

@@ -1,5 +1,7 @@
 """ Improve SEO technical for each article : HTML code and robots.txt file. """
 
+import json
+
 from bs4 import BeautifulSoup
 
 from .html_enhancer import HTMLEnhancer
@@ -17,7 +19,8 @@ class SEOEnhancer():
         html_enhancer = HTMLEnhancer(article)
 
         html_enhancements = {
-            'canonical_tag': html_enhancer.canonical_link.create_html_tag()
+            'canonical_tag': html_enhancer.canonical_link.create_html_tag(),
+            'article_schema': html_enhancer.schema_article.create_schema(),
         }
 
         return html_enhancements
@@ -31,7 +34,7 @@ class SEOEnhancer():
             'article_url': article.url,
             'noindex': robots_file.get_noindex,
             'disallow': robots_file.get_disallow,
-            }
+        }
 
     def generate_robots(self, rules):
         """ Create robots.txt file, with noindex and disallow rules for each article URL. """
@@ -51,9 +54,21 @@ class SEOEnhancer():
             html_content = html_file.read()
             soup = BeautifulSoup(html_content, features="html.parser")
 
-        canonical_tag = soup.new_tag("link", rel="canonical", href=enhancements.get('canonical_tag'))
+        canonical_tag = soup.new_tag(
+            "link",
+            rel="canonical",
+            href=enhancements.get('canonical_tag')
+        )
         soup.head.append(canonical_tag)
 
+        schema_script = soup.new_tag("script", type="application/ld+json")
+        soup.head.append(schema_script)
+
+        schema_script = soup.find('script')
+        # Json dumps permit to keep dict double quotes instead of simples
+        # Google valids schema only with double quotes
+        schema_script.append(json.dumps(enhancements.get('article_schema')))
+
         with open(path, 'w') as html_file:
-            html_file.write(str(soup))
+            html_file.write(soup.prettify())
         
