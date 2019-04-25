@@ -2,13 +2,13 @@
 
 from unittest.mock import mock_open, patch
 
-from seo_report.seo_analyzer import (
+from ..seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
     ContentTitleAnalyzer,
     PageTitleAnalyzer,
     PageDescriptionAnalyzer,
 )
-from seo_enhancer.robots_file_creator import RobotsFileCreator
+from ..seo_enhancer.robots_file_creator import RobotsFileCreator
 from .data_tests import (
     fake_article,
     fake_seo_report,
