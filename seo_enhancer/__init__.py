@@ -19,7 +19,7 @@ class SEOEnhancer():
         html_enhancer = HTMLEnhancer(article)
 
         html_enhancements = {
-            'canonical_tag': html_enhancer.canonical_link.create_html_tag(),
+            'canonical_tag': html_enhancer.canonical_link.create_url(),
             'article_schema': html_enhancer.schema_article.create_schema(),
         }
 
