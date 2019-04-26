@@ -2,13 +2,13 @@
 
 from unittest.mock import mock_open, patch
 
-from ..seo_report.seo_analyzer import (
+from ave_seo.seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
     ContentTitleAnalyzer,
     PageTitleAnalyzer,
     PageDescriptionAnalyzer,
 )
-from ..seo_enhancer.robots_file_creator import RobotsFileCreator
+from ave_seo.seo_enhancer.robots_file_creator import RobotsFileCreator
 from .data_tests import (
     fake_article,
     fake_seo_report,
@@ -57,7 +57,7 @@ class TestSEOReport():
         Need mock_open to test this.
         """
 
-        with patch('pelican_seo.seo_report.open', mock_open()) as mocked_open:
+        with patch('ave_seo.seo_report.open', mock_open()) as mocked_open:
             # Get a reference to the MagicMock that will be returned
             # when mock_open will be called
             # => When we do open("seo_report", "w") as report in generate, report
@@ -214,7 +214,7 @@ class TestSEOEnhancer():
     def test_generate_robots_file(self, fake_seo_enhancer, fake_robots_rules):
         """ Test if generate_robots create a robots.txt file by mocking open(). """
 
-        with patch('pelican_seo.seo_enhancer.open', mock_open()) as mocked_open:
+        with patch('ave_seo.seo_enhancer.open', mock_open()) as mocked_open:
             mocked_file_handle = mocked_open.return_value
 
             fake_seo_enhancer.generate_robots(fake_robots_rules)

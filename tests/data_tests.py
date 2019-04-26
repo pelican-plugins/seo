@@ -2,8 +2,8 @@
 
 import pytest
 
-from pelican_seo.seo_report import SEOReport
-from pelican_seo.seo_enhancer import SEOEnhancer
+from ave_seo.seo_report import SEOReport
+from ave_seo.seo_enhancer import SEOEnhancer
 
 
 class FakeArticle():
