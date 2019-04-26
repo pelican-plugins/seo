@@ -1,1 +1,1 @@
-# Pelican SEO, a Pelican plugin
+# Ave SEO !, a Pelican plugin
