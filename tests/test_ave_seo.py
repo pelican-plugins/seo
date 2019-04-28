@@ -9,6 +9,9 @@ from ave_seo.seo_report.seo_analyzer import (
     PageDescriptionAnalyzer,
 )
 from ave_seo.seo_enhancer.robots_file_creator import RobotsFileCreator
+from ave_seo.seo_enhancer.html_enhancer import (
+    CanonicalURLCreator,
+)
 from .data_tests import (
     fake_article,
     fake_seo_report,
@@ -196,6 +199,7 @@ class TestRobotsFileCreator():
         assert not fake_robots.get_noindex
         assert not fake_robots.get_disallow
 
+
 class TestSEOEnhancer():
     """ Units tests for SEOEnhancer. """
 
@@ -226,3 +230,23 @@ class TestSEOEnhancer():
             args, _ = mocked_file_handle.write.call_args_list[1]
             fake_rule = args[0]
             assert "Noindex: fake-title.html" in fake_rule
+
+    def test_launch_html_enhancemer_returns_dict(self, fake_article, fake_seo_enhancer):
+        """ Test if launch_html_enhancemer returns a dict with expected keys. """
+
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(fake_article)
+
+        assert fake_html_enhancements['canonical_tag']
+        assert fake_html_enhancements['article_schema']
+
+
+class TestCanonicalURLCreator():
+    """ Unit tests for CanonicalURLCreator  """
+
+    def test_create_url(self, fake_article):
+        """ Test if create_url() returns the join of site URL and article URL. """
+
+        canonical = CanonicalURLCreator(fake_article.url, fake_article.settings['SITEURL'])
+        canonical_link = canonical.create_url()
+
+        assert canonical_link == "fakesite.com/fake-title.html"
