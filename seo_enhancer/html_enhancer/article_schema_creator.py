@@ -9,13 +9,13 @@ class ArticleSchemaCreator():
     """
 
     def __init__(self, author, title, category, date, logo, image, sitename):
-        self.author = author.name
-        self.title = title
-        self.category = category.name
-        self.publication_date = date
-        self.logo = logo
-        self.image = image
-        self.sitename = sitename
+        self._author = author.name
+        self._title = title
+        self._category = category.name
+        self._publication_date = date
+        self._logo = logo
+        self._image = image
+        self._sitename = sitename
 
     def _convert_date(self, date):
         """ Get SafeDate Pelican object and return date in string. """
@@ -53,34 +53,34 @@ class ArticleSchemaCreator():
             "@type": "Article",
         }
 
-        if self.author:
+        if self._author:
             schema_article["author"] = {
                 "@type": "Person",
-                "name": self.author
+                "name": self._author
             }
 
-        if self.sitename:
+        if self._sitename:
             schema_article["publisher"] = {
                 "@type": "Organization",
-                "name": self.sitename,
+                "name": self._sitename,
             }
 
-            if self.logo:
+            if self._logo:
                 schema_article["publisher"]["logo"] = {
                     "@type": "ImageObject",
-                    "url": self.logo
+                    "url": self._logo
                 }
 
-        if self.title:
-            schema_article["headline"] = self.title
+        if self._title:
+            schema_article["headline"] = self._title
 
-        if self.category:
-            schema_article["about"] = self.category
+        if self._category:
+            schema_article["about"] = self._category
 
-        if self.publication_date:
-            schema_article["datePublished"] = self._convert_date(self.publication_date)
+        if self._publication_date:
+            schema_article["datePublished"] = self._convert_date(self._publication_date)
 
-        if self.image:
-            schema_article["image"] = self.image
+        if self._image:
+            schema_article["image"] = self._image
 
         return schema_article
