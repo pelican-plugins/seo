@@ -52,6 +52,7 @@ def fake_article():
 
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': 'Fake Site Name',
         'LOGO': 'https://www.fakesite.com/fake-logo.jpg',
     }
     metadata = {
@@ -85,9 +86,12 @@ def fake_article_missing_elements():
 
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': '',
+        'LOGO': '',
     }
     metadata = {
         'noindex': True,
+        'image': '',
     }
     title = ''
     description = ''
@@ -111,6 +115,8 @@ def fake_article_multiple_elements():
 
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': 'Fake Site Name',
+        'LOGO': 'https://www.fakesite.com/fake-logo.jpg',
     }
     metadata = {}
     title = 'Fake Title'
