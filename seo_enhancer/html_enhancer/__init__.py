@@ -2,11 +2,12 @@
 
 from .canonical_url_creator import CanonicalURLCreator
 from .article_schema_creator import ArticleSchemaCreator
+from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 
 class HTMLEnhancer():
     """ HTML Enhancer : get instances of HTML enhancements. """
 
-    def __init__(self, article):
+    def __init__(self, article, output_path, path):
         _settings = getattr(article, 'settings', None)
         _file_url = getattr(article, 'url', None)
         _author = getattr(article, 'author', None)
@@ -28,4 +29,11 @@ class HTMLEnhancer():
             logo=_settings.get('LOGO'),
             image=_image,
             sitename=_settings.get('SITENAME'),
+        )
+
+        self.breadcrumb_creator = BreadcrumbSchemaCreator(
+            output_path=output_path,
+            path=path,
+            sitename=_settings.get('SITENAME'),
+            siteurl=_settings.get('SITEURL')
         )

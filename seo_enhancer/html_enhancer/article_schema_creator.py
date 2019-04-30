@@ -1,4 +1,7 @@
-""" Article Schema.org creator : Improve articles display in Google if all fields are fill in. """
+"""
+Article Schema.org creator : Improve articles display in Google if all fields are fill in.
+https://schema.org/Article : JSON-LD format.
+"""
 
 import datetime
 

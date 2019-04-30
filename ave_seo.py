@@ -93,7 +93,7 @@ def run_html_enhancer(path, context):
 
     if context.get('article'):
         seo_enhancer = SEOEnhancer()
-        html_enhancements = seo_enhancer.launch_html_enhancer(context['article'])
+        html_enhancements = seo_enhancer.launch_html_enhancer(context['article'], context['OUTPUT_PATH'], path)
         seo_enhancer.add_html_to_file(html_enhancements, path)
 
 

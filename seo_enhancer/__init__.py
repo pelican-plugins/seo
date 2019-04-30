@@ -10,17 +10,18 @@ from .robots_file_creator import RobotsFileCreator
 class SEOEnhancer():
     """ Improve SEO technical for each article : HTML code and robots.txt file. """
 
-    def launch_html_enhancer(self, article):
+    def launch_html_enhancer(self, article, output_path, path):
         """
         Call HTMLEnhancer for each article.
         Return a dict with all HTML enhancements.
         """
 
-        html_enhancer = HTMLEnhancer(article)
+        html_enhancer = HTMLEnhancer(article, output_path, path)
 
         html_enhancements = {
             'canonical_tag': html_enhancer.canonical_link.create_url(),
             'article_schema': html_enhancer.schema_article.create_schema(),
+            'breadcrumb_schema': html_enhancer.breadcrumb_creator.create_schema(),
         }
 
         return html_enhancements
@@ -61,13 +62,21 @@ class SEOEnhancer():
         )
         soup.head.append(canonical_tag)
 
-        schema_script = soup.new_tag("script", type="application/ld+json")
-        soup.head.append(schema_script)
+        position = 0
+        for enhancement in enhancements:
 
-        schema_script = soup.find('script')
-        # Json dumps permit to keep dict double quotes instead of simples
-        # Google valids schema only with double quotes
-        schema_script.append(json.dumps(enhancements.get('article_schema')))
+            if enhancement.endswith('_schema'):
+                schema = enhancement
+
+                schema_script = soup.new_tag("script", type="application/ld+json")
+                soup.head.append(schema_script)
+
+                schema_script = soup.findAll('script')[position]
+                # Json dumps permit to keep dict double quotes instead of simples
+                # Google valids schema only with double quotes
+                schema_script.append(json.dumps(enhancements[schema]))
+
+                position += 1
 
         with open(path, 'w') as html_file:
             html_file.write(soup.prettify())
