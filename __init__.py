@@ -1,1 +1,1 @@
-from .pelican_seo import *
+from .ave_seo import *

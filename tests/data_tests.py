@@ -2,19 +2,23 @@
 
 import pytest
 
-from pelican_seo.seo_report import SEOReport
+from ave_seo.seo_report import SEOReport
+from ave_seo.seo_enhancer import SEOEnhancer
 
 
 class FakeArticle():
     """ Mock Pelican Article object. """
 
-    def __init__(self, settings, title, description, url, date, content):
+    def __init__(self, settings, metadata, title, description, url, date, content, author, category):
         self.settings = settings
+        self.metadata = metadata
         self.title = title
         self.description = description
         self.url = url
         self.date = date
         self.content = content
+        self.author = author
+        self.category = category
 
 
 class FakeDate():
@@ -28,19 +32,40 @@ class FakeDate():
         self.minute = int(minute)
 
 
+class FakeAuthor():
+    """ Mock Pelican Author object. """
+
+    def __init__(self, name):
+        self.name = name
+
+
+class FakeCategory():
+    """ Mock Pelican Category object. """
+
+    def __init__(self, name):
+        self.name = name
+
+
 @pytest.fixture()
 def fake_article():
     """ Create a fake article. """
 
-    fake_date = FakeDate('2019', '04', '03', '23', '49')
-
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': 'Fake Site Name',
+        'LOGO': 'https://www.fakesite.com/fake-logo.jpg',
+    }
+    metadata = {
+        'noindex': True,
+        'disallow': True,
+        'image': 'https://www.fakesite.com/fake-image.jpg',
     }
     title = 'Fake Title'
     description = 'Fake description'
     url = 'fake-title.html'
-    date = fake_date
+    date = FakeDate('2019', '04', '03', '23', '49')
+    author = FakeAuthor(name='Fake author')
+    category = FakeCategory(name='Fake category')
     content = """<html>
                     <head>
                         <title>Fake Title</title>
@@ -53,21 +78,27 @@ def fake_article():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, title, description, url, date, content)
+    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
 
 @pytest.fixture()
 def fake_article_missing_elements():
     """ Create a fake article. """
 
-    fake_date = FakeDate('2019', '04', '03', '23', '49')
-
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': '',
+        'LOGO': '',
+    }
+    metadata = {
+        'noindex': True,
+        'image': '',
     }
     title = ''
     description = ''
     url = 'fake-title.html'
-    date = fake_date
+    date = FakeDate('2019', '04', '03', '23', '49')
+    author = FakeAuthor(name='')
+    category = FakeCategory(name='')
     content = """<html>
                     <head>
                     </head>
@@ -76,21 +107,24 @@ def fake_article_missing_elements():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, title, description, url, date, content)
+    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
 
 @pytest.fixture()
 def fake_article_multiple_elements():
     """ Create a fake article with multiple elements. """
 
-    fake_date = FakeDate('2019', '04', '03', '23', '49')
-
     settings = {
         'SITEURL': 'fakesite.com',
+        'SITENAME': 'Fake Site Name',
+        'LOGO': 'https://www.fakesite.com/fake-logo.jpg',
     }
+    metadata = {}
     title = 'Fake Title'
     description = 'Fake description'
     url = 'fake-title.html'
-    date = fake_date
+    date = FakeDate('2019', '04', '03', '23', '49')
+    author = FakeAuthor(name='Fake author')
+    category = FakeCategory(name='Fake category')
     content = """<html>
                     <head>
                         <title>Fake Title</title>
@@ -106,7 +140,7 @@ def fake_article_multiple_elements():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, title, description, url, date, content)
+    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
 
 @pytest.fixture()
 def fake_seo_report():
@@ -125,3 +159,21 @@ def fake_articles_analysis(fake_seo_report, fake_article, fake_article_multiple_
     articles_analysis.append(fake_seo_report.launch_analysis(fake_article_multiple_elements))
 
     return articles_analysis
+
+@pytest.fixture()
+def fake_seo_enhancer():
+    """ Create a fake seo enhancer instance. """
+
+    return SEOEnhancer()
+
+@pytest.fixture()
+def fake_robots_rules(fake_seo_enhancer, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
+    """ Create a fake robots rules. """
+
+    robots_rules = []
+
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article))
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_missing_elements))
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_multiple_elements))
+
+    return robots_rules

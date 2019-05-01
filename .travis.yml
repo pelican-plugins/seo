@@ -3,9 +3,12 @@ language: python
 python:
   - "3.6"
 
+install:
+  - pip3 install pelican pytest bs4
+
 script:
-  - test_pelican_seo.py
+  - pytest
 
 branches:
   only:
-    - dev
+    - seo-enhancer-feature
