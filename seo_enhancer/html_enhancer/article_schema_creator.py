@@ -30,7 +30,7 @@ class ArticleSchemaCreator():
         """
         Create Article schema.
         Schema : {
-            "@context": "http://schema.org",
+            "@context": "https://schema.org",
             "@type": "Article",
             "author": {
                 "@type": "Person",
@@ -52,7 +52,7 @@ class ArticleSchemaCreator():
         """
 
         schema_article = {
-            "@context": "http://schema.org",
+            "@context": "https://schema.org",
             "@type": "Article",
         }
 

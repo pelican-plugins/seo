@@ -54,7 +54,7 @@ class BreadcrumbSchemaCreator():
         for item in range(1, len(split_path) + 1):
 
             name = split_path[item-1]
-            name = name.capitalize()
+            name = name.replace('-', ' ').capitalize()
             if name.endswith('.html'):
                 name = name[:-5]
 

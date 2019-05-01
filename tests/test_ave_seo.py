@@ -12,6 +12,7 @@ from ave_seo.seo_enhancer.robots_file_creator import RobotsFileCreator
 from ave_seo.seo_enhancer.html_enhancer import (
     CanonicalURLCreator,
     ArticleSchemaCreator,
+    BreadcrumbSchemaCreator,
 )
 from .data_tests import (
     fake_article,
@@ -235,10 +236,39 @@ class TestSEOEnhancer():
     def test_launch_html_enhancemer_returns_dict(self, fake_article, fake_seo_enhancer):
         """ Test if launch_html_enhancemer returns a dict with expected keys. """
 
-        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(fake_article)
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            article=fake_article,
+            output_path='fake_output',
+            path='fake_dir/fake_output/fake_file.html',
+        )
 
         assert fake_html_enhancements['canonical_tag']
         assert fake_html_enhancements['article_schema']
+        assert fake_html_enhancements['breadcrumb_schema']
+
+    def test_add_html_enhancements_to_file(self, fake_article, fake_seo_enhancer):
+        """ Test if add_html_to_file add SEO enhancements to HTML files by mocking open(). """
+
+        path = "fake_dir/fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            article=fake_article,
+            output_path='fake_output',
+            path=path,
+        )
+
+        with patch('ave_seo.seo_enhancer.open', mock_open(read_data=fake_article.content)) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(fake_html_enhancements, path)
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+            assert '<link href="fakesite.com/fake-title.html" rel="canonical"/>' in fake_html_content
+            assert '{"@context": "https://schema.org", "@type": "Article"' in fake_html_content
+            assert '{"@context": "https://schema.org", "@type": "BreadcrumbList"' in fake_html_content
 
 
 class TestCanonicalURLCreator():
@@ -271,7 +301,7 @@ class TestArticleSchemaCreator():
 
         fake_article_schema = article.create_schema()
 
-        assert fake_article_schema['@context'] == "http://schema.org"
+        assert fake_article_schema['@context'] == "https://schema.org"
         assert fake_article_schema['@type'] == "Article"
 
         assert fake_article_schema['author']['@type'] == 'Person'
@@ -305,7 +335,7 @@ class TestArticleSchemaCreator():
 
         fake_article_schema = article.create_schema()
 
-        assert fake_article_schema['@context'] == "http://schema.org"
+        assert fake_article_schema['@context'] == "https://schema.org"
         assert fake_article_schema['@type'] == "Article"
 
         assert 'author' not in fake_article_schema
@@ -482,3 +512,90 @@ class TestArticleSchemaCreator():
         assert fake_article_schema['about'] == 'Fake category'
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
+
+
+class TestBreadcrumbSchemaCreator():
+    """ Unit tests for BreadcrumbSchemaCreator. """
+
+    def test_create_schema(self, fake_article):
+        """ Test that create_schema returns a valid schema.org (dict) for breadcrumb. """
+
+        breadcrumb = BreadcrumbSchemaCreator(
+            output_path='fake_output',
+            path='fake_dir/fake_output/fake-file.html',
+            sitename=fake_article.settings['SITENAME'],
+            siteurl=fake_article.settings['SITEURL'],
+        )
+
+        fake_breadcrumb_schema = breadcrumb.create_schema()
+
+        assert fake_breadcrumb_schema['@context'] == "https://schema.org"
+        assert fake_breadcrumb_schema['@type'] == "BreadcrumbList"
+
+        assert len(fake_breadcrumb_schema['itemListElement']) == 2
+
+        assert fake_breadcrumb_schema['itemListElement'][0]['@type'] == "ListItem"
+        assert fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
+        assert fake_breadcrumb_schema['itemListElement'][0]['name'] == "Fake Site Name"
+        assert fake_breadcrumb_schema['itemListElement'][0]['item'] == "fakesite.com"
+
+        assert fake_breadcrumb_schema['itemListElement'][1]['@type'] == "ListItem"
+        assert fake_breadcrumb_schema['itemListElement'][1]['position'] == 2
+        assert fake_breadcrumb_schema['itemListElement'][1]['name'] == "Fake file"
+        assert fake_breadcrumb_schema['itemListElement'][1]['item'] == "fakesite.com/fake-file.html"
+
+    def test_create_schema_with_x_elements_in_path(self, fake_article):
+        """ Test that create_schema returns a valid schema.org (dict) for a path with x elements. """
+
+        breadcrumb = BreadcrumbSchemaCreator(
+            output_path='fake_output',
+            path='fake_dir/fake_output/test/blabla/other/kiwi/fake-file.html',
+            sitename=fake_article.settings['SITENAME'],
+            siteurl=fake_article.settings['SITEURL'],
+        )
+
+        fake_breadcrumb_schema = breadcrumb.create_schema()
+
+        assert len(fake_breadcrumb_schema['itemListElement']) == 6
+
+    def test_create_schema_with_no_sitename_no_siteurl(self, fake_article):
+        """ Test that create_schema returns incomplete schema.org. """
+
+        breadcrumb = BreadcrumbSchemaCreator(
+            output_path='fake_output',
+            path='fake_dir/fake_output/fake-file.html',
+            sitename='',
+            siteurl='',
+        )
+
+        fake_breadcrumb_schema = breadcrumb.create_schema()
+
+        assert not fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
+
+    def test_create_schema_with_no_sitename(self, fake_article):
+        """ Test that create_schema with siteurl but no sitename returns incomplete schema.org. """
+
+        breadcrumb = BreadcrumbSchemaCreator(
+            output_path='fake_output',
+            path='fake_dir/fake_output/fake-file.html',
+            sitename='',
+            siteurl=fake_article.settings['SITEURL'],
+        )
+
+        fake_breadcrumb_schema = breadcrumb.create_schema()
+
+        assert not fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
+
+    def test_create_schema_with_no_siteurl(self, fake_article):
+        """ Test that create_schema with sitename but no siteurl returns incomplete schema.org. """
+
+        breadcrumb = BreadcrumbSchemaCreator(
+            output_path='fake_output',
+            path='fake_dir/fake_output/fake-file.html',
+            sitename=fake_article.settings['SITENAME'],
+            siteurl='',
+        )
+
+        fake_breadcrumb_schema = breadcrumb.create_schema()
+
+        assert not fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
