@@ -82,7 +82,7 @@ def fake_article():
 
 @pytest.fixture()
 def fake_article_missing_elements():
-    """ Create a fake article. """
+    """ Create a fake article with missing elements. """
 
     settings = {
         'SITEURL': 'fakesite.com',
@@ -149,6 +149,19 @@ def fake_seo_report():
     return SEOReport()
 
 @pytest.fixture()
+def fake_robots_rules(fake_seo_enhancer, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
+    """ Create a fake robots rules. """
+
+    robots_rules = []
+
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article))
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_missing_elements))
+    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_multiple_elements))
+
+    return robots_rules
+
+
+@pytest.fixture()
 def fake_articles_analysis(fake_seo_report, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
     """ Create a fake articles analysis. """
 
@@ -165,15 +178,3 @@ def fake_seo_enhancer():
     """ Create a fake seo enhancer instance. """
 
     return SEOEnhancer()
-
-@pytest.fixture()
-def fake_robots_rules(fake_seo_enhancer, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
-    """ Create a fake robots rules. """
-
-    robots_rules = []
-
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article))
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_missing_elements))
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_multiple_elements))
-
-    return robots_rules

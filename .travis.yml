@@ -11,4 +11,4 @@ script:
 
 branches:
   only:
-    - seo-enhancer-feature
+    - dev
