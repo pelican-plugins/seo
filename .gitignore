@@ -8,3 +8,6 @@ seo_report/seo_analyzer/__pycache__/*
 data_tests/__pycache__/*
 seo_enhancer/__pycache__/*
 seo_enhancer/html_enhancer/__pycache__/*
+tests/__pycache__/*
+.coverage
+htmlcov/
