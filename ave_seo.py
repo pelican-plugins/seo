@@ -112,17 +112,17 @@ def register():
         signals.all_generators_finalized.connect(run_full_plugin)
         signals.all_generators_finalized.connect(run_seo_enhancer)
         signals.content_written.connect(run_html_enhancer)
-        print("------ SEO Plugin -------")
+        print("---------- Ave SEO! -----------")
         print("--- SEO Report : Done ---")
         print("--- SEO Enhancement : Done ---")
 
     elif SEO_REPORT:
         signals.all_generators_finalized.connect(run_seo_report)
-        print("------ SEO Plugin -------")
+        print("---------- Ave SEO! -----------")
         print("--- SEO Report : Done ---")
 
     elif SEO_ENHANCER:
         signals.all_generators_finalized.connect(run_seo_enhancer)
         signals.content_written.connect(run_html_enhancer)
-        print("------ SEO Plugin -------")
+        print("---------- Ave SEO! -----------")
         print("--- SEO Enhancement : Done ---")
