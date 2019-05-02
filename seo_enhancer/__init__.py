@@ -1,6 +1,7 @@
 """ Improve SEO technical for each article : HTML code and robots.txt file. """
 
 import json
+import os
 
 from bs4 import BeautifulSoup
 
@@ -37,10 +38,12 @@ class SEOEnhancer():
             'disallow': robots_file.get_disallow,
         }
 
-    def generate_robots(self, rules):
+    def generate_robots(self, rules, output_path):
         """ Create robots.txt file, with noindex and disallow rules for each article URL. """
 
-        with open('output/robots.txt', 'w') as robots_file:
+        robots_path = os.path.join(output_path, 'robots.txt')
+
+        with open(robots_path, 'w') as robots_file:
             robots_file.write('User-agent: *')
             for rule in rules:
                 if rule.get('noindex'):

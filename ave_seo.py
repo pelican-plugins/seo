@@ -1,5 +1,5 @@
 """
-Pelican SEO : a Pelican plugin to improve SEO in static files generator.
+Ave SEO! : a Pelican plugin to improve SEO in static files generator.
 Some actions are customizables in plugin settings.
 """
 
@@ -19,7 +19,7 @@ def run_full_plugin(generators):
     for generator in generators:
 
         if not generator.settings.get('SITEURL'):
-            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')
+            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
         site_name = generator.settings.get('SITENAME')
 
@@ -40,7 +40,10 @@ def run_full_plugin(generators):
                 robots_rules.append(article_metadata)
 
             seo_report.generate(site_name, articles_analysis)
-            seo_enhancer.generate_robots(robots_rules)
+            seo_enhancer.generate_robots(
+                rules=robots_rules,
+                output_path=generator.output_path,
+            )
 
         #elif isinstance(generator, PagesGenerator):
         #    for page in generator.pages:
@@ -52,7 +55,7 @@ def run_seo_report(generators):
     for generator in generators:
 
         if not generator.settings.get('SITEURL'):
-            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')
+            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
         site_name = generator.settings.get('SITENAME')
 
@@ -78,28 +81,37 @@ def run_seo_enhancer(generators):
             seo_enhancer = SEOEnhancer()
             robots_rules = []
 
-            # Launch enhancement for each articles. User can limit this number.
+            # Launch enhancement for each articles.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
                 article_metadata = seo_enhancer.populate_robots(article)
                 robots_rules.append(article_metadata)
 
-            seo_enhancer.generate_robots(robots_rules)
+            seo_enhancer.generate_robots(
+                rules=robots_rules,
+                output_path=generator.output_path,
+            )
 
 def run_html_enhancer(path, context):
     """ Run HTML enhancements """
 
     if not context.get('SITEURL'):
-        raise Exception('You must fill in SITEURL variable in pelicanconf.py to use SEO plugin.')
+        raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
     if context.get('article'):
         seo_enhancer = SEOEnhancer()
-        html_enhancements = seo_enhancer.launch_html_enhancer(context['article'], context['OUTPUT_PATH'], path)
+        html_enhancements = seo_enhancer.launch_html_enhancer(
+            article=context['article'],
+            output_path=context['OUTPUT_PATH'],
+            path=path,
+        )
         seo_enhancer.add_html_to_file(html_enhancements, path)
 
 
 def register():
     if SEO_REPORT and SEO_ENHANCER:
         signals.all_generators_finalized.connect(run_full_plugin)
+        signals.all_generators_finalized.connect(run_seo_enhancer)
+        signals.content_written.connect(run_html_enhancer)
         print("------ SEO Plugin -------")
         print("--- SEO Report : Done ---")
         print("--- SEO Enhancement : Done ---")
