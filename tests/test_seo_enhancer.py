@@ -31,8 +31,8 @@ class TestSEOEnhancer():
         with patch('ave_seo.seo_enhancer.open', mock_open()) as mocked_open:
             mocked_file_handle = mocked_open.return_value
 
-            fake_seo_enhancer.generate_robots(fake_robots_rules)
-            mocked_open.assert_called_once_with('output/robots.txt', 'w')
+            fake_seo_enhancer.generate_robots(rules=fake_robots_rules, output_path='fake_output')
+            mocked_open.assert_called_once_with('fake_output/robots.txt', 'w')
             mocked_file_handle.write.assert_called()
             # 4 : 1 fix write + 3 generated write
             assert len(mocked_file_handle.write.call_args_list) == 4
