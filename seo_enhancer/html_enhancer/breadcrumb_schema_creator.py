@@ -21,7 +21,7 @@ class BreadcrumbSchemaCreator():
         """
         Split the file path, get all elements after the output path.
         By default, output path is 'output/' but it can be changes in Pelican settings.
-        Build all paths, for example : 
+        Build all paths, for example :
         Path = 'test-dir/output/category/file.html'
         Split path = ['output', 'category', 'file.html']
         Position begins at 2, as number 1 is dedicated to the index page.
