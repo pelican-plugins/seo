@@ -21,7 +21,7 @@ class HTMLEnhancer():
             file_url=_file_url,
         )
 
-        self.schema_article = ArticleSchemaCreator(
+        self.article_schema = ArticleSchemaCreator(
             author=_author,
             title=_title,
             category=_category,
@@ -31,7 +31,7 @@ class HTMLEnhancer():
             sitename=_settings.get('SITENAME'),
         )
 
-        self.breadcrumb_creator = BreadcrumbSchemaCreator(
+        self.breadcrumb_schema = BreadcrumbSchemaCreator(
             output_path=output_path,
             path=path,
             sitename=_settings.get('SITENAME'),

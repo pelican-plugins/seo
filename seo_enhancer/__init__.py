@@ -21,8 +21,8 @@ class SEOEnhancer():
 
         html_enhancements = {
             'canonical_tag': html_enhancer.canonical_link.create_url(),
-            'article_schema': html_enhancer.schema_article.create_schema(),
-            'breadcrumb_schema': html_enhancer.breadcrumb_creator.create_schema(),
+            'article_schema': html_enhancer.article_schema.create_schema(),
+            'breadcrumb_schema': html_enhancer.breadcrumb_schema.create_schema(),
         }
 
         return html_enhancements
