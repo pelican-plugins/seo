@@ -3,8 +3,6 @@ Ave SEO! : a Pelican plugin to improve SEO in static files generator.
 Some actions are customizables in plugin settings.
 """
 
-import os
-
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
@@ -45,9 +43,21 @@ def run_full_plugin(generators):
                 output_path=generator.output_path,
             )
 
-        #elif isinstance(generator, PagesGenerator):
-        #    for page in generator.pages:
-        #        print(page)
+        # elif isinstance(generator, PagesGenerator):
+        #     for page in generator.pages:
+
+        #     for _, article in zip(range(ARTICLES_LIMIT), generator.pages):
+        #         analysis = seo_report.launch_analysis(article)
+        #         articles_analysis.append(analysis)
+
+        #         article_metadata = seo_enhancer.populate_robots(article)
+        #         robots_rules.append(article_metadata)
+
+        #     seo_report.generate(site_name, articles_analysis)
+        #     seo_enhancer.generate_robots(
+        #         rules=robots_rules,
+        #         output_path=generator.output_path,
+        #     )
 
 def run_seo_report(generators):
     """ Run SEO report plugin only if it's active in settings. """
