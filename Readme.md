@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/MaevaBrunelles/ave_seo.svg?branch=dev)](https://travis-ci.com/MaevaBrunelles/ave_seo)
 
-This plugin helps you to improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can technically do Ave SEO! for you, go directly to [Usage](#usage) part.
+This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do Ave SEO! for you, go directly to [Usage](#usage) section.
 
  
 | Author          | GitHub                            |
@@ -19,7 +19,7 @@ If :
 This plugin is for you !
 
 Ave SEO! comes with two complete features to help you :
-* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what is to improve and what is wrong. Usefull if you want to improve the referencement of your articles. 
+* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles. 
 * [SEO Enhancer](#seo-enhancer) : generation of robots indexation hints, HTML tag and structured data. Usefull if you want to control the appareance of your site in the search engine.
 
 ## Requirements
@@ -34,7 +34,7 @@ pip install bs4
 
 ## Installation
 
-Follow [Pelican demands](http://docs.getpelican.com/en/3.6.3/plugins.html#how-to-use-plugins) :
+Ave SEO! can be enabled on your site by following [Pelican's official plugin configuration management](http://docs.getpelican.com/en/3.6.3/plugins.html#how-to-use-plugins) :
 
 ```
 PLUGINS = ['ave_seo']
@@ -42,7 +42,7 @@ PLUGINS = ['ave_seo']
 
 ## Usage
 
-You can enable or disable in the plugin settings the two modules. Default is `True` for both.
+You can choose which feature to enable or disable in the plugin settings. Default is `True` for both.
 
 ```
 # settings.py
@@ -56,31 +56,32 @@ Ave SEO! runs when you [generate your site](https://docs.getpelican.com/en/stabl
 ---------- Ave SEO! ----------
 --- SEO Report : Done ---
 --- SEO Enhancement : Done ---
-Done: Processed x articles, x drafts, x pages, x hidden pages and x draft pages in 0.46 seconds.
+Done: Processed x articles, x drafts, x pages, x hidden pages and x draft pages in x.xx seconds.
 ```
 
 ### SEO report
 
-Ave SEO! analyzes all your articles and generate an HTML SEO report in your Pelican root project : `seo-report.html`
+Ave SEO! analyzes all your articles and pages, and generate an HTML SEO report in your Pelican root project : `seo-report.html`
 
 Example :
 
 ![SEO report example](docs/seo-report-example.png)
 
-You can set up a limit for article analysis in the plugin settings.py. By default, it's set up to 10 articles.
+You can set up a limit for article and page analysis in the plugin settings.py. By default, it's set up to 10 articles and 10 pages.
 
 ```
 ARTICLES_LIMIT = 10
+PAGES_LIMIT = 10
 ```
 
-The analysis works from the most recents articles to the olders according to the `date` metadata. 
-Analysis is focus on :
-* Title page `<title></title>`
-* Description page `<meta name="description" content="" />`
+The analysis works from the most recents articles or pages to the olders according to the `date` metadata. 
+Analysis is focused on :
+* Page title `<title></title>`
+* Page description `<meta name="description" content="" />`
 * Title content `<h1></h1>`
 * Internal link `<a href="SITEURL/..."></a>`
 
-Which are declared by article metadata and content :
+Which are declared by article and page metadata and content :
 
 ```markdown
 # article.md
@@ -91,15 +92,18 @@ Description: Description page
 [Internal link](https://example.com/about.html)
 ```
 
-Theses elements form the basis of page SEO optimizations. Have a look to the report, optimize your articles according to analysis, and restart the process to see if all elements are now in green. 
+Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green. 
 
 ### SEO Enhancer
 
-Ave SEO! generates for you HTML enhancements, structured data and create the robots file.
+Ave SEO! generates for you : 
+* HTML enhancements 
+* Structured data
+* Robots file
 
 #### Robots.txt file
 
-Indicate to search engines what pages they can have access to or not. By default, all pages are authorized to be explored by all the existing robots.
+Indicates to search engines which pages they are allowed to access to or not. By default, all pages are authorized to be explored by all the existing robots.
 
 ```
 User-agent: *
@@ -112,7 +116,7 @@ Disallow: True
 Noindex: True
 ```
 
-A `robots.txt` file is add at the website root, in the `OUTPUT_PATH` setting (Pelican's default is `output/`).
+A `robots.txt` file is added at the website root, in the `OUTPUT_PATH` setting (Pelican's default is `output/`).
 
 ```
 # robots.txt
@@ -124,18 +128,16 @@ Noindex: other-example.html
 
 #### Canonical URL tag
 
-Ave SEO! automatically add for each article the canonical URL tag in the `<head>` to avoid duplicate content.
+Ave SEO! automatically adds for each article the canonical URL tag in the `<head>` to avoid duplicate content.
 
 ```html
 <link rel="canonical" href="<SITEURL>/example.html" />
 ```
 
-This feature requires the `SITEURL` setting.
-
 #### Structured data
 
-Ave SEO! automatically adds for each article structured data in the `<head>` to improve the display of result snippet in search engines.
-Structured data are based on [Schema.org](https://schema.org/) vocabulary, with `JSON-LD` encoding. Note that schema generated by default are Schema.org compliant, but not automatically Google compliant. Additionnal metadata are required for it.
+Ave SEO! automatically adds structured data in the `<head>` to improve the display of result snippet in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
+Structured data are based on [Schema.org](https://schema.org/) vocabulary, with `JSON-LD` encoding. Note that schemas generated by default are Schema.org compliant, but not automatically Google compliant. Additionnal metadata are required for it.
 
 ##### Breadcrumb schema
 
@@ -168,7 +170,7 @@ Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList) :
 }
 ```
 
-Each element of the file path have his `ListItem`, even folder, so it's better to create a user friendly page for those (Pelican's default is the Apache "Index of" directory). 
+Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page). 
 
 ##### Article schema
 
@@ -197,7 +199,7 @@ Based on [Article schema](https://schema.org/Article) :
 }
 ```
 
-`:logo:` and `:image:` fields are not required by Schema.org but they are by Google to render this schema valid for it. 
+`:logo:` and `:image:` fields are not required by Schema.org but they are by Google. 
 
 To fill `:logo:`, add a parameter in the `pelicanconf.py` :
 
@@ -218,4 +220,4 @@ Image: https://www.example.com/article-image.jpg
 
 ## How to contribute ?
 
-If you encounter some issue or have some ideas to contribute, just open an issue, would be happy to discuss with you.
+If you encounter some issue or have some ideas to contribute, just open an issue, I would be happy to discuss it with you.
