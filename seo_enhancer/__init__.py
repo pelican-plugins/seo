@@ -1,4 +1,4 @@
-""" Improve SEO technical for each article : HTML code and robots.txt file. """
+""" Improve SEO technical for each article and page : HTML code and robots.txt file. """
 
 import json
 import os
@@ -9,21 +9,23 @@ from .html_enhancer import HTMLEnhancer
 from .robots_file_creator import RobotsFileCreator
 
 class SEOEnhancer():
-    """ Improve SEO technical for each article : HTML code and robots.txt file. """
+    """ Improve SEO technical for each article and page : HTML code and robots.txt file. """
 
-    def launch_html_enhancer(self, article, output_path, path):
+    def launch_html_enhancer(self, file, output_path, path):
         """
-        Call HTMLEnhancer for each article.
+        Call HTMLEnhancer for each article and page.
         Return a dict with all HTML enhancements.
         """
 
-        html_enhancer = HTMLEnhancer(article, output_path, path)
+        html_enhancer = HTMLEnhancer(file, output_path, path)
 
         html_enhancements = {
             'canonical_tag': html_enhancer.canonical_link.create_url(),
-            'article_schema': html_enhancer.article_schema.create_schema(),
             'breadcrumb_schema': html_enhancer.breadcrumb_schema.create_schema(),
         }
+
+        if not 'pages' in file.url:
+            html_enhancements['article_schema'] = html_enhancer.article_schema.create_schema()
 
         return html_enhancements
 
@@ -41,9 +43,12 @@ class SEOEnhancer():
     def generate_robots(self, rules, output_path):
         """ Create robots.txt file, with noindex and disallow rules for each article URL. """
 
+        if not os.path.isdir(output_path):
+            os.mkdir(output_path)
+
         robots_path = os.path.join(output_path, 'robots.txt')
 
-        with open(robots_path, 'w') as robots_file:
+        with open(robots_path, 'w+') as robots_file:
             robots_file.write('User-agent: *')
             for rule in rules:
                 if rule.get('noindex'):

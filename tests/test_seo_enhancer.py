@@ -32,7 +32,7 @@ class TestSEOEnhancer():
             mocked_file_handle = mocked_open.return_value
 
             fake_seo_enhancer.generate_robots(rules=fake_robots_rules, output_path='fake_output')
-            mocked_open.assert_called_once_with('fake_output/robots.txt', 'w')
+            mocked_open.assert_called_once_with('fake_output/robots.txt', 'w+')
             mocked_file_handle.write.assert_called()
             # 4 : 1 fix write + 3 generated write
             assert len(mocked_file_handle.write.call_args_list) == 4
@@ -45,7 +45,7 @@ class TestSEOEnhancer():
         """ Test if launch_html_enhancemer returns a dict with expected keys. """
 
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            article=fake_article,
+            file=fake_article,
             output_path='fake_output',
             path='fake_dir/fake_output/fake_file.html',
         )
@@ -59,7 +59,7 @@ class TestSEOEnhancer():
 
         path = "fake_dir/fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            article=fake_article,
+            file=fake_article,
             output_path='fake_output',
             path=path,
         )

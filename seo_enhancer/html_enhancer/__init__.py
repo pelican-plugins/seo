@@ -7,19 +7,14 @@ from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 class HTMLEnhancer():
     """ HTML Enhancer : get instances of HTML enhancements. """
 
-    def __init__(self, article, output_path, path):
-        _settings = getattr(article, 'settings', None)
-        _file_url = getattr(article, 'url', None)
-        _author = getattr(article, 'author', None)
-        _date = getattr(article, 'date', None)
-        _title = getattr(article, 'title', None)
-        _category = getattr(article, 'category', None)
-        _image = getattr(article, 'image', None)
-
-        self.canonical_link = CanonicalURLCreator(
-            site_url=_settings.get('SITEURL'),
-            file_url=_file_url,
-        )
+    def __init__(self, file, output_path, path):
+        _settings = getattr(file, 'settings', None)
+        _fileurl = getattr(file, 'url', None)
+        _author = getattr(file, 'author', None)
+        _date = getattr(file, 'date', None)
+        _title = getattr(file, 'title', None)
+        _category = getattr(file, 'category', None)
+        _image = getattr(file, 'image', None)
 
         self.article_schema = ArticleSchemaCreator(
             author=_author,
@@ -31,9 +26,14 @@ class HTMLEnhancer():
             sitename=_settings.get('SITENAME'),
         )
 
+        self.canonical_link = CanonicalURLCreator(
+            siteurl=_settings.get('SITEURL'),
+            fileurl=_fileurl,
+        )
+
         self.breadcrumb_schema = BreadcrumbSchemaCreator(
             output_path=output_path,
             path=path,
             sitename=_settings.get('SITENAME'),
-            siteurl=_settings.get('SITEURL')
+            siteurl=_settings.get('SITEURL'),
         )

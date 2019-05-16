@@ -1,18 +1,32 @@
 """
-Ave SEO! : a Pelican plugin to improve SEO in static files generator.
-Some actions are customizables in plugin settings.
+Ave SEO! is a Pelican plugin to helps you to improve your Pelican site SEO to reach
+the tops positions on search engines like Qwant or Google.
+===================================================================================
+
+It generates a SEO report and SEO enhancements.
+You can enable / disable the main features in the plugin settings.
+For the SEO report, you can limit the number of analysis in the plugin settings too.
+
+Author : Maëva Brunelles <https://github.com/MaevaBrunelles>
+License : 
 """
 
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
-from .settings import SEO_REPORT, SEO_ENHANCER, ARTICLES_LIMIT
+from .settings import SEO_REPORT, SEO_ENHANCER, ARTICLES_LIMIT, PAGES_LIMIT
 from .seo_report import SEOReport
 from .seo_enhancer import SEOEnhancer
 
 
-def run_full_plugin(generators):
+def run_seo_report_robots_file(generators):
     """ Run all plugin elements if it's active in settings. """
+
+    seo_report = SEOReport()
+    files_analysis = []
+
+    seo_enhancer = SEOEnhancer()
+    robots_rules = []
 
     for generator in generators:
 
@@ -20,48 +34,39 @@ def run_full_plugin(generators):
             raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
         site_name = generator.settings.get('SITENAME')
+        output_path = generator.output_path
 
         if isinstance(generator, ArticlesGenerator):
-
-            seo_report = SEOReport()
-            articles_analysis = []
-
-            seo_enhancer = SEOEnhancer()
-            robots_rules = []
-
-            # Launch analysis and enhancement for each articles. User can limit this number.
-            for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
-                analysis = seo_report.launch_analysis(article)
-                articles_analysis.append(analysis)
-
+            for index, article in enumerate(generator.articles, 1):
+                # Launch robots file creation for each article.
                 article_metadata = seo_enhancer.populate_robots(article)
                 robots_rules.append(article_metadata)
+                # Launch analysis for a limited article number. User can set the limit.
+                if index <= ARTICLES_LIMIT:
+                    analysis = seo_report.launch_analysis(article)
+                    files_analysis.append(analysis)
 
-            seo_report.generate(site_name, articles_analysis)
-            seo_enhancer.generate_robots(
-                rules=robots_rules,
-                output_path=generator.output_path,
-            )
+        if isinstance(generator, PagesGenerator):
+            for index, page in enumerate(generator.pages, 1):
+                page_metadata = seo_enhancer.populate_robots(page)
+                robots_rules.append(page_metadata)
 
-        # elif isinstance(generator, PagesGenerator):
-        #     for page in generator.pages:
+                if index <= PAGES_LIMIT:
+                    analysis = seo_report.launch_analysis(page)
+                    files_analysis.append(analysis)
 
-        #     for _, article in zip(range(ARTICLES_LIMIT), generator.pages):
-        #         analysis = seo_report.launch_analysis(article)
-        #         articles_analysis.append(analysis)
-
-        #         article_metadata = seo_enhancer.populate_robots(article)
-        #         robots_rules.append(article_metadata)
-
-        #     seo_report.generate(site_name, articles_analysis)
-        #     seo_enhancer.generate_robots(
-        #         rules=robots_rules,
-        #         output_path=generator.output_path,
-        #     )
+    seo_report.generate(site_name, files_analysis)
+    seo_enhancer.generate_robots(
+        rules=robots_rules,
+        output_path=output_path,
+    )
 
 def run_seo_report(generators):
     """ Run SEO report plugin only if it's active in settings. """
 
+    seo_report = SEOReport()
+    files_analysis = []
+
     for generator in generators:
 
         if not generator.settings.get('SITEURL'):
@@ -70,36 +75,43 @@ def run_seo_report(generators):
         site_name = generator.settings.get('SITENAME')
 
         if isinstance(generator, ArticlesGenerator):
-
-            seo_report = SEOReport()
-            articles_analysis = []
-
-            # Launch analysis for each articles. User can limit this number.
+            # Launch analysis for each article. User can limit this number.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(article)
-                articles_analysis.append(analysis)
+                files_analysis.append(analysis)
 
-            seo_report.generate(site_name, articles_analysis)
+        if isinstance(generator, PagesGenerator):
+            # Launch analysis each page. User can limit this number.
+            for _, page in zip(range(PAGES_LIMIT), generator.pages):
+                analysis = seo_report.launch_analysis(page)
+                files_analysis.append(analysis)
 
-def run_seo_enhancer(generators):
+    seo_report.generate(site_name, files_analysis)
+
+def run_robots_file(generators):
     """ Run SEO enhancement plugin only if it's active in settings. """
+
+    seo_enhancer = SEOEnhancer()
+    robots_rules = []
 
     for generator in generators:
 
+        output_path = generator.output_path
+
         if isinstance(generator, ArticlesGenerator):
-
-            seo_enhancer = SEOEnhancer()
-            robots_rules = []
-
-            # Launch enhancement for each articles.
-            for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
+            for article in generator.articles:
                 article_metadata = seo_enhancer.populate_robots(article)
                 robots_rules.append(article_metadata)
 
-            seo_enhancer.generate_robots(
-                rules=robots_rules,
-                output_path=generator.output_path,
-            )
+        if isinstance(generator, PagesGenerator):
+            for page in generator.pages:
+                page_metadata = seo_enhancer.populate_robots(page)
+                robots_rules.append(page_metadata)
+
+    seo_enhancer.generate_robots(
+        rules=robots_rules,
+        output_path=output_path,
+    )
 
 def run_html_enhancer(path, context):
     """ Run HTML enhancements """
@@ -110,8 +122,17 @@ def run_html_enhancer(path, context):
     if context.get('article'):
         seo_enhancer = SEOEnhancer()
         html_enhancements = seo_enhancer.launch_html_enhancer(
-            article=context['article'],
-            output_path=context['OUTPUT_PATH'],
+            file=context['article'],
+            output_path=context.get('OUTPUT_PATH'),
+            path=path,
+        )
+        seo_enhancer.add_html_to_file(html_enhancements, path)
+
+    elif context.get('page'):
+        seo_enhancer = SEOEnhancer()
+        html_enhancements = seo_enhancer.launch_html_enhancer(
+            file=context['page'],
+            output_path=context.get('OUTPUT_PATH'),
             path=path,
         )
         seo_enhancer.add_html_to_file(html_enhancements, path)
@@ -119,8 +140,7 @@ def run_html_enhancer(path, context):
 
 def register():
     if SEO_REPORT and SEO_ENHANCER:
-        signals.all_generators_finalized.connect(run_full_plugin)
-        signals.all_generators_finalized.connect(run_seo_enhancer)
+        signals.all_generators_finalized.connect(run_seo_report_robots_file)
         signals.content_written.connect(run_html_enhancer)
         print("---------- Ave SEO! -----------")
         print("--- SEO Report : Done ---")
@@ -132,7 +152,7 @@ def register():
         print("--- SEO Report : Done ---")
 
     elif SEO_ENHANCER:
-        signals.all_generators_finalized.connect(run_seo_enhancer)
+        signals.all_generators_finalized.connect(run_robots_file)
         signals.content_written.connect(run_html_enhancer)
         print("---------- Ave SEO! -----------")
         print("--- SEO Enhancement : Done ---")

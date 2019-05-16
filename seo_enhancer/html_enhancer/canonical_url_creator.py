@@ -5,12 +5,12 @@ import os
 class CanonicalURLCreator():
     """ Canonical URL creator. """
 
-    def __init__(self, file_url, site_url):
-        self._file_url = file_url
-        self._site_url = site_url
+    def __init__(self, fileurl, siteurl):
+        self._fileurl = fileurl
+        self._siteurl = siteurl
 
     def create_url(self):
         """ Join site URL and file URL to create canonical link. """
 
-        canonical_url = os.path.join(self._site_url, self._file_url)
+        canonical_url = os.path.join(self._siteurl, self._fileurl)
         return canonical_url
