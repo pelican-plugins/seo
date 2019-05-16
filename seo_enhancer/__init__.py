@@ -82,10 +82,9 @@ class SEOEnhancer():
                 schema_script = soup.findAll('script')[position]
                 # Json dumps permit to keep dict double quotes instead of simples
                 # Google valids schema only with double quotes
-                schema_script.append(json.dumps(enhancements[schema]))
+                schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
 
                 position += 1
 
         with open(path, 'w') as html_file:
             html_file.write(soup.prettify())
-        
