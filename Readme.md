@@ -46,8 +46,8 @@ You can choose which feature to enable or disable in the plugin settings. Defaul
 
 ```
 # settings.py
-SEO_REPORT: True # To enable this feature
-SEO_ENHANCER: False # To disable this feature
+SEO_REPORT = True # To enable this feature
+SEO_ENHANCER = False # To disable this feature
 ```
 
 Ave SEO! runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site) :

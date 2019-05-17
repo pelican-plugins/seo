@@ -1,5 +1,5 @@
 """
-Ave SEO! is a Pelican plugin to helps you to improve your Pelican site SEO to reach
+Ave SEO! is a Pelican plugin to helps you improve your Pelican site SEO to reach
 the tops positions on search engines like Qwant or Google.
 ===================================================================================
 
