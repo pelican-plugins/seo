@@ -19,6 +19,15 @@ from .seo_report import SEOReport
 from .seo_enhancer import SEOEnhancer
 
 
+def plugin_initializer(settings):
+    """ Raises if SITEURL parameter is not set in Pelican settings """
+
+    if not settings.settings.get('SITEURL'):
+        raise Exception("You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.")
+
+    print("Ave SEO! plugin initialized")
+
+
 def run_seo_report_robots_file(generators):
     """ Run all plugin elements if it's active in settings. """
 
@@ -29,9 +38,6 @@ def run_seo_report_robots_file(generators):
     robots_rules = []
 
     for generator in generators:
-
-        if not generator.settings.get('SITEURL'):
-            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
         site_name = generator.settings.get('SITENAME')
         output_path = generator.output_path
@@ -64,6 +70,7 @@ def run_seo_report_robots_file(generators):
         output_path=output_path,
     )
 
+
 def run_seo_report(generators):
     """ Run SEO report plugin only if it's active in settings. """
 
@@ -71,9 +78,6 @@ def run_seo_report(generators):
     files_analysis = []
 
     for generator in generators:
-
-        if not generator.settings.get('SITEURL'):
-            raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
         site_name = generator.settings.get('SITENAME')
 
@@ -93,6 +97,7 @@ def run_seo_report(generators):
         site_name=site_name,
         articles_analysis=files_analysis
     )
+
 
 def run_robots_file(generators):
     """ Run SEO enhancement plugin only if it's active in settings. """
@@ -119,11 +124,9 @@ def run_robots_file(generators):
         output_path=output_path,
     )
 
+
 def run_html_enhancer(path, context):
     """ Run HTML enhancements """
-
-    if not context.get('SITEURL'):
-        raise Exception('You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.')
 
     if context.get('article'):
         seo_enhancer = SEOEnhancer()
@@ -151,7 +154,8 @@ def run_html_enhancer(path, context):
 
 
 def register():
-    print("Ave SEO! plugin initialized")
+
+    signals.initialized.connect(plugin_initializer)
 
     if SEO_REPORT and SEO_ENHANCER:
         signals.all_generators_finalized.connect(run_seo_report_robots_file)
