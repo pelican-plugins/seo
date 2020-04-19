@@ -33,61 +33,8 @@ def plugin_initializer(settings):
     logger.info("Ave SEO! plugin initialized")
 
 
-def run_seo_report_robots_file(generators):
-    """ Run all plugin elements if it's active in settings. """
-
-    seo_report = SEOReport()
-    files_analysis = []
-
-    seo_enhancer = SEOEnhancer()
-    robots_rules = []
-
-    site_name = None
-    output_path = None
-
-    for generator in generators:
-
-        if isinstance(generator, ArticlesGenerator):
-            for index, article in enumerate(generator.articles, 1):
-                # Launch robots file creation for each article.
-                article_metadata = seo_enhancer.populate_robots(article=article)
-                robots_rules.append(article_metadata)
-                # Launch analysis for a limited article number. User can set the limit.
-                if index <= ARTICLES_LIMIT:
-                    analysis = seo_report.launch_analysis(article=article)
-                    files_analysis.append(analysis)
-            
-            if not site_name:
-                site_name = generator.settings.get('SITENAME')
-            if not output_path:
-                output_path = generator.output_path
-
-        if isinstance(generator, PagesGenerator):
-            for index, page in enumerate(generator.pages, 1):
-                page_metadata = seo_enhancer.populate_robots(article=page)
-                robots_rules.append(page_metadata)
-
-                if index <= PAGES_LIMIT:
-                    analysis = seo_report.launch_analysis(article=page)
-                    files_analysis.append(analysis)
-
-            if not site_name:
-                site_name = generator.settings.get('SITENAME')
-            if not output_path:
-                output_path = generator.output_path 
-
-    seo_report.generate(
-        site_name=site_name,
-        articles_analysis=files_analysis
-    )
-    seo_enhancer.generate_robots(
-        rules=robots_rules,
-        output_path=output_path,
-    )
-
-
 def run_seo_report(generators):
-    """ Run SEO report plugin only if it's active in settings. """
+    """ Run SEO report creation if SEO_REPORT is enabled in settings. """
 
     seo_report = SEOReport()
     files_analysis = []
@@ -121,7 +68,7 @@ def run_seo_report(generators):
 
 
 def run_robots_file(generators):
-    """ Run SEO enhancement plugin only if it's active in settings. """
+    """ Run robots.txt file creation if SEO_ENHANCER is enabled in settings. """
 
     seo_enhancer = SEOEnhancer()
     robots_rules = []
@@ -147,7 +94,7 @@ def run_robots_file(generators):
 
 
 def run_html_enhancer(path, context):
-    """ Run HTML enhancements """
+    """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
     if context.get('article'):
         seo_enhancer = SEOEnhancer()
@@ -179,7 +126,8 @@ def register():
     signals.initialized.connect(plugin_initializer)
 
     if SEO_REPORT and SEO_ENHANCER:
-        signals.all_generators_finalized.connect(run_seo_report_robots_file)
+        signals.all_generators_finalized.connect(run_seo_report)
+        signals.all_generators_finalized.connect(run_robots_file)
         signals.content_written.connect(run_html_enhancer)
 
     elif SEO_REPORT:
