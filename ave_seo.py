@@ -11,6 +11,8 @@ Author : Maëva Brunelles <https://github.com/MaevaBrunelles>
 License : GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 """
 
+import logging
+
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
@@ -19,13 +21,16 @@ from .seo_report import SEOReport
 from .seo_enhancer import SEOEnhancer
 
 
+logger = logging.getLogger(__name__)
+
+
 def plugin_initializer(settings):
     """ Raises if SITEURL parameter is not set in Pelican settings """
 
     if not settings.settings.get('SITEURL'):
         raise Exception("You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.")
 
-    print("Ave SEO! plugin initialized")
+    logger.info("Ave SEO! plugin initialized")
 
 
 def run_seo_report_robots_file(generators):

@@ -1,12 +1,17 @@
 """ Improve SEO technical for each article and page : HTML code and robots.txt file. """
 
 import json
+import logging
 import os
 
 from bs4 import BeautifulSoup
 
 from .html_enhancer import HTMLEnhancer
 from .robots_file_creator import RobotsFileCreator
+
+
+logger = logging.getLogger(__name__)
+
 
 class SEOEnhancer():
     """ Improve SEO technical for each article and page : HTML code and robots.txt file. """
@@ -56,7 +61,7 @@ class SEOEnhancer():
                 if rule.get('disallow'):
                     robots_file.write('\n' + 'Disallow: ' + rule.get('article_url'))
         
-        print(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
+        logger.info(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
 
     def add_html_to_file(self, enhancements, path):
         """ Open HTML file, add HTML enhancements with bs4 and create the new HTML files. """
@@ -91,4 +96,4 @@ class SEOEnhancer():
         with open(path, 'w') as html_file:
             html_file.write(soup.prettify())
 
-        print(f"Ave SEO! plugin - SEO Enhancement: Done for {path}")
+        logger.info(f"Ave SEO! plugin - SEO Enhancement: Done for {path}")

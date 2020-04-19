@@ -2,12 +2,16 @@
 Generate a SEO report by calling SEO analyzers for each content.
 """
 
-import os
 import datetime
+import logging
+import os
 
 from jinja2 import Environment, FileSystemLoader
 
 from .seo_analyzer import SEOAnalyzer
+
+
+logger = logging.getLogger(__name__)
 
 
 class SEOReport():
@@ -218,4 +222,4 @@ class SEOReport():
         with open("seo_report.html", 'w') as report:
             report.write(output)
         
-        print("Ave SEO! plugin - SEO Report: seo_report.html file created")
+        logger.info("Ave SEO! plugin - SEO Report: seo_report.html file created")

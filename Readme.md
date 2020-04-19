@@ -50,13 +50,15 @@ SEO_REPORT = True # To enable this feature
 SEO_ENHANCER = False # To disable this feature
 ```
 
-Ave SEO! runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site) :
+Ave SEO! runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see Ave SEO! logs, you should use `--verbose` Pelican argument:
 ```
-> pelican content
----------- Ave SEO! ----------
---- SEO Report : Done ---
---- SEO Enhancement : Done ---
-Done: Processed x articles, x drafts, x pages, x hidden pages and x draft pages in x.xx seconds.
+$ pelican content --verbose
+-> Ave SEO! plugin initialized
+-> Ave SEO! plugin - SEO Report: seo_report.html file created
+-> Ave SEO! plugin - SEO Enhancement: robots.txt file created
+-> Writing /output/my-first-review.html
+-> Ave SEO! plugin - SEO Enhancement: Done for /output/my-first-review.html
+Done: Processed 1 articles, 0 drafts, 0 pages, 0 hidden pages and 0 draft pages in 0.17 seconds.
 ```
 
 ### SEO report
