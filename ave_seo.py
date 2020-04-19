@@ -37,10 +37,10 @@ def run_seo_report_robots_file(generators):
     seo_enhancer = SEOEnhancer()
     robots_rules = []
 
-    for generator in generators:
+    site_name = None
+    output_path = None
 
-        site_name = generator.settings.get('SITENAME')
-        output_path = generator.output_path
+    for generator in generators:
 
         if isinstance(generator, ArticlesGenerator):
             for index, article in enumerate(generator.articles, 1):
@@ -51,6 +51,11 @@ def run_seo_report_robots_file(generators):
                 if index <= ARTICLES_LIMIT:
                     analysis = seo_report.launch_analysis(article=article)
                     files_analysis.append(analysis)
+            
+            if not site_name:
+                site_name = generator.settings.get('SITENAME')
+            if not output_path:
+                output_path = generator.output_path
 
         if isinstance(generator, PagesGenerator):
             for index, page in enumerate(generator.pages, 1):
@@ -60,6 +65,11 @@ def run_seo_report_robots_file(generators):
                 if index <= PAGES_LIMIT:
                     analysis = seo_report.launch_analysis(article=page)
                     files_analysis.append(analysis)
+
+            if not site_name:
+                site_name = generator.settings.get('SITENAME')
+            if not output_path:
+                output_path = generator.output_path 
 
     seo_report.generate(
         site_name=site_name,
@@ -77,21 +87,27 @@ def run_seo_report(generators):
     seo_report = SEOReport()
     files_analysis = []
 
-    for generator in generators:
+    site_name = None
 
-        site_name = generator.settings.get('SITENAME')
+    for generator in generators:
 
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(article=article)
                 files_analysis.append(analysis)
+            
+            if not site_name:
+                site_name = generator.settings.get('SITENAME')
 
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
             for _, page in zip(range(PAGES_LIMIT), generator.pages):
                 analysis = seo_report.launch_analysis(article=page)
                 files_analysis.append(analysis)
+            
+            if not site_name:
+                site_name = generator.settings.get('SITENAME')
 
     seo_report.generate(
         site_name=site_name,
