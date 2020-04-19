@@ -55,6 +55,8 @@ class SEOEnhancer():
                     robots_file.write('\n' + 'Noindex: ' + rule.get('article_url'))
                 if rule.get('disallow'):
                     robots_file.write('\n' + 'Disallow: ' + rule.get('article_url'))
+        
+        print(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
 
     def add_html_to_file(self, enhancements, path):
         """ Open HTML file, add HTML enhancements with bs4 and create the new HTML files. """
@@ -88,3 +90,5 @@ class SEOEnhancer():
 
         with open(path, 'w') as html_file:
             html_file.write(soup.prettify())
+
+        print(f"Ave SEO! plugin - SEO Enhancement: Done for {path}")

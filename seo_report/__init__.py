@@ -217,3 +217,5 @@ class SEOReport():
         # Create HTML file
         with open("seo_report.html", 'w') as report:
             report.write(output)
+        
+        print("Ave SEO! plugin - SEO Report: Done")
