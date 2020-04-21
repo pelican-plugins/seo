@@ -33,9 +33,14 @@ class SEOReport():
         """
 
         seo_analysis = SEOAnalyzer(document)
+
+        date = None
+        if hasattr(document, "date"):
+            date = self._convert_date(document.date)
+
         document_analysis = {
             "url": document.url,
-            "date": self._convert_date(document.date),
+            "date": date,
             "seo_analysis": {
                 "page_title_analysis": seo_analysis.page_title_analysis,
                 "page_description_analysis": seo_analysis.page_description_analysis,
@@ -206,8 +211,9 @@ class SEOReport():
 
             seo_reports.append(documents_reports)
 
-        # Sort documents by publication date, from recent to oldest
-        seo_reports = sorted(seo_reports, key=lambda k: k['date'], reverse=True)
+        # Sort documents by publication date, from recent to oldest.
+        # Document whithout a date are sorted at the end of the report.
+        seo_reports = sorted(seo_reports, key=lambda k: (k['date'] is not None, k['date']), reverse=True)
 
         # Get Jinja HTML template
         plugin_path = os.path.dirname(os.path.realpath(__file__))

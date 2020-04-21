@@ -64,7 +64,7 @@ def run_seo_report(generators):
 
     seo_report.generate(
         site_name=site_name,
-        documents_analysis=files_analysis
+        documents_analysis=documents_analysis
     )
 
 

@@ -11,15 +11,17 @@
 
         <section>
 
-            {% for articles in seo_reports %}
+            {% for documents in seo_reports %}
             <article>
                 
                 <div class="article-header">
-                    <h2>{{ articles.url }}</h2>
-                    <span>{{ articles.date }}</span>
+                    <h2>{{ documents.url }}</h2>
+                    {% if documents.date %}
+                    <span>{{ documents.date }}</span>
+                    {% endif %}
                 </div>
 
-                {% for report in articles.seo_reports %}
+                {% for report in documents.seo_reports %}
 
                     <h3>{{ report.title }}</h3>
 
@@ -61,7 +63,7 @@
         </section>
 
         <footer>
-            <p>Powered by <a href="https://github.com/MaevaBrunelles/ave-seo">Ave SEO!</a>, a Pelican plugin, with much salt.</p>
+            <p>Powered by <a href="https://github.com/MaevaBrunelles/ave_seo">Ave SEO!</a>, a Pelican plugin, with much salt.</p>
         </footer>
 
     </body>
