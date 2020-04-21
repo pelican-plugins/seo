@@ -34,19 +34,22 @@ class SEOEnhancer():
 
         return html_enhancements
 
-    def populate_robots(self, article):
-        """ Get all robots rules in article.metadata. Return a dict with rules per url. """
+    def populate_robots(self, document):
+        """
+        Get all robots rules in document.metadata.
+        Return a dict with rules per url.
+        """
 
-        robots_file = RobotsFileCreator(article.metadata)
+        robots_file = RobotsFileCreator(document.metadata)
 
         return {
-            'article_url': article.url,
+            'document_url': document.url,
             'noindex': robots_file.get_noindex,
             'disallow': robots_file.get_disallow,
         }
 
     def generate_robots(self, rules, output_path):
-        """ Create robots.txt file, with noindex and disallow rules for each article URL. """
+        """ Create robots.txt file, with noindex and disallow rules for each document URL. """
 
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
@@ -57,9 +60,9 @@ class SEOEnhancer():
             robots_file.write('User-agent: *')
             for rule in rules:
                 if rule.get('noindex'):
-                    robots_file.write('\n' + 'Noindex: ' + rule.get('article_url'))
+                    robots_file.write('\n' + 'Noindex: ' + rule.get('document_url'))
                 if rule.get('disallow'):
-                    robots_file.write('\n' + 'Disallow: ' + rule.get('article_url'))
+                    robots_file.write('\n' + 'Disallow: ' + rule.get('document_url'))
         
         logger.info(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
 

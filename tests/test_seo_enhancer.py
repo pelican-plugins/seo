@@ -15,13 +15,13 @@ class TestSEOEnhancer():
 
     def test_populate_robots_return_dict_with_rules_for_an_url(self, fake_seo_enhancer, fake_article):
         """
-        Test that populate_robots return a dict with article_url,
+        Test that populate_robots return a dict with document_url,
         noindex and disallow rules.
         """
 
         fake_robots_rules = fake_seo_enhancer.populate_robots(fake_article)
 
-        assert fake_robots_rules['article_url']
+        assert fake_robots_rules['document_url']
         assert fake_robots_rules['noindex']
         assert fake_robots_rules['disallow']
 

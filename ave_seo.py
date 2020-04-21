@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Ave SEO! is a Pelican plugin to helps you improve your Pelican site SEO to reach
 the tops positions on search engines like Qwant, DuckDuckGo or Google.
@@ -37,7 +38,7 @@ def run_seo_report(generators):
     """ Run SEO report creation if SEO_REPORT is enabled in settings. """
 
     seo_report = SEOReport()
-    files_analysis = []
+    documents_analysis = []
 
     site_name = None
 
@@ -46,8 +47,8 @@ def run_seo_report(generators):
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
-                analysis = seo_report.launch_analysis(article=article)
-                files_analysis.append(analysis)
+                analysis = seo_report.launch_analysis(document=article)
+                documents_analysis.append(analysis)
             
             if not site_name:
                 site_name = generator.settings.get('SITENAME')
@@ -55,15 +56,15 @@ def run_seo_report(generators):
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
             for _, page in zip(range(PAGES_LIMIT), generator.pages):
-                analysis = seo_report.launch_analysis(article=page)
-                files_analysis.append(analysis)
+                analysis = seo_report.launch_analysis(document=page)
+                documents_analysis.append(analysis)
             
             if not site_name:
                 site_name = generator.settings.get('SITENAME')
 
     seo_report.generate(
         site_name=site_name,
-        articles_analysis=files_analysis
+        documents_analysis=files_analysis
     )
 
 
@@ -79,12 +80,12 @@ def run_robots_file(generators):
 
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
-                article_metadata = seo_enhancer.populate_robots(article=article)
+                article_metadata = seo_enhancer.populate_robots(document=article)
                 robots_rules.append(article_metadata)
 
         if isinstance(generator, PagesGenerator):
             for page in generator.pages:
-                page_metadata = seo_enhancer.populate_robots(article=page)
+                page_metadata = seo_enhancer.populate_robots(document=page)
                 robots_rules.append(page_metadata)
 
     seo_enhancer.generate_robots(
