@@ -1,10 +1,6 @@
 """ Unit tests for Page Title Analyzer. """
 
 from ave_seo.seo_report.seo_analyzer import PageTitleAnalyzer
-from .data_tests import (
-    fake_article,
-    fake_article_missing_elements,
-)
 
 
 class TestPageTitleAnalyzer():

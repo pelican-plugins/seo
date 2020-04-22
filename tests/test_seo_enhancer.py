@@ -1,19 +1,13 @@
 """ Units tests for SEO Enhancer. """
 
 from unittest.mock import mock_open, patch
-from .data_tests import (
-    fake_article,
-    fake_article_missing_elements,
-    fake_article_multiple_elements,
-    fake_seo_enhancer,
-    fake_robots_rules,
-)
 
 
 class TestSEOEnhancer():
     """ Units tests for SEOEnhancer. """
 
-    def test_populate_robots_return_dict_with_rules_for_an_url(self, fake_seo_enhancer, fake_article):
+    def test_populate_robots_return_dict_with_rules_for_an_url(
+            self, fake_seo_enhancer, fake_article):
         """
         Test that populate_robots return a dict with document_url,
         noindex and disallow rules.
@@ -31,7 +25,10 @@ class TestSEOEnhancer():
         with patch('ave_seo.seo_enhancer.open', mock_open()) as mocked_open:
             mocked_file_handle = mocked_open.return_value
 
-            fake_seo_enhancer.generate_robots(rules=fake_robots_rules, output_path='fake_output')
+            fake_seo_enhancer.generate_robots(
+                rules=fake_robots_rules,
+                output_path='fake_output'
+            )
             mocked_open.assert_called_once_with('fake_output/robots.txt', 'w+')
             mocked_file_handle.write.assert_called()
             # 4 : 1 fix write + 3 generated write
@@ -55,7 +52,10 @@ class TestSEOEnhancer():
         assert fake_html_enhancements['breadcrumb_schema']
 
     def test_add_html_enhancements_to_file(self, fake_article, fake_seo_enhancer):
-        """ Test if add_html_to_file add SEO enhancements to HTML files by mocking open(). """
+        """
+        Test if add_html_to_file add SEO enhancements
+        to HTML files by mocking open().
+        """
 
         path = "fake_dir/fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
@@ -64,16 +64,25 @@ class TestSEOEnhancer():
             path=path,
         )
 
-        with patch('ave_seo.seo_enhancer.open', mock_open(read_data=fake_article.content)) as mocked_open:
+        with patch(
+            'ave_seo.seo_enhancer.open',
+            mock_open(read_data=fake_article.content)
+        ) as mocked_open:
             mocked_file_handle = mocked_open.return_value
 
-            fake_seo_enhancer.add_html_to_file(fake_html_enhancements, path)
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements,
+                path=path
+            )
             assert len(mocked_open.call_args_list) == 2
             mocked_file_handle.read.assert_called_once()
             mocked_file_handle.write.assert_called_once()
 
             write_args, _ = mocked_file_handle.write.call_args_list[0]
             fake_html_content = write_args[0]
-            assert '<link href="fakesite.com/fake-title.html" rel="canonical"/>' in fake_html_content
-            assert '{"@context": "https://schema.org", "@type": "Article"' in fake_html_content
-            assert '{"@context": "https://schema.org", "@type": "BreadcrumbList"' in fake_html_content
+            assert '<link href="fakesite.com/fake-title.html" rel="canonical"/>' \
+                in fake_html_content
+            assert '{"@context": "https://schema.org", "@type": "Article"' \
+                in fake_html_content
+            assert '{"@context": "https://schema.org", "@type": "BreadcrumbList"' \
+                in fake_html_content

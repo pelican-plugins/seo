@@ -9,7 +9,8 @@ from ave_seo.seo_enhancer import SEOEnhancer
 class FakeArticle():
     """ Mock Pelican Article object. """
 
-    def __init__(self, settings, metadata, title, description, url, date, content, author, category):
+    def __init__(self, settings, metadata, title,
+                 description, url, date, content, author, category):
         self.settings = settings
         self.metadata = metadata
         self.title = title
@@ -78,7 +79,18 @@ def fake_article():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category
+    )
+
 
 @pytest.fixture()
 def fake_article_missing_elements():
@@ -107,7 +119,18 @@ def fake_article_missing_elements():
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category
+    )
+
 
 @pytest.fixture()
 def fake_article_multiple_elements():
@@ -136,11 +159,22 @@ def fake_article_multiple_elements():
                         <h1>Multiple content title</h1>
                         <a href='https://www.fakesite.com'>Fake internal link</a>
                         <a href='https://www.test.com'>Fake external link</a>
-                        <a href='www.fakesite.com/test/'>Fake internal link with path</a>
+                        <a href='www.fakesite.com/test/'>Fake internal path link</a>
                     </body>
                 </html>"""
 
-    return FakeArticle(settings, metadata, title, description, url, date, content, author, category)
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category
+    )
+
 
 @pytest.fixture()
 def fake_seo_report():
@@ -148,30 +182,48 @@ def fake_seo_report():
 
     return SEOReport()
 
+
 @pytest.fixture()
-def fake_robots_rules(fake_seo_enhancer, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
+def fake_robots_rules(fake_seo_enhancer, fake_article,
+                      fake_article_multiple_elements,
+                      fake_article_missing_elements):
     """ Create a fake robots rules. """
 
     robots_rules = []
 
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article))
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_missing_elements))
-    robots_rules.append(fake_seo_enhancer.populate_robots(fake_article_multiple_elements))
+    robots_rules.append(
+        fake_seo_enhancer.populate_robots(fake_article)
+    )
+    robots_rules.append(
+        fake_seo_enhancer.populate_robots(fake_article_missing_elements)
+    )
+    robots_rules.append(
+        fake_seo_enhancer.populate_robots(fake_article_multiple_elements)
+    )
 
     return robots_rules
 
 
 @pytest.fixture()
-def fake_articles_analysis(fake_seo_report, fake_article, fake_article_multiple_elements, fake_article_missing_elements):
+def fake_articles_analysis(fake_seo_report, fake_article,
+                           fake_article_multiple_elements,
+                           fake_article_missing_elements):
     """ Create a fake articles analysis. """
 
     articles_analysis = []
 
-    articles_analysis.append(fake_seo_report.launch_analysis(fake_article))
-    articles_analysis.append(fake_seo_report.launch_analysis(fake_article_missing_elements))
-    articles_analysis.append(fake_seo_report.launch_analysis(fake_article_multiple_elements))
+    articles_analysis.append(
+        fake_seo_report.launch_analysis(fake_article)
+    )
+    articles_analysis.append(
+        fake_seo_report.launch_analysis(fake_article_missing_elements)
+    )
+    articles_analysis.append(
+        fake_seo_report.launch_analysis(fake_article_multiple_elements)
+    )
 
     return articles_analysis
+
 
 @pytest.fixture()
 def fake_seo_enhancer():

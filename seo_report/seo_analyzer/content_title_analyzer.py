@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup
 
+
 class ContentTitleAnalyzer():
     """ Analyze the content title. """
 

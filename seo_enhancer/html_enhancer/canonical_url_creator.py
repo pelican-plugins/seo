@@ -2,6 +2,7 @@
 
 import os
 
+
 class CanonicalURLCreator():
     """ Canonical URL creator. """
 

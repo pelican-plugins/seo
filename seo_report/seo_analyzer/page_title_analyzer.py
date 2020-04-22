@@ -1,5 +1,6 @@
 """ Analyze the page title. """
 
+
 class PageTitleAnalyzer():
     """ Analyze the page title. """
 

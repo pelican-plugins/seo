@@ -1,10 +1,6 @@
 """ Units tests for Article Schema Creator. """
 
 from ave_seo.seo_enhancer.html_enhancer import ArticleSchemaCreator
-from .data_tests import (
-    fake_article,
-    fake_article_missing_elements,
-)
 
 
 class TestArticleSchemaCreator():
@@ -34,7 +30,8 @@ class TestArticleSchemaCreator():
         assert fake_article_schema['publisher']['@type'] == 'Organization'
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
         assert fake_article_schema['publisher']['logo']['@type'] == 'ImageObject'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
 
         assert fake_article_schema['headline'] == 'Fake Title'
 
@@ -45,7 +42,10 @@ class TestArticleSchemaCreator():
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
     def test_create_schema_with_incomplete_article(self, fake_article_missing_elements):
-        """ Test that create_schema returns a schema.org, even if article is incomplete. """
+        """
+        Test that create_schema returns a schema.org,
+        even if article is incomplete.
+        """
 
         article = ArticleSchemaCreator(
             author=fake_article_missing_elements.author,
@@ -69,7 +69,8 @@ class TestArticleSchemaCreator():
         assert 'datePublished' not in fake_article_schema
         assert 'image' not in fake_article_schema
 
-    def test_create_schema_with_author_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_author_missing(self, fake_article,
+                                               fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with author missing. """
 
         article = ArticleSchemaCreator(
@@ -87,13 +88,15 @@ class TestArticleSchemaCreator():
         assert 'Fake author' not in fake_article_schema
 
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
         assert fake_article_schema['headline'] == 'Fake Title'
         assert fake_article_schema['about'] == 'Fake category'
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
-    def test_create_schema_with_title_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_title_missing(self, fake_article,
+                                              fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with title missing. """
 
         article = ArticleSchemaCreator(
@@ -112,12 +115,14 @@ class TestArticleSchemaCreator():
 
         assert fake_article_schema['author']['name'] == 'Fake author'
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
         assert fake_article_schema['about'] == 'Fake category'
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
-    def test_create_schema_with_category_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_category_missing(self, fake_article,
+                                                 fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with category missing. """
 
         article = ArticleSchemaCreator(
@@ -136,12 +141,14 @@ class TestArticleSchemaCreator():
 
         assert fake_article_schema['author']['name'] == 'Fake author'
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
         assert fake_article_schema['headline'] == 'Fake Title'
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
-    def test_create_schema_with_date_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_date_missing(self, fake_article,
+                                             fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with date missing. """
 
         article = ArticleSchemaCreator(
@@ -160,12 +167,14 @@ class TestArticleSchemaCreator():
 
         assert fake_article_schema['author']['name'] == 'Fake author'
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
         assert fake_article_schema['headline'] == 'Fake Title'
         assert fake_article_schema['about'] == 'Fake category'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
-    def test_create_schema_with_logo_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_logo_missing(self, fake_article,
+                                             fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with logo missing. """
 
         article = ArticleSchemaCreator(
@@ -189,7 +198,8 @@ class TestArticleSchemaCreator():
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
         assert fake_article_schema['image'] == 'https://www.fakesite.com/fake-image.jpg'
 
-    def test_create_schema_with_image_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_image_missing(self, fake_article,
+                                              fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with image missing. """
 
         article = ArticleSchemaCreator(
@@ -208,12 +218,14 @@ class TestArticleSchemaCreator():
 
         assert fake_article_schema['author']['name'] == 'Fake author'
         assert fake_article_schema['publisher']['name'] == 'Fake Site Name'
-        assert fake_article_schema['publisher']['logo']['url'] == 'https://www.fakesite.com/fake-logo.jpg'
+        assert fake_article_schema['publisher']['logo']['url'] == \
+            'https://www.fakesite.com/fake-logo.jpg'
         assert fake_article_schema['headline'] == 'Fake Title'
         assert fake_article_schema['about'] == 'Fake category'
         assert fake_article_schema['datePublished'] == '2019-04-03 23:49'
 
-    def test_create_schema_with_sitename_missing(self, fake_article, fake_article_missing_elements):
+    def test_create_schema_with_sitename_missing(self, fake_article,
+                                                 fake_article_missing_elements):
         """ Test that create_schema returns a schema.org, with sitename missing. """
 
         article = ArticleSchemaCreator(
