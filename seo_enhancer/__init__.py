@@ -14,7 +14,9 @@ logger = logging.getLogger(__name__)
 
 
 class SEOEnhancer():
-    """ Improve SEO technical for each article and page : HTML code and robots.txt file. """
+    """
+    Improve SEO technical for each article and page : HTML code and robots.txt file.
+    """
 
     def launch_html_enhancer(self, file, output_path, path):
         """
@@ -29,8 +31,9 @@ class SEOEnhancer():
             'breadcrumb_schema': html_enhancer.breadcrumb_schema.create_schema(),
         }
 
-        if not 'pages' in file.url:
-            html_enhancements['article_schema'] = html_enhancer.article_schema.create_schema()
+        if 'pages' not in file.url:
+            article_schema = html_enhancer.article_schema.create_schema()
+            html_enhancements['article_schema'] = article_schema
 
         return html_enhancements
 
@@ -49,7 +52,9 @@ class SEOEnhancer():
         }
 
     def generate_robots(self, rules, output_path):
-        """ Create robots.txt file, with noindex and disallow rules for each document URL. """
+        """
+        Create robots.txt file, with noindex and disallow rules for each document URL.
+        """
 
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
@@ -63,11 +68,13 @@ class SEOEnhancer():
                     robots_file.write('\n' + 'Noindex: ' + rule.get('document_url'))
                 if rule.get('disallow'):
                     robots_file.write('\n' + 'Disallow: ' + rule.get('document_url'))
-        
+
         logger.info(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
 
     def add_html_to_file(self, enhancements, path):
-        """ Open HTML file, add HTML enhancements with bs4 and create the new HTML files. """
+        """
+        Open HTML file, add HTML enhancements with bs4 and create the new HTML files.
+        """
 
         with open(path) as html_file:
             html_content = html_file.read()
@@ -92,7 +99,9 @@ class SEOEnhancer():
                 schema_script = soup.findAll('script')[position]
                 # Json dumps permit to keep dict double quotes instead of simples
                 # Google valids schema only with double quotes
-                schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
+                schema_script.append(
+                    json.dumps(enhancements[schema], ensure_ascii=False)
+                )
 
                 position += 1
 

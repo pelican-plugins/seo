@@ -4,6 +4,7 @@ from .canonical_url_creator import CanonicalURLCreator
 from .article_schema_creator import ArticleSchemaCreator
 from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 
+
 class HTMLEnhancer():
     """ HTML Enhancer : get instances of HTML enhancements. """
 

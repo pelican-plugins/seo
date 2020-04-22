@@ -1,16 +1,16 @@
 """ Units tests for Breadcrumb Schema Creator. """
 
 from ave_seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
-from .data_tests import (
-    fake_article,
-)
 
 
 class TestBreadcrumbSchemaCreator():
     """ Unit tests for BreadcrumbSchemaCreator. """
 
     def test_create_schema(self, fake_article):
-        """ Test that create_schema returns a valid schema.org (dict) for breadcrumb. """
+        """
+        Test that create_schema returns a valid
+        schema.org (dict) for breadcrumb.
+        """
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path='fake_output',
@@ -34,10 +34,14 @@ class TestBreadcrumbSchemaCreator():
         assert fake_breadcrumb_schema['itemListElement'][1]['@type'] == "ListItem"
         assert fake_breadcrumb_schema['itemListElement'][1]['position'] == 2
         assert fake_breadcrumb_schema['itemListElement'][1]['name'] == "Fake file"
-        assert fake_breadcrumb_schema['itemListElement'][1]['item'] == "fakesite.com/fake-file.html"
+        assert fake_breadcrumb_schema['itemListElement'][1]['item'] == \
+            "fakesite.com/fake-file.html"
 
     def test_create_schema_with_x_elements_in_path(self, fake_article):
-        """ Test that create_schema returns a valid schema.org (dict) for a path with x elements. """
+        """
+        Test that create_schema returns a valid
+        schema.org (dict) for a path with x elements.
+        """
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path='fake_output',
@@ -65,7 +69,10 @@ class TestBreadcrumbSchemaCreator():
         assert not fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
 
     def test_create_schema_with_no_sitename(self, fake_article):
-        """ Test that create_schema with siteurl but no sitename returns incomplete schema.org. """
+        """
+        Test that create_schema with siteurl but no
+        sitename returns incomplete schema.org.
+        """
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path='fake_output',
@@ -79,7 +86,10 @@ class TestBreadcrumbSchemaCreator():
         assert not fake_breadcrumb_schema['itemListElement'][0]['position'] == 1
 
     def test_create_schema_with_no_siteurl(self, fake_article):
-        """ Test that create_schema with sitename but no siteurl returns incomplete schema.org. """
+        """
+        Test that create_schema with sitename but no
+        siteurl returns incomplete schema.org.
+        """
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path='fake_output',

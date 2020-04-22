@@ -1,9 +1,11 @@
 """
-Article Schema.org creator : Improve articles display in Google if all fields are fill in.
+Article Schema.org creator : Improve articles display in Google
+if all fields are fill in.
 https://schema.org/Article : JSON-LD format.
 """
 
 import datetime
+
 
 class ArticleSchemaCreator():
     """
@@ -23,7 +25,13 @@ class ArticleSchemaCreator():
     def _convert_date(self, date):
         """ Get SafeDate Pelican object and return date in string. """
 
-        date_time = datetime.datetime(date.year, date.month, date.day, date.hour, date.minute)
+        date_time = datetime.datetime(
+            date.year,
+            date.month,
+            date.day,
+            date.hour,
+            date.minute
+        )
         return date_time.strftime("%Y-%m-%d %H:%M")
 
     def create_schema(self):

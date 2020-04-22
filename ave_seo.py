@@ -1,12 +1,13 @@
 # coding=utf-8
 """
-Ave SEO! is a Pelican plugin to helps you improve your Pelican site SEO to reach
-the tops positions on search engines like Qwant, DuckDuckGo or Google.
+Ave SEO! is a Pelican plugin to helps you improve your Pelican site SEO to
+reach the tops positions on search engines like Qwant, DuckDuckGo or Google.
 ===================================================================================
 
 It generates a SEO report and SEO enhancements.
 You can enable / disable the main features in the plugin settings.
-For the SEO report, you can limit the number of analysis in the plugin settings too.
+For the SEO report, you can limit the number of analysis
+in the plugin settings too.
 
 Author : Maëva Brunelles <https://github.com/MaevaBrunelles>
 License : GNU AFFERO GENERAL PUBLIC LICENSE Version 3
@@ -29,7 +30,8 @@ def plugin_initializer(settings):
     """ Raises if SITEURL parameter is not set in Pelican settings """
 
     if not settings.settings.get('SITEURL'):
-        raise Exception("You must fill in SITEURL variable in pelicanconf.py to use Ave SEO! plugin.")
+        raise Exception("You must fill in SITEURL variable in pelicanconf.py \
+            to use Ave SEO! plugin.")
 
     logger.info("Ave SEO! plugin initialized")
 
@@ -49,7 +51,7 @@ def run_seo_report(generators):
             for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(document=article)
                 documents_analysis.append(analysis)
-            
+
             if not site_name:
                 site_name = generator.settings.get('SITENAME')
 
@@ -58,7 +60,7 @@ def run_seo_report(generators):
             for _, page in zip(range(PAGES_LIMIT), generator.pages):
                 analysis = seo_report.launch_analysis(document=page)
                 documents_analysis.append(analysis)
-            
+
             if not site_name:
                 site_name = generator.settings.get('SITENAME')
 
@@ -69,7 +71,10 @@ def run_seo_report(generators):
 
 
 def run_robots_file(generators):
-    """ Run robots.txt file creation if SEO_ENHANCER is enabled in settings. """
+    """
+    Run robots.txt file creation if SEO_ENHANCER
+    is enabled in settings.
+    """
 
     seo_enhancer = SEOEnhancer()
     robots_rules = []
@@ -80,7 +85,9 @@ def run_robots_file(generators):
 
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
-                article_metadata = seo_enhancer.populate_robots(document=article)
+                article_metadata = seo_enhancer.populate_robots(
+                    document=article
+                )
                 robots_rules.append(article_metadata)
 
         if isinstance(generator, PagesGenerator):

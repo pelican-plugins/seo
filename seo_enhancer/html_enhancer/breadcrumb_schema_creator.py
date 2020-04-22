@@ -1,9 +1,11 @@
 """
-Breadcrumb Schema.org creator : Improve URLs display in Google thanks to breadcrumb set up.
+Breadcrumb Schema.org creator : Improve URLs display in Google
+thanks to breadcrumb set up.
 https://schema.org/BreadcrumbList : JSON-LD format.
 """
 
 import os
+
 
 class BreadcrumbSchemaCreator():
     """

@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup
 
+
 class InternalLinkAnalyzer():
     """ Analyze internal link of an article. """
 
@@ -11,7 +12,10 @@ class InternalLinkAnalyzer():
         self._siteurl = siteurl
 
     def has_internal_link(self):
-        """ Return True is there is a internal link. Need to have SITEURL parameter declared. """
+        """
+        Return True is there is a internal link.
+        Need to have SITEURL parameter declared.
+        """
 
         if not self._links:
             return False

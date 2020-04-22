@@ -1,5 +1,6 @@
 """ Analyze the page description. """
 
+
 class PageDescriptionAnalyzer():
     """ Analyze the page description. """
 

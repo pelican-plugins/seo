@@ -1,5 +1,6 @@
 """ Return elements to build the robots.txt file. """
 
+
 class RobotsFileCreator():
     """ Get robots rules from article metadata. Return them. """
 
