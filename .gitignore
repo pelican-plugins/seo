@@ -1,14 +1,2 @@
-Pipfile
-Pipfile.lock
-.vscode/*
-__pycache__/*
-seo_report/__pycache__/*
-seo_report/seo_analyzer/__pycache__/*
-.pytest_cache
-data_tests/__pycache__/*
-seo_enhancer/__pycache__/*
-seo_enhancer/html_enhancer/__pycache__/*
-tests/__pycache__/*
-.coverage
-htmlcov/
-*.pyc
+.vscode/
+*__pycache__

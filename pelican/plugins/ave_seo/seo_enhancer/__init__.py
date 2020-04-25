@@ -55,7 +55,6 @@ class SEOEnhancer():
         """
         Create robots.txt file, with noindex and disallow rules for each document URL.
         """
-
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
 

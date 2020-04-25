@@ -1,10 +1,9 @@
-# Ave SEO!, a Pelican plugin :fr:
+# Ave SEO!: A Plugin for Pelican :fr:
 
 [![Build Status](https://travis-ci.com/MaevaBrunelles/ave_seo.svg?branch=dev)](https://travis-ci.com/MaevaBrunelles/ave_seo)
 
 This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do Ave SEO! for you, go directly to [Usage](#usage) section.
 
- 
 | Author          | GitHub                            |
 | :-------------: | :-------------------------------: |
 | Maëva Brunelles | https://github.com/MaevaBrunelles |
@@ -18,9 +17,15 @@ If :
 
 This plugin is for you !
 
-Ave SEO! comes with two complete features to help you :
+Ave SEO comes with two complete features to help you :
 * [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles. 
 * [SEO Enhancer](#seo-enhancer) : generation of robots indexation hints, HTML tag and structured data. Usefull if you want to control the appareance of your site in the search engine.
+
+## Installation
+
+This plugin can be installed via:
+
+    pip install pelican-ave-seo
 
 ## Requirements
 
@@ -31,14 +36,6 @@ pip install bs4
 ```
 
 `SITEURL` Pelican parameter must be defined as features are based on it.
-
-## Installation
-
-Ave SEO! can be enabled on your site by following [Pelican's official plugin configuration management](http://docs.getpelican.com/en/3.6.3/plugins.html#how-to-use-plugins) :
-
-```
-PLUGINS = ['ave_seo']
-```
 
 ## Usage
 
@@ -220,6 +217,11 @@ Image: https://www.example.com/article-image.jpg
 :image: https://www.example.com/article-image.jpg
 ```
 
-## How to contribute ?
+## Contributing
 
-If you encounter some issue or have some ideas to contribute, just open an issue, I would be happy to discuss it with you.
+Contributions are welcome and much appreciated. Every little bit helps. You can contribute by improving the documentation, adding missing features, and fixing bugs. You can also help out by reviewing and commenting on [existing issues][].
+
+To start contributing to this plugin, review the [Contributing to Pelican][] documentation, beginning with the **Contributing Code** section.
+
+[existing issues]: https://github.com/pelican-plugins/ave-seo/issues
+[Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html
