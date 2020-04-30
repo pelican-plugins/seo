@@ -1,8 +1,8 @@
 <html>
     <head>
-        <title>SEO Report - Ave SEO!</title>
+        <title>SEO Report</title>
 
-        <link href="{{ css_file }}" rel="stylesheet" media="all" type="text/css"> 
+        <link href="{{ css_file }}" rel="stylesheet" media="all" type="text/css">
     </head>
     <body>
         <header>
@@ -13,7 +13,7 @@
 
             {% for documents in seo_reports %}
             <article>
-                
+
                 <div class="article-header">
                     <h2>{{ documents.url }}</h2>
                     {% if documents.date %}
@@ -27,7 +27,7 @@
 
                     <table>
                         {% if report.content.good %}
-                        <tr>  
+                        <tr>
                             <th class="green">Good</th>
                             {% for good_point in report.content.good %}
                             <td>{{ good_point }}</td>
@@ -52,18 +52,18 @@
                             {% endfor %}
                         </tr>
                         {% endif %}
-                    
+
                     </table>
 
                 {% endfor %}
-            
+
             </article>
             {% endfor %}
 
         </section>
 
         <footer>
-            <p>Powered by <a href="https://github.com/MaevaBrunelles/ave_seo">Ave SEO!</a>, a Pelican plugin, with much salt.</p>
+            <p>Powered by <a href="https://github.com/MaevaBrunelles/pelican-seo">SEO</a>, a Pelican plugin, with much salt.</p>
         </footer>
 
     </body>

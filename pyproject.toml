@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "pelican-ave-seo"
+name = "pelican-seo"
 version = "0.1.0"
 description = "This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines."
 authors = ["Maëva Brunelles <contact@tremacorp.fr>"]
 license = "AGPL-3.0"
 readme = "README.md"
 keywords = ["pelican", "plugin", "seo"]
-repository = "https://github.com/pelican-plugins/ave-seo"
+repository = "https://github.com/pelican-plugins/seo"
 packages = [
     { include = "pelican" },
 ]
@@ -31,8 +31,8 @@ classifiers = [
 [tool.poetry.urls]
 "Documentation" = "https://docs.getpelican.com/"
 "Funding" = "https://donate.getpelican.com/"
-"Source" = "https://github.com/pelican-plugins/ave-seo"
-"Tracker" = "https://github.com/pelican-plugins/ave-seo/issues"
+"Source" = "https://github.com/pelican-plugins/seo"
+"Tracker" = "https://github.com/pelican-plugins/seo/issues"
 
 [tool.poetry.dependencies]
 python = "3.7"

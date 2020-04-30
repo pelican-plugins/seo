@@ -68,7 +68,7 @@ class SEOEnhancer():
                 if rule.get('disallow'):
                     robots_file.write('\n' + 'Disallow: ' + rule.get('document_url'))
 
-        logger.info(f"Ave SEO! plugin - SEO Enhancement: robots.txt file created")
+        logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
     def add_html_to_file(self, enhancements, path):
         """
@@ -107,4 +107,4 @@ class SEOEnhancer():
         with open(path, 'w') as html_file:
             html_file.write(soup.prettify())
 
-        logger.info(f"Ave SEO! plugin - SEO Enhancement: Done for {path}")
+        logger.info(f"SEO plugin - SEO Enhancement: Done for {path}")

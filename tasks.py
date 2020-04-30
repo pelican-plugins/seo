@@ -4,7 +4,7 @@ from shutil import which
 
 from invoke import task
 
-PKG_NAME = "ave_seo"
+PKG_NAME = "seo"
 PKG_PATH = Path(f"pelican/plugins/{PKG_NAME}")
 ACTIVE_VENV = os.environ.get("VIRTUAL_ENV", None)
 VENV_HOME = Path(os.environ.get("WORKON_HOME", "~/.local/share/virtualenvs"))

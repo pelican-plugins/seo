@@ -1,6 +1,6 @@
 """ Units tests for Breadcrumb Schema Creator. """
 
-from ave_seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
+from seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
 
 
 class TestBreadcrumbSchemaCreator():

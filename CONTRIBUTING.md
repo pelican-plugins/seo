@@ -5,5 +5,5 @@ Contributions are welcome and much appreciated. Every little bit helps. You can 
 
 To start contributing to this plugin, review the [Contributing to Pelican][] documentation, beginning with the **Contributing Code** section.
 
-[existing issues]: https://github.com/pelican-plugins/ave-seo/issues
+[existing issues]: https://github.com/pelican-plugins/seo/issues
 [Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html

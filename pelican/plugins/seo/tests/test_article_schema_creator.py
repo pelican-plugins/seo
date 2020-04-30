@@ -1,6 +1,6 @@
 """ Units tests for Article Schema Creator. """
 
-from ave_seo.seo_enhancer.html_enhancer import ArticleSchemaCreator
+from seo.seo_enhancer.html_enhancer import ArticleSchemaCreator
 
 
 class TestArticleSchemaCreator():

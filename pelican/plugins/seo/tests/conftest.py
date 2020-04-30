@@ -2,8 +2,8 @@
 
 import pytest
 
-from ave_seo.seo_report import SEOReport
-from ave_seo.seo_enhancer import SEOEnhancer
+from seo.seo_report import SEOReport
+from seo.seo_enhancer import SEOEnhancer
 
 
 class FakeArticle():

@@ -23,7 +23,7 @@ class TestSEOEnhancer():
         """ Test if generate_robots create a robots.txt file by mocking open(). """
 
         with patch('os.mkdir'):
-            with patch('ave_seo.seo_enhancer.open', mock_open()) as mocked_open:
+            with patch('seo.seo_enhancer.open', mock_open()) as mocked_open:
                 mocked_file_handle = mocked_open.return_value
 
                 fake_seo_enhancer.generate_robots(
@@ -67,7 +67,7 @@ class TestSEOEnhancer():
         )
 
         with patch(
-            'ave_seo.seo_enhancer.open',
+            'seo.seo_enhancer.open',
             mock_open(read_data=fake_article.content)
         ) as mocked_open:
             mocked_file_handle = mocked_open.return_value

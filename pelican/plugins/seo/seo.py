@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-Ave SEO! is a Pelican plugin to helps you improve your Pelican site SEO to
+SEO is a Pelican plugin to helps you improve your Pelican site SEO to
 reach the tops positions on search engines like Qwant, DuckDuckGo or Google.
 ===================================================================================
 
@@ -31,9 +31,9 @@ def plugin_initializer(settings):
 
     if not settings.settings.get('SITEURL'):
         raise Exception("You must fill in SITEURL variable in pelicanconf.py \
-            to use Ave SEO! plugin.")
+            to use SEO plugin.")
 
-    logger.info("Ave SEO! plugin initialized")
+    logger.info("SEO plugin initialized")
 
 
 def run_seo_report(generators):

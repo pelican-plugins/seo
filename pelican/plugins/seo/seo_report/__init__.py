@@ -284,5 +284,5 @@ class SEOReport():
             report.write(output)
 
         logger.info(
-            "Ave SEO! plugin - SEO Report: seo_report.html file created"
+            "SEO plugin - SEO Report: seo_report.html file created"
         )

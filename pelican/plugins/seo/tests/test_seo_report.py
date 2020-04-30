@@ -2,7 +2,7 @@
 
 from unittest.mock import mock_open, patch
 
-from ave_seo.seo_report.seo_analyzer import (
+from seo.seo_report.seo_analyzer import (
     InternalLinkAnalyzer,
     ContentTitleAnalyzer,
     PageTitleAnalyzer,
@@ -53,7 +53,7 @@ class TestSEOReport():
         Need mock_open to test this.
         """
 
-        with patch('ave_seo.seo_report.open', mock_open()) as mocked_open:
+        with patch('seo.seo_report.open', mock_open()) as mocked_open:
             # Get a reference to the MagicMock that will be returned
             # when mock_open will be called
             # => When we do open("seo_report", "w") as report in generate, report
