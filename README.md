@@ -11,14 +11,14 @@ This plugin helps you improve your Pelican site SEO (Search Engine Optimization)
 ## Why do you need SEO
 
 If :
-* you need some help to improve the SEO of your Pelican site 
-* you are not familiar with SEO 
+* you need some help to improve the SEO of your Pelican site
+* you are not familiar with SEO
 * you want a simple site with all SEO basis
 
 This plugin is for you !
 
 SEO comes with two complete features to help you :
-* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles. 
+* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles.
 * [SEO Enhancer](#seo-enhancer) : generation of robots indexation hints, HTML tag and structured data. Usefull if you want to control the appareance of your site in the search engine.
 
 ## Installation
@@ -32,7 +32,7 @@ This plugin can be installed via:
 SEO needs Beautiful Soup 4 :
 
 ```
-pip install bs4
+pip install beautifulsoup4
 ```
 
 `SITEURL` Pelican parameter must be defined as features are based on it.
@@ -73,7 +73,7 @@ ARTICLES_LIMIT = 10
 PAGES_LIMIT = 10
 ```
 
-The analysis works from the most recents articles or pages to the olders according to the `date` metadata. 
+The analysis works from the most recents articles or pages to the olders according to the `date` metadata.
 Analysis is focused on :
 * Page title `<title></title>`
 * Page description `<meta name="description" content="" />`
@@ -91,12 +91,12 @@ Description: Description page
 [Internal link](https://example.com/about.html)
 ```
 
-Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green. 
+Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green.
 
 ### SEO Enhancer
 
-SEO generates for you : 
-* HTML enhancements 
+SEO generates for you :
+* HTML enhancements
 * Structured data
 * Robots file
 
@@ -169,7 +169,7 @@ Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList) :
 }
 ```
 
-Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page). 
+Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page).
 
 ##### Article schema
 
@@ -198,7 +198,7 @@ Based on [Article schema](https://schema.org/Article) :
 }
 ```
 
-`:logo:` and `:image:` fields are not required by Schema.org but they are by Google. 
+`:logo:` and `:image:` fields are not required by Schema.org but they are by Google.
 
 To fill `:logo:`, add a parameter in the `pelicanconf.py` :
 
