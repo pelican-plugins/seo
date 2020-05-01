@@ -1,6 +1,6 @@
 """ Units tests for Robots File Creator. """
 
-from ave_seo.seo_enhancer.robots_file_creator import RobotsFileCreator
+from seo.seo_enhancer.robots_file_creator import RobotsFileCreator
 
 
 class TestRobotsFileCreator():

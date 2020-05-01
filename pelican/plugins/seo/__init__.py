@@ -1,0 +1,1 @@
+from .seo import *  # NOQA

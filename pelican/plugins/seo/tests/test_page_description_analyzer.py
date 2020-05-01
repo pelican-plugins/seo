@@ -1,6 +1,6 @@
 """ Unit tests for Page Description Analyzer. """
 
-from ave_seo.seo_report.seo_analyzer import PageDescriptionAnalyzer
+from seo.seo_report.seo_analyzer import PageDescriptionAnalyzer
 
 
 class TestPageDescriptionAnalyzer():

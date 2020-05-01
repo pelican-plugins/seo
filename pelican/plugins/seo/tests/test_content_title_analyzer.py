@@ -1,6 +1,6 @@
 """ Unit tests for Content Title Analyzer. """
 
-from ave_seo.seo_report.seo_analyzer import ContentTitleAnalyzer
+from seo.seo_report.seo_analyzer import ContentTitleAnalyzer
 
 
 class TestContentTitleAnalyzer():

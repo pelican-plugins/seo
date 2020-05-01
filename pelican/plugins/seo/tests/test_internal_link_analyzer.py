@@ -1,6 +1,6 @@
 """ Unit tests for Internal Link Analyzer. """
 
-from ave_seo.seo_report.seo_analyzer import InternalLinkAnalyzer
+from seo.seo_report.seo_analyzer import InternalLinkAnalyzer
 
 
 class TestInternalLinkAnalyzer():

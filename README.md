@@ -1,44 +1,41 @@
-# Ave SEO!, a Pelican plugin :fr:
+# SEO: A plugin for Pelican :fr:
 
-[![Build Status](https://travis-ci.com/MaevaBrunelles/ave_seo.svg?branch=dev)](https://travis-ci.com/MaevaBrunelles/ave_seo)
+[![Build Status](https://travis-ci.com/MaevaBrunelles/pelican-seo.svg?branch=master)](https://travis-ci.com/MaevaBrunelles/pelican-seo)
 
-This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do Ave SEO! for you, go directly to [Usage](#usage) section.
+This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do SEO for you, go directly to [Usage](#usage) section.
 
- 
 | Author          | GitHub                            |
 | :-------------: | :-------------------------------: |
 | Maëva Brunelles | https://github.com/MaevaBrunelles |
 
-## Why do you need Ave SEO!
+## Why do you need SEO
 
 If :
-* you need some help to improve the SEO of your Pelican site 
-* you are not familiar with SEO 
+* you need some help to improve the SEO of your Pelican site
+* you are not familiar with SEO
 * you want a simple site with all SEO basis
 
 This plugin is for you !
 
-Ave SEO! comes with two complete features to help you :
-* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles. 
+SEO comes with two complete features to help you :
+* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles.
 * [SEO Enhancer](#seo-enhancer) : generation of robots indexation hints, HTML tag and structured data. Usefull if you want to control the appareance of your site in the search engine.
-
-## Requirements
-
-Ave SEO! needs Beautiful Soup 4 :
-
-```
-pip install bs4
-```
-
-`SITEURL` Pelican parameter must be defined as features are based on it.
 
 ## Installation
 
-Ave SEO! can be enabled on your site by following [Pelican's official plugin configuration management](http://docs.getpelican.com/en/3.6.3/plugins.html#how-to-use-plugins) :
+This plugin can be installed via:
+
+    pip install pelican-seo
+
+## Requirements
+
+SEO needs Beautiful Soup 4 :
 
 ```
-PLUGINS = ['ave_seo']
+pip install beautifulsoup4
 ```
+
+`SITEURL` Pelican parameter must be defined as features are based on it.
 
 ## Usage
 
@@ -50,20 +47,20 @@ SEO_REPORT = True # To enable this feature
 SEO_ENHANCER = False # To disable this feature
 ```
 
-Ave SEO! runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see Ave SEO! logs, you should use `--verbose` Pelican argument:
+SEO runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logs, you should use `--verbose` Pelican argument:
 ```
 $ pelican content --verbose
--> Ave SEO! plugin initialized
--> Ave SEO! plugin - SEO Report: seo_report.html file created
--> Ave SEO! plugin - SEO Enhancement: robots.txt file created
+-> SEO plugin initialized
+-> SEO plugin - SEO Report: seo_report.html file created
+-> SEO plugin - SEO Enhancement: robots.txt file created
 -> Writing /output/my-first-review.html
--> Ave SEO! plugin - SEO Enhancement: Done for /output/my-first-review.html
+-> SEO plugin - SEO Enhancement: Done for /output/my-first-review.html
 Done: Processed 1 articles, 0 drafts, 0 pages, 0 hidden pages and 0 draft pages in 0.17 seconds.
 ```
 
 ### SEO report
 
-Ave SEO! analyzes all your articles and pages, and generate an HTML SEO report in your Pelican root project : `seo-report.html`
+SEO analyzes all your articles and pages, and generate an HTML SEO report in your Pelican root project : `seo-report.html`
 
 Example :
 
@@ -76,7 +73,7 @@ ARTICLES_LIMIT = 10
 PAGES_LIMIT = 10
 ```
 
-The analysis works from the most recents articles or pages to the olders according to the `date` metadata. 
+The analysis works from the most recents articles or pages to the olders according to the `date` metadata.
 Analysis is focused on :
 * Page title `<title></title>`
 * Page description `<meta name="description" content="" />`
@@ -94,12 +91,12 @@ Description: Description page
 [Internal link](https://example.com/about.html)
 ```
 
-Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green. 
+Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green.
 
 ### SEO Enhancer
 
-Ave SEO! generates for you : 
-* HTML enhancements 
+SEO generates for you :
+* HTML enhancements
 * Structured data
 * Robots file
 
@@ -130,7 +127,7 @@ Noindex: other-example.html
 
 #### Canonical URL tag
 
-Ave SEO! automatically adds for each article the canonical URL tag in the `<head>` to avoid duplicate content.
+SEO automatically adds for each article the canonical URL tag in the `<head>` to avoid duplicate content.
 
 ```html
 <link rel="canonical" href="<SITEURL>/example.html" />
@@ -138,7 +135,7 @@ Ave SEO! automatically adds for each article the canonical URL tag in the `<head
 
 #### Structured data
 
-Ave SEO! automatically adds structured data in the `<head>` to improve the display of result snippet in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
+SEO automatically adds structured data in the `<head>` to improve the display of result snippet in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
 Structured data are based on [Schema.org](https://schema.org/) vocabulary, with `JSON-LD` encoding. Note that schemas generated by default are Schema.org compliant, but not automatically Google compliant. Additionnal metadata are required for it.
 
 ##### Breadcrumb schema
@@ -172,7 +169,7 @@ Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList) :
 }
 ```
 
-Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page). 
+Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page).
 
 ##### Article schema
 
@@ -201,7 +198,7 @@ Based on [Article schema](https://schema.org/Article) :
 }
 ```
 
-`:logo:` and `:image:` fields are not required by Schema.org but they are by Google. 
+`:logo:` and `:image:` fields are not required by Schema.org but they are by Google.
 
 To fill `:logo:`, add a parameter in the `pelicanconf.py` :
 
@@ -220,6 +217,11 @@ Image: https://www.example.com/article-image.jpg
 :image: https://www.example.com/article-image.jpg
 ```
 
-## How to contribute ?
+## Contributing
 
-If you encounter some issue or have some ideas to contribute, just open an issue, I would be happy to discuss it with you.
+Contributions are welcome and much appreciated. Every little bit helps. You can contribute by improving the documentation, adding missing features, and fixing bugs. You can also help out by reviewing and commenting on [existing issues][].
+
+To start contributing to this plugin, review the [Contributing to Pelican][] documentation, beginning with the **Contributing Code** section.
+
+[existing issues]: https://github.com/pelican-plugins/seo/issues
+[Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html

@@ -1,6 +1,6 @@
 """ Units tests for Canonical URL Creator. """
 
-from ave_seo.seo_enhancer.html_enhancer import CanonicalURLCreator
+from seo.seo_enhancer.html_enhancer import CanonicalURLCreator
 
 
 class TestCanonicalURLCreator():

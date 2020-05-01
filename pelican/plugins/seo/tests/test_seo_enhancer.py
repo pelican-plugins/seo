@@ -22,21 +22,23 @@ class TestSEOEnhancer():
     def test_generate_robots_file(self, fake_seo_enhancer, fake_robots_rules):
         """ Test if generate_robots create a robots.txt file by mocking open(). """
 
-        with patch('ave_seo.seo_enhancer.open', mock_open()) as mocked_open:
-            mocked_file_handle = mocked_open.return_value
+        with patch('os.mkdir'):
+            with patch('seo.seo_enhancer.open', mock_open()) as mocked_open:
+                mocked_file_handle = mocked_open.return_value
 
-            fake_seo_enhancer.generate_robots(
-                rules=fake_robots_rules,
-                output_path='fake_output'
-            )
-            mocked_open.assert_called_once_with('fake_output/robots.txt', 'w+')
-            mocked_file_handle.write.assert_called()
-            # 4 : 1 fix write + 3 generated write
-            assert len(mocked_file_handle.write.call_args_list) == 4
+                fake_seo_enhancer.generate_robots(
+                    rules=fake_robots_rules,
+                    output_path='fake_output'
+                )
 
-            args, _ = mocked_file_handle.write.call_args_list[1]
-            fake_rule = args[0]
-            assert "Noindex: fake-title.html" in fake_rule
+                mocked_open.assert_called_once_with('fake_output/robots.txt', 'w+')
+                mocked_file_handle.write.assert_called()
+                # 4 : 1 fix write + 3 generated write
+                assert len(mocked_file_handle.write.call_args_list) == 4
+
+                args, _ = mocked_file_handle.write.call_args_list[1]
+                fake_rule = args[0]
+                assert "Noindex: fake-title.html" in fake_rule
 
     def test_launch_html_enhancemer_returns_dict(self, fake_article, fake_seo_enhancer):
         """ Test if launch_html_enhancemer returns a dict with expected keys. """
@@ -65,7 +67,7 @@ class TestSEOEnhancer():
         )
 
         with patch(
-            'ave_seo.seo_enhancer.open',
+            'seo.seo_enhancer.open',
             mock_open(read_data=fake_article.content)
         ) as mocked_open:
             mocked_file_handle = mocked_open.return_value
