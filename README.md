@@ -1,6 +1,6 @@
 # SEO: A plugin for Pelican :fr:
 
-[![Build Status](https://travis-ci.com/MaevaBrunelles/pelican-seo.svg?branch=master)](https://travis-ci.com/MaevaBrunelles/pelican-seo)
+[![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/seo/build)](https://github.com/pelican-plugins/seo/actions)
 
 This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do SEO for you, go directly to [Usage](#usage) section.
 
