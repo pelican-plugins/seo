@@ -1,7 +1,7 @@
 """ Analyze the page description. """
 
 
-class PageDescriptionAnalyzer():
+class PageDescriptionAnalyzer:
     """ Analyze the page description. """
 
     def __init__(self, description):

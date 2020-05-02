@@ -3,7 +3,7 @@
 from seo.seo_enhancer.robots_file_creator import RobotsFileCreator
 
 
-class TestRobotsFileCreator():
+class TestRobotsFileCreator:
     """ Units tests for RobotsFileCreator. """
 
     def test_get_all_robots_rules(self, fake_article):

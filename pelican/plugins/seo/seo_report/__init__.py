@@ -10,11 +10,10 @@ from jinja2 import Environment, FileSystemLoader
 
 from .seo_analyzer import SEOAnalyzer
 
-
 logger = logging.getLogger(__name__)
 
 
-class SEOReport():
+class SEOReport:
     """ Generate a SEO report by calling SEO analyzers for each content. """
 
     PAGE_TITLE_RECOMMENDED_LENGTH = range(60, 71)
@@ -24,11 +23,7 @@ class SEOReport():
         """ Get SafeDate Pelican object and return date in string. """
 
         date_time = datetime.datetime(
-            date.year,
-            date.month,
-            date.day,
-            date.hour,
-            date.minute
+            date.year, date.month, date.day, date.hour, date.minute
         )
         return date_time.strftime("%Y-%m-%d %H:%M")
 
@@ -52,8 +47,8 @@ class SEOReport():
                 "page_description_analysis": seo_analysis.page_description_analysis,
                 "content_title_analysis": seo_analysis.content_title_analysis,
                 "internal_link_analysis": seo_analysis.internal_link_analysis,
-                },
-            }
+            },
+        }
 
         return document_analysis
 
@@ -64,39 +59,39 @@ class SEOReport():
         """
 
         report = {
-            'title': 'Page title analysis',
-            'content': {
-                'good': [],
-                'to_improve': [],
-                'problems': [],
-            },
+            "title": "Page title analysis",
+            "content": {"good": [], "to_improve": [], "problems": []},
         }
 
         if page_title_analysis.has_page_title:
-            report['content']['good'].append(
-                'You have declared a title. Nice job !'
-            )
+            report["content"]["good"].append("You have declared a title. Nice job !")
 
-            if page_title_analysis.page_title_length in \
-                    SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH:
-                report['content']['good'].append('Your title has a good longer.')
+            if (
+                page_title_analysis.page_title_length
+                in SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH
+            ):
+                report["content"]["good"].append("Your title has a good longer.")
 
-            elif page_title_analysis.page_title_length < \
-                    SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH[0]:
-                report['content']['to_improve'].append(
-                    'Your title is too short. The recommended length is 70 characters.'
+            elif (
+                page_title_analysis.page_title_length
+                < SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH[0]
+            ):
+                report["content"]["to_improve"].append(
+                    "Your title is too short. The recommended length is 70 characters."
                 )
 
-            elif page_title_analysis.page_title_length > \
-                    SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH[-1]:
-                report['content']['to_improve'].append(
-                    'Your title is too long. The maximum recommended \
-                        length is 70 characters.'
+            elif (
+                page_title_analysis.page_title_length
+                > SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH[-1]
+            ):
+                report["content"]["to_improve"].append(
+                    "Your title is too long. The maximum recommended \
+                        length is 70 characters."
                 )
 
         else:
-            report['content']['problems'].append(
-                'Title is missing. Create one to improve your SEO.'
+            report["content"]["problems"].append(
+                "Title is missing. Create one to improve your SEO."
             )
 
         return report
@@ -108,40 +103,42 @@ class SEOReport():
         """
 
         report = {
-            'title': 'Page description analysis',
-            'content': {
-                'good': [],
-                'to_improve': [],
-                'problems': [],
-            },
+            "title": "Page description analysis",
+            "content": {"good": [], "to_improve": [], "problems": []},
         }
 
         if page_description_analysis.has_page_description():
-            report['content']['good'].append(
-                'You have declared a description. Nice job !'
+            report["content"]["good"].append(
+                "You have declared a description. Nice job !"
             )
 
-            if page_description_analysis.page_description_length in \
-                    SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH:
-                report['content']['good'].append('Your description has a good longer')
+            if (
+                page_description_analysis.page_description_length
+                in SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH
+            ):
+                report["content"]["good"].append("Your description has a good longer")
 
-            elif page_description_analysis.page_description_length < \
-                    SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[0]:
-                report['content']['to_improve'].append(
-                    'Your description is too short. The minimum recommended \
-                        length is 150 characters.'
+            elif (
+                page_description_analysis.page_description_length
+                < SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[0]
+            ):
+                report["content"]["to_improve"].append(
+                    "Your description is too short. The minimum recommended \
+                        length is 150 characters."
                 )
 
-            elif page_description_analysis.page_description_length > \
-                    SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[-1]:
-                report['content']['to_improve'].append(
-                    'Your description is too long. The maximum recommended \
-                        length is 160 characters.'
+            elif (
+                page_description_analysis.page_description_length
+                > SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[-1]
+            ):
+                report["content"]["to_improve"].append(
+                    "Your description is too long. The maximum recommended \
+                        length is 160 characters."
                 )
 
         else:
-            report['content']['problems'].append(
-                'You need to declare a description to improve SEO.'
+            report["content"]["problems"].append(
+                "You need to declare a description to improve SEO."
             )
 
         return report
@@ -153,25 +150,21 @@ class SEOReport():
         """
 
         report = {
-            'title': 'Content title analysis',
-            'content': {
-                'good': [],
-                'to_improve': [],
-                'problems': [],
-            },
+            "title": "Content title analysis",
+            "content": {"good": [], "to_improve": [], "problems": []},
         }
 
         if content_title_analysis.has_content_title():
-            report['content']['good'].append(
-                'You have declared a content title. Nice job !'
+            report["content"]["good"].append(
+                "You have declared a content title. Nice job !"
             )
 
             if not content_title_analysis.is_content_title_unique():
-                report['content']['to_improve'].append(
-                    'Your content title must be unique.'
+                report["content"]["to_improve"].append(
+                    "Your content title must be unique."
                 )
         else:
-            report['content']['problems'].append('You\'re missing a content title.')
+            report["content"]["problems"].append("You're missing a content title.")
 
         return report
 
@@ -182,25 +175,23 @@ class SEOReport():
         """
 
         report = {
-            'title': 'Internal link analysis',
-            'content': {
-                'good': [],
-                'to_improve': [],
-                'problems': [],
-            }
+            "title": "Internal link analysis",
+            "content": {"good": [], "to_improve": [], "problems": []},
         }
 
         internal_link_occurrence = internal_link_analysis.internal_link_occurrence
 
         if internal_link_analysis.has_internal_link():
-            report['content']['good'].append(
-                'You\'ve included ' + str(internal_link_occurrence) + ' internal \
-                    links. Nice job !'
+            report["content"]["good"].append(
+                "You've included "
+                + str(internal_link_occurrence)
+                + " internal \
+                    links. Nice job !"
             )
 
         else:
-            report['content']['problems'].append(
-                'It\'s better to include internal links.'
+            report["content"]["problems"].append(
+                "It's better to include internal links."
             )
 
         return report
@@ -210,12 +201,12 @@ class SEOReport():
         Get all adocuments analysis and launch dedicated report for each.
         Return a dict with all micro-reports.
         """
-        seo_analysis = document_analysis['seo_analysis']
+        seo_analysis = document_analysis["seo_analysis"]
 
-        page_title_analysis = seo_analysis['page_title_analysis']
-        page_description_analysis = seo_analysis['page_description_analysis']
-        content_title_analysis = seo_analysis['content_title_analysis']
-        internal_link_analysis = seo_analysis['internal_link_analysis']
+        page_title_analysis = seo_analysis["page_title_analysis"]
+        page_description_analysis = seo_analysis["page_description_analysis"]
+        content_title_analysis = seo_analysis["content_title_analysis"]
+        internal_link_analysis = seo_analysis["internal_link_analysis"]
 
         page_title_report = self._page_title_report(
             page_title_analysis=page_title_analysis
@@ -251,9 +242,9 @@ class SEOReport():
             document_report = self._launch_report(document_analysis)
 
             documents_reports = {
-                'url': document_analysis.get('url'),
-                'date': document_analysis.get('date'),
-                'seo_reports': document_report,
+                "url": document_analysis.get("url"),
+                "date": document_analysis.get("date"),
+                "seo_reports": document_report,
             }
 
             seo_reports.append(documents_reports)
@@ -261,28 +252,22 @@ class SEOReport():
         # Sort documents by publication date, from recent to oldest.
         # Document whithout a date are sorted at the end of the report.
         seo_reports = sorted(
-            seo_reports,
-            key=lambda k: (k['date'] is not None, k['date']),
-            reverse=True
+            seo_reports, key=lambda k: (k["date"] is not None, k["date"]), reverse=True
         )
 
         # Get Jinja HTML template
         plugin_path = os.path.dirname(os.path.realpath(__file__))
-        file_loader = FileSystemLoader(plugin_path + '/template')
+        file_loader = FileSystemLoader(plugin_path + "/template")
         env = Environment(loader=file_loader)
 
-        template = env.get_template('seo_report.html')
-        css_file = plugin_path + '/static/seo_report.css'
+        template = env.get_template("seo_report.html")
+        css_file = plugin_path + "/static/seo_report.css"
         output = template.render(
-            site_name=site_name,
-            seo_reports=seo_reports,
-            css_file=css_file
+            site_name=site_name, seo_reports=seo_reports, css_file=css_file
         )
 
         # Create HTML file
-        with open("seo_report.html", 'w') as report:
+        with open("seo_report.html", "w") as report:
             report.write(output)
 
-        logger.info(
-            "SEO plugin - SEO Report: seo_report.html file created"
-        )
+        logger.info("SEO plugin - SEO Report: seo_report.html file created")

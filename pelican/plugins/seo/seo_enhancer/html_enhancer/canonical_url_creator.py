@@ -3,7 +3,7 @@
 import os
 
 
-class CanonicalURLCreator():
+class CanonicalURLCreator:
     """ Canonical URL creator. """
 
     def __init__(self, fileurl, siteurl):

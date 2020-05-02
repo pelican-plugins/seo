@@ -3,7 +3,7 @@
 from seo.seo_report.seo_analyzer import InternalLinkAnalyzer
 
 
-class TestInternalLinkAnalyzer():
+class TestInternalLinkAnalyzer:
     """ Units tests for InternalLinkAnalyzer. """
 
     def test_article_has_internal_link(self, fake_article):
@@ -13,8 +13,7 @@ class TestInternalLinkAnalyzer():
         """
 
         fake_analysis = InternalLinkAnalyzer(
-            content=fake_article.content,
-            siteurl=fake_article.settings['SITEURL'],
+            content=fake_article.content, siteurl=fake_article.settings["SITEURL"],
         )
         assert fake_analysis.has_internal_link()
 
@@ -26,7 +25,7 @@ class TestInternalLinkAnalyzer():
 
         fake_analysis = InternalLinkAnalyzer(
             content=fake_article_missing_elements.content,
-            siteurl=fake_article_missing_elements.settings['SITEURL'],
+            siteurl=fake_article_missing_elements.settings["SITEURL"],
         )
         assert not fake_analysis.has_internal_link()
 
@@ -35,6 +34,6 @@ class TestInternalLinkAnalyzer():
 
         fake_analysis = InternalLinkAnalyzer(
             content=fake_article_multiple_elements.content,
-            siteurl=fake_article_multiple_elements.settings['SITEURL'],
+            siteurl=fake_article_multiple_elements.settings["SITEURL"],
         )
         assert fake_analysis.internal_link_occurrence == 2

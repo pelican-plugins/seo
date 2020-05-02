@@ -1,7 +1,7 @@
 """ Analyze the page title. """
 
 
-class PageTitleAnalyzer():
+class PageTitleAnalyzer:
     """ Analyze the page title. """
 
     def __init__(self, title):

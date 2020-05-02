@@ -7,7 +7,7 @@ https://schema.org/Article : JSON-LD format.
 import datetime
 
 
-class ArticleSchemaCreator():
+class ArticleSchemaCreator:
     """
     Get all field values and build the Article schema compliant
     to https://schema.org/Article and Google requirements.
@@ -26,11 +26,7 @@ class ArticleSchemaCreator():
         """ Get SafeDate Pelican object and return date in string. """
 
         date_time = datetime.datetime(
-            date.year,
-            date.month,
-            date.day,
-            date.hour,
-            date.minute
+            date.year, date.month, date.day, date.hour, date.minute
         )
         return date_time.strftime("%Y-%m-%d %H:%M")
 
@@ -65,10 +61,7 @@ class ArticleSchemaCreator():
         }
 
         if self._author:
-            schema_article["author"] = {
-                "@type": "Person",
-                "name": self._author
-            }
+            schema_article["author"] = {"@type": "Person", "name": self._author}
 
         if self._sitename:
             schema_article["publisher"] = {
@@ -79,7 +72,7 @@ class ArticleSchemaCreator():
             if self._logo:
                 schema_article["publisher"]["logo"] = {
                     "@type": "ImageObject",
-                    "url": self._logo
+                    "url": self._logo,
                 }
 
         if self._title:

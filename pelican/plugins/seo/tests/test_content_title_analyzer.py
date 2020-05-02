@@ -3,7 +3,7 @@
 from seo.seo_report.seo_analyzer import ContentTitleAnalyzer
 
 
-class TestContentTitleAnalyzer():
+class TestContentTitleAnalyzer:
     """ Units tests for ContentTitleAnalyzer. """
 
     def test_article_has_content_title(self, fake_article):

@@ -7,7 +7,7 @@ https://schema.org/BreadcrumbList : JSON-LD format.
 import os
 
 
-class BreadcrumbSchemaCreator():
+class BreadcrumbSchemaCreator:
     """
     Get all URLs for a path and build the Breadcrumb schema compliant
     to https://schema.org/BreadcrumbList and Google requirements.
@@ -42,7 +42,7 @@ class BreadcrumbSchemaCreator():
         ]
         """
 
-        split_path = self._path.split('/')
+        split_path = self._path.split("/")
 
         if self._output_path in split_path:
             max_index = split_path.index(self._output_path) + 1
@@ -55,19 +55,15 @@ class BreadcrumbSchemaCreator():
 
         for item in range(1, len(split_path) + 1):
 
-            name = split_path[item-1]
-            name = name.replace('-', ' ').capitalize()
-            if name.endswith('.html'):
+            name = split_path[item - 1]
+            name = name.replace("-", " ").capitalize()
+            if name.endswith(".html"):
                 name = name[:-5]
 
-            full_path = '/'.join(split_path[:item])
+            full_path = "/".join(split_path[:item])
             url = os.path.join(self._siteurl, full_path)
 
-            breadcrumb_paths.append({
-                'name': name,
-                'url': url,
-                'position': position
-            })
+            breadcrumb_paths.append({"name": name, "url": url, "position": position})
 
             position += 1
 
@@ -110,22 +106,22 @@ class BreadcrumbSchemaCreator():
         }
 
         if self._sitename and self._siteurl:
-            breadcrumb_schema['itemListElement'].append(
+            breadcrumb_schema["itemListElement"].append(
                 {
                     "@type": "ListItem",
                     "position": 1,
                     "name": self._sitename,
-                    "item": self._siteurl
+                    "item": self._siteurl,
                 }
             )
 
         for item in breadcrumb_items:
-            breadcrumb_schema['itemListElement'].append(
+            breadcrumb_schema["itemListElement"].append(
                 {
                     "@type": "ListItem",
-                    "position": item['position'],
-                    "name": item['name'],
-                    "item": item['url']
+                    "position": item["position"],
+                    "name": item["name"],
+                    "item": item["url"],
                 }
             )
 
