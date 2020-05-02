@@ -18,10 +18,9 @@ import logging
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
-from .settings import SEO_REPORT, SEO_ENHANCER, ARTICLES_LIMIT, PAGES_LIMIT
-from .seo_report import SEOReport
 from .seo_enhancer import SEOEnhancer
-
+from .seo_report import SEOReport
+from .settings import ARTICLES_LIMIT, PAGES_LIMIT, SEO_ENHANCER, SEO_REPORT
 
 logger = logging.getLogger(__name__)
 
@@ -29,9 +28,11 @@ logger = logging.getLogger(__name__)
 def plugin_initializer(settings):
     """ Raises if SITEURL parameter is not set in Pelican settings """
 
-    if not settings.settings.get('SITEURL'):
-        raise Exception("You must fill in SITEURL variable in pelicanconf.py \
-            to use SEO plugin.")
+    if not settings.settings.get("SITEURL"):
+        raise Exception(
+            "You must fill in SITEURL variable in pelicanconf.py \
+            to use SEO plugin."
+        )
 
     logger.info("SEO plugin initialized")
 
@@ -53,7 +54,7 @@ def run_seo_report(generators):
                 documents_analysis.append(analysis)
 
             if not site_name:
-                site_name = generator.settings.get('SITENAME')
+                site_name = generator.settings.get("SITENAME")
 
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
@@ -62,12 +63,9 @@ def run_seo_report(generators):
                 documents_analysis.append(analysis)
 
             if not site_name:
-                site_name = generator.settings.get('SITENAME')
+                site_name = generator.settings.get("SITENAME")
 
-    seo_report.generate(
-        site_name=site_name,
-        documents_analysis=documents_analysis
-    )
+    seo_report.generate(site_name=site_name, documents_analysis=documents_analysis)
 
 
 def run_robots_file(generators):
@@ -85,9 +83,7 @@ def run_robots_file(generators):
 
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
-                article_metadata = seo_enhancer.populate_robots(
-                    document=article
-                )
+                article_metadata = seo_enhancer.populate_robots(document=article)
                 robots_rules.append(article_metadata)
 
         if isinstance(generator, PagesGenerator):
@@ -96,36 +92,29 @@ def run_robots_file(generators):
                 robots_rules.append(page_metadata)
 
     seo_enhancer.generate_robots(
-        rules=robots_rules,
-        output_path=output_path,
+        rules=robots_rules, output_path=output_path,
     )
 
 
 def run_html_enhancer(path, context):
     """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
-    if context.get('article'):
+    if context.get("article"):
         seo_enhancer = SEOEnhancer()
         html_enhancements = seo_enhancer.launch_html_enhancer(
-            file=context['article'],
-            output_path=context.get('OUTPUT_PATH'),
-            path=path,
+            file=context["article"], output_path=context.get("OUTPUT_PATH"), path=path,
         )
         seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements,
-            path=path,
+            enhancements=html_enhancements, path=path,
         )
 
-    elif context.get('page'):
+    elif context.get("page"):
         seo_enhancer = SEOEnhancer()
         html_enhancements = seo_enhancer.launch_html_enhancer(
-            file=context['page'],
-            output_path=context.get('OUTPUT_PATH'),
-            path=path,
+            file=context["page"], output_path=context.get("OUTPUT_PATH"), path=path,
         )
         seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements,
-            path=path,
+            enhancements=html_enhancements, path=path,
         )
 
 

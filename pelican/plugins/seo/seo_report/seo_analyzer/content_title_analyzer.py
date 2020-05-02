@@ -3,7 +3,7 @@
 from bs4 import BeautifulSoup
 
 
-class ContentTitleAnalyzer():
+class ContentTitleAnalyzer:
     """ Analyze the content title. """
 
     def __init__(self, content):
@@ -20,7 +20,7 @@ class ContentTitleAnalyzer():
     def is_content_title_unique(self):
         """ Return True if content title is unique. """
 
-        content_titles = self._soup.find_all('h1')
+        content_titles = self._soup.find_all("h1")
 
         if len(content_titles) > 1:
             return False

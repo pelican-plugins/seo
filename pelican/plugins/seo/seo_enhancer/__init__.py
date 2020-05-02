@@ -9,11 +9,10 @@ from bs4 import BeautifulSoup
 from .html_enhancer import HTMLEnhancer
 from .robots_file_creator import RobotsFileCreator
 
-
 logger = logging.getLogger(__name__)
 
 
-class SEOEnhancer():
+class SEOEnhancer:
     """
     Improve SEO technical for each article and page : HTML code and robots.txt file.
     """
@@ -27,13 +26,13 @@ class SEOEnhancer():
         html_enhancer = HTMLEnhancer(file, output_path, path)
 
         html_enhancements = {
-            'canonical_tag': html_enhancer.canonical_link.create_url(),
-            'breadcrumb_schema': html_enhancer.breadcrumb_schema.create_schema(),
+            "canonical_tag": html_enhancer.canonical_link.create_url(),
+            "breadcrumb_schema": html_enhancer.breadcrumb_schema.create_schema(),
         }
 
-        if 'pages' not in file.url:
+        if "pages" not in file.url:
             article_schema = html_enhancer.article_schema.create_schema()
-            html_enhancements['article_schema'] = article_schema
+            html_enhancements["article_schema"] = article_schema
 
         return html_enhancements
 
@@ -46,9 +45,9 @@ class SEOEnhancer():
         robots_file = RobotsFileCreator(document.metadata)
 
         return {
-            'document_url': document.url,
-            'noindex': robots_file.get_noindex,
-            'disallow': robots_file.get_disallow,
+            "document_url": document.url,
+            "noindex": robots_file.get_noindex,
+            "disallow": robots_file.get_disallow,
         }
 
     def generate_robots(self, rules, output_path):
@@ -58,15 +57,15 @@ class SEOEnhancer():
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
 
-        robots_path = os.path.join(output_path, 'robots.txt')
+        robots_path = os.path.join(output_path, "robots.txt")
 
-        with open(robots_path, 'w+') as robots_file:
-            robots_file.write('User-agent: *')
+        with open(robots_path, "w+") as robots_file:
+            robots_file.write("User-agent: *")
             for rule in rules:
-                if rule.get('noindex'):
-                    robots_file.write('\n' + 'Noindex: ' + rule.get('document_url'))
-                if rule.get('disallow'):
-                    robots_file.write('\n' + 'Disallow: ' + rule.get('document_url'))
+                if rule.get("noindex"):
+                    robots_file.write("\n" + "Noindex: " + rule.get("document_url"))
+                if rule.get("disallow"):
+                    robots_file.write("\n" + "Disallow: " + rule.get("document_url"))
 
         logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
@@ -80,22 +79,20 @@ class SEOEnhancer():
             soup = BeautifulSoup(html_content, features="html.parser")
 
         canonical_tag = soup.new_tag(
-            "link",
-            rel="canonical",
-            href=enhancements.get('canonical_tag')
+            "link", rel="canonical", href=enhancements.get("canonical_tag")
         )
         soup.head.append(canonical_tag)
 
         position = 0
         for enhancement in enhancements:
 
-            if enhancement.endswith('_schema'):
+            if enhancement.endswith("_schema"):
                 schema = enhancement
 
                 schema_script = soup.new_tag("script", type="application/ld+json")
                 soup.head.append(schema_script)
 
-                schema_script = soup.findAll('script')[position]
+                schema_script = soup.findAll("script")[position]
                 # Json dumps permit to keep dict double quotes instead of simples
                 # Google valids schema only with double quotes
                 schema_script.append(
@@ -104,7 +101,7 @@ class SEOEnhancer():
 
                 position += 1
 
-        with open(path, 'w') as html_file:
+        with open(path, "w") as html_file:
             html_file.write(soup.prettify())
 
         logger.info(f"SEO plugin - SEO Enhancement: Done for {path}")
