@@ -20,7 +20,7 @@ from pelican.generators import ArticlesGenerator, PagesGenerator
 
 from .seo_enhancer import SEOEnhancer
 from .seo_report import SEOReport
-from .settings import ARTICLES_LIMIT, PAGES_LIMIT, SEO_ENHANCER, SEO_REPORT
+from .settings import SEO_ARTICLES_LIMIT, SEO_ENHANCER, SEO_PAGES_LIMIT, SEO_REPORT
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ def run_seo_report(generators):
 
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
-            for _, article in zip(range(ARTICLES_LIMIT), generator.articles):
+            for _, article in zip(range(SEO_ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(document=article)
                 documents_analysis.append(analysis)
 
@@ -58,7 +58,7 @@ def run_seo_report(generators):
 
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
-            for _, page in zip(range(PAGES_LIMIT), generator.pages):
+            for _, page in zip(range(SEO_PAGES_LIMIT), generator.pages):
                 analysis = seo_report.launch_analysis(document=page)
                 documents_analysis.append(analysis)
 

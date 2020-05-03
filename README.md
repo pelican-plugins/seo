@@ -69,8 +69,8 @@ Example :
 You can set up a limit for article and page analysis in the plugin settings.py. By default, it's set up to 10 articles and 10 pages.
 
 ```
-ARTICLES_LIMIT = 10
-PAGES_LIMIT = 10
+SEO_ARTICLES_LIMIT = 10
+SEO_PAGES_LIMIT = 10
 ```
 
 The analysis works from the most recents articles or pages to the olders according to the `date` metadata.
