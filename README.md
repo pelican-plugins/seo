@@ -1,25 +1,27 @@
-# SEO: A plugin for Pelican :fr:
+# SEO Plugin for Pelican :fr:
 
 [![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/seo/build)](https://github.com/pelican-plugins/seo/actions)
 
-This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what can do SEO for you, go directly to [Usage](#usage) section.
+This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what this SEO plugin can do for you, visit the [Usage](#usage) section.
 
 | Author          | GitHub                            |
 | :-------------: | :-------------------------------: |
 | Maëva Brunelles | https://github.com/MaevaBrunelles |
 
-## Why do you need SEO
+## Why Use This Plugin?
 
-If :
-* you need some help to improve the SEO of your Pelican site
+If:
+
 * you are not familiar with SEO
-* you want a simple site with all SEO basis
+* you want an easy way to apply SEO fundamentals
+* you need help improving the SEO of your Pelican site
 
-This plugin is for you !
+… then this plugin is for you!
 
-SEO comes with two complete features to help you :
-* [SEO Report](#seo-report) : generation of an HTML report based on articles analysis. Provides you what is good, what should be improved and what is problematic. Useful if you want to improve the referencement of your articles.
-* [SEO Enhancer](#seo-enhancer) : generation of robots indexation hints, HTML tag and structured data. Usefull if you want to control the appareance of your site in the search engine.
+SEO comes with two features to help you:
+
+* [SEO Report](#seo-report) — Generates an HTML report based on article analysis, indicating what is good, what could be improved, and what is problematic. Useful if you want to improve the ranking of your articles.
+* [SEO Enhancer](#seo-enhancer) — Generates robot indexing guidelines, HTML tags, and structured data. Useful if you want to control how your site appears in search engine results.
 
 ## Installation
 
@@ -29,26 +31,25 @@ This plugin can be installed via:
 
 ## Requirements
 
-SEO needs Beautiful Soup 4 :
+The above installation step should automatically install Beautiful Soup 4, which the SEO plugin requires. The following command will manually install this dependency:
 
-```
-pip install beautifulsoup4
-```
+    pip install beautifulsoup4
 
-`SITEURL` Pelican parameter must be defined as features are based on it.
+Please keep in mind that the `SITEURL` Pelican setting must be defined in order for this plugin to function as intended.
 
 ## Usage
 
-You can choose which feature to enable or disable in the plugin settings. Default is `True` for both.
+You can enable/disable features by setting them to `True` or `False` in your Pelican settings. The default is `True` for both.
 
-```
+```python
 # settings.py
-SEO_REPORT = True # To enable this feature
-SEO_ENHANCER = False # To disable this feature
+SEO_REPORT = True  # To enable this feature
+SEO_ENHANCER = False  # To disable this feature
 ```
 
-SEO runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logs, you should use `--verbose` Pelican argument:
-```
+The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
+
+```bash
 $ pelican content --verbose
 -> SEO plugin initialized
 -> SEO plugin - SEO Report: seo_report.html file created
@@ -58,64 +59,65 @@ $ pelican content --verbose
 Done: Processed 1 articles, 0 drafts, 0 pages, 0 hidden pages and 0 draft pages in 0.17 seconds.
 ```
 
-### SEO report
+### SEO Report
 
-SEO analyzes all your articles and pages, and generate an HTML SEO report in your Pelican root project : `seo-report.html`
+The SEO plugin analyzes all your articles and pages and generate an SEO HTML report in your Pelican project root: `seo-report.html`
 
-Example :
+Example:
 
 ![SEO report example](docs/seo-report-example.png)
 
-You can set up a limit for article and page analysis in the plugin settings.py. By default, it's set up to 10 articles and 10 pages.
+You can set limits for article and page analysis in the plugin settings.py. By default, it's set up to 10 articles and 10 pages.
 
-```
+```python
 SEO_ARTICLES_LIMIT = 10
 SEO_PAGES_LIMIT = 10
 ```
 
-The analysis works from the most recents articles or pages to the olders according to the `date` metadata.
-Analysis is focused on :
-* Page title `<title></title>`
-* Page description `<meta name="description" content="" />`
-* Title content `<h1></h1>`
-* Internal link `<a href="SITEURL/..."></a>`
+The SEO analysis begins with the most recent articles/pages, according to the `date` metadata, and is focused on the following criteria:
 
-Which are declared by article and page metadata and content :
+* Page title: `<title></title>`
+* Page description: `<meta name="description" content="" />`
+* Heading content: `<h1></h1>`
+* Internal site links: `<a href="SITEURL/..."></a>`
+
+The above information is defined in your source content, such as the following example Markdown file:
 
 ```markdown
-# article.md
-Title: Title page
-Description: Description page
+Title: Page Title
+Description: Page Description
 
-# Title content
+# Heading Content
+
 [Internal link](https://example.com/about.html)
 ```
 
-Theses elements form the basis of page SEO optimization. Have a look to the report, optimize your articles and pages according to analysis, and restart the process to see if all elements are now in green.
+Once the SEO analysis has generated a report, optimize your articles and pages according to the report’s recommendations, and then repeat the analysis to see whether everything comes up green.
 
 ### SEO Enhancer
 
-SEO generates for you :
+The SEO Enhancer module generates the following for you:
+
+* robots file
 * HTML enhancements
-* Structured data
-* Robots file
+* structured data
 
-#### Robots.txt file
+#### Robots.txt File
 
-Indicates to search engines which pages they are allowed to access to or not. By default, all pages are authorized to be explored by all the existing robots.
+The generated `robots.txt` file indicates to search engines which pages they should index. By default, search engine bots are allowed to crawl and index all pages.
 
 ```
 User-agent: *
 ```
 
-To disallow the exploration or to forbid the indexation of a specific ressource, add theses metadata :
+To disallow crawling and/or forbid indexing for a given article/page, add the following to your article/page metadata:
 
 ```
 Disallow: True
 Noindex: True
 ```
 
-A `robots.txt` file is added at the website root, in the `OUTPUT_PATH` setting (Pelican's default is `output/`).
+A `robots.txt` file will be generated at your web site root, as per the `OUTPUT_PATH` setting (Pelican’s default is `output/`).
 
 ```
 # robots.txt
@@ -125,24 +127,25 @@ Disallow: example.html
 Noindex: other-example.html
 ```
 
-#### Canonical URL tag
+#### Canonical URL Tag
 
-SEO automatically adds for each article the canonical URL tag in the `<head>` to avoid duplicate content.
+The SEO Enhancer automatically adds canonical link metadata to `<head>` tags in order to avoid presenting duplicate content to search engines.
 
 ```html
 <link rel="canonical" href="<SITEURL>/example.html" />
 ```
 
-#### Structured data
+#### Structured Data
 
-SEO automatically adds structured data in the `<head>` to improve the display of result snippet in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
-Structured data are based on [Schema.org](https://schema.org/) vocabulary, with `JSON-LD` encoding. Note that schemas generated by default are Schema.org compliant, but not automatically Google compliant. Additionnal metadata are required for it.
+The SEO Enhancer automatically adds structured data in the `<head>` tag in order to improve the display of result snippets in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
 
-##### Breadcrumb schema
+Structured data is based on [Schema.org](https://schema.org/) vocabulary, with `JSON-LD` encoding. Note that schemas generated by default are compliant with Schema.org but not (by default) Google-compliant. The latter requires additional metadata.
 
-Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList) :
+##### Breadcrumb Schema
 
-```
+Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList):
+
+```json-ld
 {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -169,13 +172,13 @@ Based on [BreadcrumbList schema](https://schema.org/BreadcrumbList) :
 }
 ```
 
-Each element of the file path has his `ListItem`, even folders, so it's better to create a user friendly page for those (otherwise you'll get your server's default page).
+Each path element has a `ListItem`, even folders, so it’s better to create a user-friendly page for those (otherwise you’ll get your server’s default page).
 
 ##### Article schema
 
-Based on [Article schema](https://schema.org/Article) :
+Based on [Article schema](https://schema.org/Article):
 
-```
+```json-ld
 {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -198,16 +201,16 @@ Based on [Article schema](https://schema.org/Article) :
 }
 ```
 
-`:logo:` and `:image:` fields are not required by Schema.org but they are by Google.
+`:logo:` and `:image:` fields are not required by Schema.org but are by Google.
 
-To fill `:logo:`, add a parameter in the `pelicanconf.py` :
+To populate the `:logo:` field, add a `LOGO` setting to your Pelican settings file containing an absolute link to your site logo image:
 
 ```
 # pelicanconf.py
-LOGO = 'https://www.example.com/logo.jpg'
+LOGO = "https://www.example.com/logo.jpg"
 ```
 
-To fill `:image:`, add a metadata for each Markdown or reST article :
+To populate the `:image:` field, add an image metadata field to your Markdown/reST content:
 
 ```
 # article.md
