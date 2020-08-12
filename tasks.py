@@ -51,7 +51,7 @@ def isort(c, check=False, diff=False):
     if diff:
         diff_flag = "--diff"
     isort = find_tool("isort")
-    c.run(f"{isort} {check_flag} {diff_flag} --recursive {PKG_PATH}/* tasks.py")
+    c.run(f"{isort} {check_flag} {diff_flag} .")
 
 
 @task
