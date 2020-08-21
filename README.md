@@ -1,4 +1,4 @@
-# SEO Plugin for Pelican :fr:
+# SEO Plugin for Pelican 🇫🇷
 
 [![Build Status](https://img.shields.io/github/workflow/status/pelican-plugins/seo/build)](https://github.com/pelican-plugins/seo/actions) [![PyPI Version](https://img.shields.io/pypi/v/pelican-seo)](https://pypi.org/project/pelican-seo/)
 
