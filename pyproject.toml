@@ -56,6 +56,11 @@ Werkzeug = "^1.0"
 [tool.poetry.extras]
 markdown = ["markdown"]
 
+[tool.autopub]
+project-name = "SEO"
+git-username = "botpub"
+git-email = "botpub@autopub.rocks"
+
 [tool.isort]
 # Maintain compatibility with Black
 combine_as_imports = true
