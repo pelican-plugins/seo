@@ -7,12 +7,13 @@ license = "AGPL-3.0"
 readme = "README.md"
 keywords = ["pelican", "plugin", "seo", "search", "optimization"]
 repository = "https://github.com/pelican-plugins/seo"
+documentation = "https://docs.getpelican.com"
 packages = [
     { include = "pelican" },
 ]
 
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Framework :: Pelican",
     "Framework :: Pelican :: Plugins",
@@ -29,22 +30,21 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
-"Documentation" = "https://docs.getpelican.com/"
 "Funding" = "https://donate.getpelican.com/"
 "Tracker" = "https://github.com/pelican-plugins/seo/issues"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-pelican = "^4.2"
-markdown = {version = "^3.2.2",optional = true}
+pelican = "^4.5"
+markdown = {version = "^3.2.2", optional = true}
 beautifulsoup4 = "^4.9"
 
 [tool.poetry.dev-dependencies]
-black = {version = "^19.10b0",allow-prereleases = true}
-flake8 = "^3.7"
+black = {version = "^19.10b0", allow-prereleases = true}
+flake8 = "^3.8"
 flake8-black = "^0.1.0"
 invoke = "^1.3"
-isort = "^5.3"
+isort = "^5.4"
 livereload = "^2.6"
 markdown = "^3.2.2"
 pytest = "^6.0"
