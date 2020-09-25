@@ -27,4 +27,6 @@ class TestCanonicalURLCreator:
             path="fake_dir/fake_output/fake_file.html",
         )
 
-        assert html_enhancements["canonical_tag"] == "fakesite.com/custom_file_name.html"
+        assert (
+            html_enhancements["canonical_tag"] == "fakesite.com/custom_file_name.html"
+        )

@@ -29,7 +29,8 @@ class HTMLEnhancer:
 
         # The canonical URL must be built with custom metadata if filled
         # If not, fallback to the default URL name
-        _fileurl = _metadata.get("save_as") if _metadata.get("save_as") else getattr(file, "url")
+        save_as = _metadata.get("save_as")
+        _fileurl = save_as if save_as else getattr(file, "url")
 
         self.canonical_link = CanonicalURLCreator(
             siteurl=_settings.get("SITEURL"), fileurl=_fileurl,
