@@ -5,6 +5,7 @@ https://schema.org/BreadcrumbList : JSON-LD format.
 """
 
 import os
+from pathlib import PurePath
 
 
 class BreadcrumbSchemaCreator:
@@ -18,14 +19,24 @@ class BreadcrumbSchemaCreator:
         self._path = path
         self._sitename = sitename
         self._siteurl = siteurl
+    
+    def _extract_file_path_from_path(self) -> tuple:
+        """
+        Normalize paths thanks to pathlib,
+        and get the file path by discarding output path.
+        By default, output path is 'output/' but it can be changed in Pelican settings.
+        """
+        path = PurePath(self._path)
+        output_path = PurePath(self._output_path)
+
+        file_path = path.relative_to(output_path)
+
+        return file_path.parts
 
     def _create_paths(self):
         """
-        Split the file path, get all elements after the output path.
-        By default, output path is 'output/' but it can be changes in Pelican settings.
         Build all paths, for example :
-        Path = 'test-dir/output/category/file.html'
-        Split path = ['output', 'category', 'file.html']
+        File path = ("category", "file.html")
         Position begins at 2, as number 1 is dedicated to the index page.
         Returns list of dicts :
         [
@@ -41,26 +52,19 @@ class BreadcrumbSchemaCreator:
             },
         ]
         """
-
-        split_path = self._path.split("/")
-
-        if self._output_path in split_path:
-            max_index = split_path.index(self._output_path) + 1
-
-        # Delete all elements before output path, including it
-        del split_path[0:max_index]
+        file_path = self._extract_file_path_from_path()
 
         breadcrumb_paths = []
         position = 2
 
-        for item in range(1, len(split_path) + 1):
+        for item in range(1, len(file_path) + 1):
 
-            name = split_path[item - 1]
+            name = file_path[item - 1]
             name = name.replace("-", " ").capitalize()
             if name.endswith(".html"):
                 name = name[:-5]
 
-            full_path = "/".join(split_path[:item])
+            full_path = "/".join(file_path[:item])
             url = os.path.join(self._siteurl, full_path)
 
             breadcrumb_paths.append({"name": name, "url": url, "position": position})
