@@ -19,7 +19,7 @@ class BreadcrumbSchemaCreator:
         self._path = path
         self._sitename = sitename
         self._siteurl = siteurl
-    
+
     def _extract_file_path_from_path(self) -> tuple:
         """
         Normalize paths thanks to pathlib,
@@ -35,8 +35,8 @@ class BreadcrumbSchemaCreator:
 
     def _create_paths(self):
         """
-        Build all paths, for example :
-        File path = ("category", "file.html")
+        Build all paths for the breadcrumb.
+        Example with a file_path == ("category", "file.html")
         Position begins at 2, as number 1 is dedicated to the index page.
         Returns list of dicts :
         [

@@ -41,17 +41,19 @@ class TestBreadcrumbSchemaCreator:
             == "fakesite.com/fake-file.html"
         )
 
-    @pytest.mark.parametrize("output_path,path", [
-        (
-            "fake_output",
-            "fake_output/test/blabla/other/kiwi/fake-file.html",
-        ),
-        (
-            "/home/kiwi/pelican/my-site/fake_output",
-            "/home/kiwi/pelican/my-site/fake_output/test/blabla/other/kiwi/fake-file.html",
-        ),
-    ])
-    def test_create_schema_with_x_elements_in_path(self, fake_article, output_path, path):
+    @pytest.mark.parametrize(
+        "output_path,path",
+        [
+            ("fake_output", "fake_output/test/blabla/other/kiwi/fake-file.html",),
+            (
+                "/home/kiwi/pelican/my-site/fake_output",
+                "/home/kiwi/pelican/my-site/fake_output/test/blabla/other/kiwi/fake-file.html",
+            ),
+        ],
+    )
+    def test_create_schema_with_x_elements_in_path(
+        self, fake_article, output_path, path
+    ):
         """
         Test that create_schema returns a valid schema.org (dict)
         for an absolute or relative path with x elements.
