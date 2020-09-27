@@ -1,5 +1,7 @@
 """ Units tests for Breadcrumb Schema Creator. """
 
+import pytest
+
 from seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
 
 
@@ -8,13 +10,13 @@ class TestBreadcrumbSchemaCreator:
 
     def test_create_schema(self, fake_article):
         """
-        Test that create_schema returns a valid
+        Test that create_schema() returns a valid
         schema.org (dict) for breadcrumb.
         """
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path="fake_output",
-            path="fake_dir/fake_output/fake-file.html",
+            path="fake_output/fake-file.html",
             sitename=fake_article.settings["SITENAME"],
             siteurl=fake_article.settings["SITEURL"],
         )
@@ -39,15 +41,27 @@ class TestBreadcrumbSchemaCreator:
             == "fakesite.com/fake-file.html"
         )
 
-    def test_create_schema_with_x_elements_in_path(self, fake_article):
+    @pytest.mark.parametrize(
+        "output_path,path",
+        [
+            ("fake_output", "fake_output/test/blabla/other/kiwi/fake-file.html",),
+            (
+                "/home/kiwi/pelican/my-site/fake_output",
+                "/home/kiwi/pelican/my-site/fake_output/test/blabla/other/kiwi/fake-file.html",
+            ),
+        ],
+    )
+    def test_create_schema_with_x_elements_in_path(
+        self, fake_article, output_path, path
+    ):
         """
-        Test that create_schema returns a valid
-        schema.org (dict) for a path with x elements.
+        Test that create_schema returns a valid schema.org (dict)
+        for an absolute or relative path with x elements.
         """
 
         breadcrumb = BreadcrumbSchemaCreator(
-            output_path="fake_output",
-            path="fake_dir/fake_output/test/blabla/other/kiwi/fake-file.html",
+            output_path=output_path,
+            path=path,
             sitename=fake_article.settings["SITENAME"],
             siteurl=fake_article.settings["SITEURL"],
         )
@@ -61,7 +75,7 @@ class TestBreadcrumbSchemaCreator:
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path="fake_output",
-            path="fake_dir/fake_output/fake-file.html",
+            path="fake_output/fake-file.html",
             sitename="",
             siteurl="",
         )
@@ -78,7 +92,7 @@ class TestBreadcrumbSchemaCreator:
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path="fake_output",
-            path="fake_dir/fake_output/fake-file.html",
+            path="fake_output/fake-file.html",
             sitename="",
             siteurl=fake_article.settings["SITEURL"],
         )
@@ -95,7 +109,7 @@ class TestBreadcrumbSchemaCreator:
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path="fake_output",
-            path="fake_dir/fake_output/fake-file.html",
+            path="fake_output/fake-file.html",
             sitename=fake_article.settings["SITENAME"],
             siteurl="",
         )
