@@ -9,13 +9,13 @@ class HTMLEnhancer:
     """ HTML Enhancer : get instances of HTML enhancements. """
 
     def __init__(self, file, output_path, path):
-        _settings = getattr(file, "settings", None)
-        _fileurl = getattr(file, "url", None)
+        _settings = getattr(file, "settings")
         _author = getattr(file, "author", None)
         _date = getattr(file, "date", None)
         _title = getattr(file, "title", None)
         _category = getattr(file, "category", None)
         _image = getattr(file, "image", None)
+        _metadata = getattr(file, "metadata", None)
 
         self.article_schema = ArticleSchemaCreator(
             author=_author,
@@ -26,6 +26,11 @@ class HTMLEnhancer:
             image=_image,
             sitename=_settings.get("SITENAME"),
         )
+
+        # The canonical URL must be built with custom metadata if filled
+        # If not, fallback to the default URL name
+        save_as = _metadata.get("save_as")
+        _fileurl = save_as if save_as else getattr(file, "url")
 
         self.canonical_link = CanonicalURLCreator(
             siteurl=_settings.get("SITEURL"), fileurl=_fileurl,
