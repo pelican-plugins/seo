@@ -24,7 +24,7 @@ class TestCanonicalURLCreator:
         html_enhancements = fake_seo_enhancer.launch_html_enhancer(
             file=fake_article,
             output_path="fake_output",
-            path="fake_dir/fake_output/fake_file.html",
+            path="fake_output/fake_file.html",
         )
 
         assert (
