@@ -98,19 +98,16 @@ def run_robots_file(generators):
 def run_html_enhancer(path, context):
     """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
+    content_file = None
     if context.get("article"):
-        seo_enhancer = SEOEnhancer()
-        html_enhancements = seo_enhancer.launch_html_enhancer(
-            file=context["article"], output_path=context.get("OUTPUT_PATH"), path=path,
-        )
-        seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements, path=path,
-        )
-
+        content_file = context["article"]
     elif context.get("page"):
+        content_file = context["page"]
+
+    if content_file:
         seo_enhancer = SEOEnhancer()
         html_enhancements = seo_enhancer.launch_html_enhancer(
-            file=context["page"], output_path=context.get("OUTPUT_PATH"), path=path,
+            file=content_file, output_path=context.get("OUTPUT_PATH"), path=path,
         )
         seo_enhancer.add_html_to_file(
             enhancements=html_enhancements, path=path,
@@ -121,14 +118,9 @@ def register():
 
     signals.initialized.connect(plugin_initializer)
 
-    if SEO_REPORT and SEO_ENHANCER:
-        signals.all_generators_finalized.connect(run_seo_report)
-        signals.all_generators_finalized.connect(run_robots_file)
-        signals.content_written.connect(run_html_enhancer)
-
-    elif SEO_REPORT:
+    if SEO_REPORT:
         signals.all_generators_finalized.connect(run_seo_report)
 
-    elif SEO_ENHANCER:
+    if SEO_ENHANCER:
         signals.all_generators_finalized.connect(run_robots_file)
         signals.content_written.connect(run_html_enhancer)
