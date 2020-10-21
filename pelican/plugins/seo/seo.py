@@ -1,4 +1,3 @@
-# coding=utf-8
 """
 SEO is a Pelican plugin to helps you improve your Pelican site SEO to
 reach the tops positions on search engines like Qwant, DuckDuckGo or Google.
