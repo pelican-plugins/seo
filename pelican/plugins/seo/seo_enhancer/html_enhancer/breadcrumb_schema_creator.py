@@ -5,7 +5,7 @@ https://schema.org/BreadcrumbList : JSON-LD format.
 """
 
 import os
-from pathlib import PurePath
+from pathlib import Path
 
 
 class BreadcrumbSchemaCreator:
@@ -26,8 +26,8 @@ class BreadcrumbSchemaCreator:
         and get the file path by discarding output path.
         By default, output path is 'output/' but it can be changed in Pelican settings.
         """
-        path = PurePath(self._path)
-        output_path = PurePath(self._output_path)
+        path = Path(self._path).resolve()
+        output_path = Path(self._output_path).resolve()
 
         file_path = path.relative_to(output_path)
 
