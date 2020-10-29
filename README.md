@@ -27,13 +27,13 @@ SEO comes with two features to help you:
 
 This plugin can be installed via:
 
-    pip install pelican-seo
+    python -m pip install pelican-seo
 
 ## Requirements
 
 The above installation step should automatically install Beautiful Soup 4, which the SEO plugin requires. The following command will manually install this dependency:
 
-    pip install beautifulsoup4
+    python -m pip install beautifulsoup4
 
 Please keep in mind that the `SITEURL` Pelican setting must be defined in order for this plugin to function as intended.
 
