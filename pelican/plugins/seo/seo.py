@@ -46,23 +46,20 @@ def run_seo_report(generators):
 
     for generator in generators:
 
+        if not site_name:
+            site_name = generator.settings.get("SITENAME")
+
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
             for _, article in zip(range(SEO_ARTICLES_LIMIT), generator.articles):
                 analysis = seo_report.launch_analysis(document=article)
                 documents_analysis.append(analysis)
 
-            if not site_name:
-                site_name = generator.settings.get("SITENAME")
-
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
             for _, page in zip(range(SEO_PAGES_LIMIT), generator.pages):
                 analysis = seo_report.launch_analysis(document=page)
                 documents_analysis.append(analysis)
-
-            if not site_name:
-                site_name = generator.settings.get("SITENAME")
 
     seo_report.generate(site_name=site_name, documents_analysis=documents_analysis)
 
