@@ -14,9 +14,8 @@ License : GNU AFFERO GENERAL PUBLIC LICENSE Version 3
 
 import logging
 
-from pelican.generators import ArticlesGenerator, PagesGenerator
-
 from pelican import signals
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 from .seo_enhancer import SEOEnhancer
 from .seo_report import SEOReport
