@@ -83,23 +83,13 @@ class SEOEnhancer:
         )
         soup.head.append(canonical_tag)
 
-        position = 0
-        for enhancement in enhancements:
-
-            if enhancement.endswith("_schema"):
-                schema = enhancement
-
-                schema_script = soup.new_tag("script", type="application/ld+json")
-                soup.head.append(schema_script)
-
-                schema_script = soup.findAll("script")[position]
-                # Json dumps permit to keep dict double quotes instead of simples
-                # Google valids schema only with double quotes
-                schema_script.append(
-                    json.dumps(enhancements[schema], ensure_ascii=False)
-                )
-
-                position += 1
+        schemas = [e for e in enhancements if e.endswith("_schema")]
+        for schema in schemas:
+            schema_script = soup.new_tag("script", type="application/ld+json")
+            # Json dumps permit to keep dict double quotes instead of simples
+            # Google valids schema only with double quotes
+            schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
+            soup.head.append(schema_script)
 
         with open(path, "w") as html_file:
             html_file.write(soup.prettify())
