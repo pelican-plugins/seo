@@ -78,15 +78,33 @@ class TestSEOEnhancer:
 
             write_args, _ = mocked_file_handle.write.call_args_list[0]
             fake_html_content = write_args[0]
+
             assert (
-                '<link href="fakesite.com/fake-title.html" rel="canonical"/>'
-                in fake_html_content
-            )
-            assert (
-                '{"@context": "https://schema.org", "@type": "Article"'
-                in fake_html_content
-            )
-            assert (
-                '{"@context": "https://schema.org", "@type": "BreadcrumbList"'
-                in fake_html_content
+                fake_html_content
+                == """<html>
+ <head>
+  <title>
+   Fake Title
+  </title>
+  <meta content="Fake description" name="description"/>
+  <link href="fakesite.com/fake-title.html" rel="canonical"/>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "fakesite.com/fake_file.html"}]}
+  </script>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
+  </script>
+ </head>
+ <body>
+  <h1>
+   Fake content title
+  </h1>
+  <p>
+   Fake content 🙃
+  </p>
+  <a href="https://www.fakesite.com">
+   Fake internal link
+  </a>
+ </body>
+</html>"""
             )
