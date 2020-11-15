@@ -74,7 +74,7 @@ class SEOEnhancer:
         Open HTML file, add HTML enhancements with bs4 and create the new HTML files.
         """
 
-        with open(path) as html_file:
+        with open(path, "r", encoding="utf8") as html_file:
             html_content = html_file.read()
             soup = BeautifulSoup(html_content, features="html.parser")
 
@@ -91,7 +91,7 @@ class SEOEnhancer:
             schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
             soup.head.append(schema_script)
 
-        with open(path, "w") as html_file:
+        with open(path, "w", encoding="utf8") as html_file:
             html_file.write(soup.prettify())
 
         logger.info(f"SEO plugin - SEO Enhancement: Done for {path}")
