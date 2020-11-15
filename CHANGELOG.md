@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.0.3 - 2020-11-15
+------------------
+
+Fix definitively encoding issues when open file
+
 1.0.2 - 2020-11-03
 ------------------
 
