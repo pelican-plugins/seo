@@ -267,7 +267,7 @@ class SEOReport:
         )
 
         # Create HTML file
-        with open("seo_report.html", "w") as report:
+        with open("seo_report.html", "w", encoding="utf8") as report:
             report.write(output)
 
         logger.info("SEO plugin - SEO Report: seo_report.html file created")

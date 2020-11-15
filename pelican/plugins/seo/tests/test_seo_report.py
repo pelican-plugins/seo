@@ -67,7 +67,7 @@ class TestSEOReport:
 
             # mocked_open and the file handle got all
             # executed calls, and can assert them
-            mocked_open.assert_called_once_with("seo_report.html", "w")
+            mocked_open.assert_called_once_with("seo_report.html", "w", encoding="utf8")
             mocked_file_handle.write.assert_called_once()
 
             # Get all arguments in the mocked write call and select the first
