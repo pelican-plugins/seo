@@ -1,14 +1,23 @@
 """ HTML Enhancer : get instances of HTML enhancements. """
 
+from pelican.contents import Article, Page
+
 from .article_schema_creator import ArticleSchemaCreator
 from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 from .canonical_url_creator import CanonicalURLCreator
+from .open_graph import OpenGraph
 
 
 class HTMLEnhancer:
     """ HTML Enhancer : get instances of HTML enhancements. """
 
-    def __init__(self, file, output_path, path):
+    def __init__(self, file, output_path, path, open_graph=False):
+        _file_type = "website"  # Default value
+        if isinstance(file, Article):
+            _file_type = "article"
+        elif isinstance(file, Page):
+            _file_type = "page"
+
         _settings = getattr(file, "settings")
         _author = getattr(file, "author", None)
         _date = getattr(file, "date", None)
@@ -42,3 +51,15 @@ class HTMLEnhancer:
             sitename=_settings.get("SITENAME"),
             siteurl=_settings.get("SITEURL"),
         )
+
+        if open_graph:
+            self.open_graph = OpenGraph(
+                siteurl=_settings.get("SITEURL"),
+                fileurl=_fileurl,
+                file_type=_file_type,
+                title=_metadata.get("og_title") or _title,
+                description=_metadata.get("og_description")
+                or _metadata.get("description"),
+                image=_metadata.get("og_image") or _image,
+                locale=_settings.get("LOCALE"),
+            )

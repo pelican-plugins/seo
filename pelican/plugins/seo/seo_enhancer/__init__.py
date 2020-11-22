@@ -17,13 +17,15 @@ class SEOEnhancer:
     Improve SEO technical for each article and page : HTML code and robots.txt file.
     """
 
-    def launch_html_enhancer(self, file, output_path, path):
+    def launch_html_enhancer(self, file, output_path, path, open_graph=False):
         """
         Call HTMLEnhancer for each article and page.
         Return a dict with all HTML enhancements.
         """
 
-        html_enhancer = HTMLEnhancer(file, output_path, path)
+        html_enhancer = HTMLEnhancer(
+            file=file, output_path=output_path, path=path, open_graph=open_graph
+        )
 
         html_enhancements = {
             "canonical_tag": html_enhancer.canonical_link.create_url(),
@@ -33,6 +35,9 @@ class SEOEnhancer:
         if "pages" not in file.url:
             article_schema = html_enhancer.article_schema.create_schema()
             html_enhancements["article_schema"] = article_schema
+
+        if open_graph:
+            html_enhancements["open_graph"] = html_enhancer.open_graph.create_tags()
 
         return html_enhancements
 
@@ -90,6 +95,13 @@ class SEOEnhancer:
             # Google valids schema only with double quotes
             schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
             soup.head.append(schema_script)
+
+        if "open_graph" in enhancements:
+            for og_property, og_content in enhancements["open_graph"].items():
+                open_graph_tag = soup.new_tag(
+                    "meta", property="og:" + og_property, content=og_content
+                )
+                soup.head.append(open_graph_tag)
 
         with open(path, "w", encoding="utf8") as html_file:
             html_file.write(soup.prettify())

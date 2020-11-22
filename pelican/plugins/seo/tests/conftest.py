@@ -62,14 +62,18 @@ def fake_article():
     """ Create a fake article. """
 
     settings = {
-        "SITEURL": "fakesite.com",
+        "SITEURL": "https://www.fakesite.com",
         "SITENAME": "Fake Site Name",
         "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+        "LOCALE": ["fr_FR"],
     }
     metadata = {
         "noindex": True,
         "disallow": True,
         "image": "https://www.fakesite.com/fake-image.jpg",
+        "og_title": "OG Title",
+        "og_description": "OG Description",
+        "og_image": "https://www.fakesite.com/og-image.jpg",
     }
     title = "Fake Title"
     description = "Fake description"
@@ -107,7 +111,7 @@ def fake_article_missing_elements():
     """ Create a fake article with missing elements. """
 
     settings = {
-        "SITEURL": "fakesite.com",
+        "SITEURL": "https://www.fakesite.com",
         "SITENAME": "",
         "LOGO": "",
     }
@@ -147,7 +151,7 @@ def fake_article_multiple_elements():
     """ Create a fake article with multiple elements. """
 
     settings = {
-        "SITEURL": "fakesite.com",
+        "SITEURL": "https://www.fakesite.com",
         "SITENAME": "Fake Site Name",
         "LOGO": "https://www.fakesite.com/fake-logo.jpg",
     }
