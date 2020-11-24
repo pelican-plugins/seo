@@ -8,7 +8,7 @@ class InternalLinkAnalyzer:
 
     def __init__(self, content, siteurl):
         self._soup = BeautifulSoup(content, features="html.parser")
-        self._links = self._soup.find_all("a")
+        self._links = self._soup.find_all("a", href=True)
         self._siteurl = siteurl
 
     def has_internal_link(self):
