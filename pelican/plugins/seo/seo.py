@@ -19,7 +19,13 @@ from pelican.generators import ArticlesGenerator, PagesGenerator
 
 from .seo_enhancer import SEOEnhancer
 from .seo_report import SEOReport
-from .settings import SEO_ARTICLES_LIMIT, SEO_ENHANCER, SEO_PAGES_LIMIT, SEO_REPORT
+from .settings import (
+    SEO_ARTICLES_LIMIT,
+    SEO_ENHANCER,
+    SEO_ENHANCER_OPEN_GRAPH,
+    SEO_PAGES_LIMIT,
+    SEO_REPORT,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -95,6 +101,11 @@ def run_robots_file(generators):
 def run_html_enhancer(path, context):
     """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
+    if SEO_ENHANCER_OPEN_GRAPH and not SEO_ENHANCER:
+        raise Exception(
+            "You must enable SEO_ENHANCER setting to use Open Graph feature."
+        )
+
     content_file = None
     if context.get("article"):
         content_file = context["article"]
@@ -104,7 +115,10 @@ def run_html_enhancer(path, context):
     if content_file:
         seo_enhancer = SEOEnhancer()
         html_enhancements = seo_enhancer.launch_html_enhancer(
-            file=content_file, output_path=context.get("OUTPUT_PATH"), path=path,
+            file=content_file,
+            output_path=context.get("OUTPUT_PATH"),
+            path=path,
+            open_graph=SEO_ENHANCER_OPEN_GRAPH,
         )
         seo_enhancer.add_html_to_file(
             enhancements=html_enhancements, path=path,

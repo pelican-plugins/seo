@@ -31,14 +31,17 @@ class TestBreadcrumbSchemaCreator:
         assert fake_breadcrumb_schema["itemListElement"][0]["@type"] == "ListItem"
         assert fake_breadcrumb_schema["itemListElement"][0]["position"] == 1
         assert fake_breadcrumb_schema["itemListElement"][0]["name"] == "Fake Site Name"
-        assert fake_breadcrumb_schema["itemListElement"][0]["item"] == "fakesite.com"
+        assert (
+            fake_breadcrumb_schema["itemListElement"][0]["item"]
+            == "https://www.fakesite.com"
+        )
 
         assert fake_breadcrumb_schema["itemListElement"][1]["@type"] == "ListItem"
         assert fake_breadcrumb_schema["itemListElement"][1]["position"] == 2
         assert fake_breadcrumb_schema["itemListElement"][1]["name"] == "Fake file"
         assert (
             fake_breadcrumb_schema["itemListElement"][1]["item"]
-            == "fakesite.com/fake-file.html"
+            == "https://www.fakesite.com/fake-file.html"
         )
 
     @pytest.mark.parametrize(

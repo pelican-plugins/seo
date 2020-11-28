@@ -21,7 +21,7 @@ If:
 SEO comes with two features to help you:
 
 * [SEO Report](#seo-report) — Generates an HTML report based on article analysis, indicating what is good, what could be improved, and what is problematic. Useful if you want to improve the ranking of your articles.
-* [SEO Enhancer](#seo-enhancer) — Generates robot indexing guidelines, HTML tags, and structured data. Useful if you want to control how your site appears in search engine results.
+* [SEO Enhancer](#seo-enhancer) — Generates robot indexing guidelines, HTML tags, structured data, and if enabled, Open Graph tags. Useful if you want to control how your site appears in search engine results and in social medias.
 
 ## Installation
 
@@ -39,13 +39,17 @@ Please keep in mind that the `SITEURL` Pelican setting must be defined in order 
 
 ## Usage
 
-You can enable/disable features by setting them to `True` or `False` in your Pelican settings. The default is `True` for both.
+You can enable/disable parents features by setting them to `True` or `False` in your Pelican settings. The default is `True` for both.
 
 ```python
 # settings.py
 SEO_REPORT = True  # To enable this feature
 SEO_ENHANCER = False  # To disable this feature
+SEO_ENHANCER_OPEN_GRAPH = False # The default value for this feature
 ```
+
+Open Graph option is a part of the SEO enhancer feature, and may be enabled to generate Open Graph tags.
+Please note that `SEO_ENHANCER` setting must be enabled in order to use this feature.
 
 The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
 
@@ -101,6 +105,7 @@ The SEO Enhancer module generates the following for you:
 * robots file
 * HTML enhancements
 * structured data
+* Open Graph tags (if enabled)
 
 #### Robots.txt File
 
@@ -219,6 +224,40 @@ Image: https://www.example.com/article-image.jpg
 # article.rst
 :image: https://www.example.com/article-image.jpg
 ```
+
+#### Open Graph
+
+Based on [Facebook guide](https://developers.facebook.com/docs/sharing/webmasters):
+
+```
+<meta property="og:url" content=":fileurl:" />
+```
+`:fileurl:`: An absolute URL build with the `SITEURL` setting and the file URL.
+
+```
+<meta property="og:type" content=":type:" />
+```
+`:type:`: Either `article` or `page`.
+
+```
+<meta property="og:title" content=":title:" />
+<meta property="og:description" content=":description:" />
+<meta property="og:image" content=":image:" />
+```
+`:title:`, `:description:`, `:image:`: If you need to optimize your social links, you can write dedicated Open Graph content as described below in the file metadata:
+
+```
+og_title: Specific title for Open Graph
+og_description: Specific description
+og_image: https://www.example.com/og-image.jpg
+```
+
+If these metadata are not declared, `:title:`, `:description:`, `:image:` will be filled by the default `Title`, `Description` (Pelican metadata) and `Image` (plugin metadata) if they exist.
+
+```
+<meta property="og:locale" content=":language:">
+```
+`:language:`: The site language as defined in `LOCALE` Pelican setting. If not filled, it will try to get the default system locale.
 
 ## Contributing
 
