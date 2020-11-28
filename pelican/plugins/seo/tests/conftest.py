@@ -173,7 +173,7 @@ def fake_article_multiple_elements():
                         <h1>Multiple content title</h1>
                         <a href='https://www.fakesite.com'>Fake internal link</a>
                         <a href='https://www.test.com'>Fake external link</a>
-                        <a href='www.fakesite.com/test/'>Fake internal path link</a>
+                        <a href='https://www.fakesite.com/test/'>Fake internal path link</a>
                         <a>a tag without href attribute</a>
                     </body>
                 </html>"""

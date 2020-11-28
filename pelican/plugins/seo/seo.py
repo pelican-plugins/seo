@@ -22,7 +22,7 @@ from .seo_report import SEOReport
 from .settings import (
     SEO_ARTICLES_LIMIT,
     SEO_ENHANCER,
-    SEO_OPEN_GRAPH,
+    SEO_ENHANCER_OPEN_GRAPH,
     SEO_PAGES_LIMIT,
     SEO_REPORT,
 )
@@ -101,6 +101,11 @@ def run_robots_file(generators):
 def run_html_enhancer(path, context):
     """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
+    if SEO_ENHANCER_OPEN_GRAPH and not SEO_ENHANCER:
+        raise Exception(
+            "You must enable SEO_ENHANCER setting to use Open Graph feature."
+        )
+
     content_file = None
     if context.get("article"):
         content_file = context["article"]
@@ -113,7 +118,7 @@ def run_html_enhancer(path, context):
             file=content_file,
             output_path=context.get("OUTPUT_PATH"),
             path=path,
-            open_graph=SEO_OPEN_GRAPH,
+            open_graph=SEO_ENHANCER_OPEN_GRAPH,
         )
         seo_enhancer.add_html_to_file(
             enhancements=html_enhancements, path=path,

@@ -41,14 +41,15 @@ Please keep in mind that the `SITEURL` Pelican setting must be defined in order 
 
 You can enable/disable parents features by setting them to `True` or `False` in your Pelican settings. The default is `True` for both.
 
-Open Graph feature is a child of SEO enhancer feature, and can be enable or disable as a standalone. The default is `False`.
-
 ```python
 # settings.py
 SEO_REPORT = True  # To enable this feature
 SEO_ENHANCER = False  # To disable this feature
-SEO_OPEN_GRAPH = False # The default value for this feature
+SEO_ENHANCER_OPEN_GRAPH = False # The default value for this feature
 ```
+
+Open Graph option is a part of the SEO enhancer feature, and may be enabled to generate Open Graph tags.
+Please note that `SEO_ENHANCER` setting must be enabled in order to use this feature.
 
 The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
 
@@ -104,7 +105,7 @@ The SEO Enhancer module generates the following for you:
 * robots file
 * HTML enhancements
 * structured data
-* Open Graph tags only if the dediacted setting is enabled
+* Open Graph tags (if enabled)
 
 #### Robots.txt File
 
@@ -243,7 +244,7 @@ Based on [Facebook guide](https://developers.facebook.com/docs/sharing/webmaster
 <meta property="og:description" content=":description:" />
 <meta property="og:image" content=":image:" />
 ```
-`:title:`, `:description:`, `:image:`: As Open Graph requires shorten version of these element to be used as efficiently as possible, you can write dedicated Open Graph content in specific file metadata:
+`:title:`, `:description:`, `:image:`: If you need to optimize your social links, you can write dedicated Open Graph content as described below in the file metadata:
 
 ```
 og_title: Specific title for Open Graph
@@ -251,12 +252,12 @@ og_description: Specific description
 og_image: https://www.example.com/og-image.jpg
 ```
 
-If these metadata are not declared, `:title:`, `:description:`, `:image:` will be filled by the default `Title`, `Description` (Pelican metadata) and `Image` (plugin metadata) if they exists.
+If these metadata are not declared, `:title:`, `:description:`, `:image:` will be filled by the default `Title`, `Description` (Pelican metadata) and `Image` (plugin metadata) if they exist.
 
 ```
 <meta property="og:locale" content=":language:">
 ```
-`:language:`: The site language defined in `LOCALE` Pelican setting. If not filled, it will try to get the default locale system.
+`:language:`: The site language as defined in `LOCALE` Pelican setting. If not filled, it will try to get the default system locale.
 
 ## Contributing
 
