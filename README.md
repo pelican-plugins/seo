@@ -46,10 +46,13 @@ You can enable/disable parents features by setting them to `True` or `False` in 
 SEO_REPORT = True  # To enable this feature
 SEO_ENHANCER = False  # To disable this feature
 SEO_ENHANCER_OPEN_GRAPH = False # The default value for this feature
+SEO_ENHANCER_TWITTER_CARDS = False # The default value for this feature
 ```
 
-Open Graph option is a part of the SEO enhancer feature, and may be enabled to generate Open Graph tags.
-Please note that `SEO_ENHANCER` setting must be enabled in order to use this feature.
+Open Graph and Twitter Cards options are part of the SEO enhancer feature, and may be enabled to generate social tags.
+Please note that :
+ * `SEO_ENHANCER` setting must be enabled in order to use this feature
+ * `SEO_ENHANCER_OPEN_GRAPH` setting must be enabled in order to use `SEO_ENHANCER_TWITTER_CARDS` (see [why](#twitter-cards)
 
 The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
 
@@ -106,6 +109,7 @@ The SEO Enhancer module generates the following for you:
 * HTML enhancements
 * structured data
 * Open Graph tags (if enabled)
+* Twitter Cards tags (if enabled)
 
 #### Robots.txt File
 
@@ -227,7 +231,7 @@ Image: https://www.example.com/article-image.jpg
 
 #### Open Graph
 
-Based on [Facebook guide](https://developers.facebook.com/docs/sharing/webmasters):
+Based on [Open Graph protocol](https://ogp.me), the SEO plugin implements required properties and some aditionnals ones:
 
 ```
 <meta property="og:url" content=":fileurl:" />
@@ -258,6 +262,23 @@ If these metadata are not declared, `:title:`, `:description:`, `:image:` will b
 <meta property="og:locale" content=":language:">
 ```
 `:language:`: The site language as defined in `LOCALE` Pelican setting. If not filled, it will try to get the default system locale.
+
+#### Twitter Cards
+
+The Twitter Cards feature requires Open Graph feature to be functional. To avoid the duplication of similar tags, [Twitter falls back on some Open Graph tags](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started#opengraph) if Twitter's are not present.
+
+Based on [Twitter guide](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary), the SEO plugin implements the Summary Card:
+
+```
+<meta name="twitter:card" content="summary" />
+```
+
+```
+<meta name="twitter:site" content=":tw_account:" />
+```
+`:tw_account:`: The Twitter @account to link to the card. You can fill in the file metadata, but it's not a required property.
+
+The other properties required by Twitter are created thanks to Open Graph feature.
 
 ## Contributing
 

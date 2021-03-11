@@ -6,12 +6,13 @@ from .article_schema_creator import ArticleSchemaCreator
 from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 from .canonical_url_creator import CanonicalURLCreator
 from .open_graph import OpenGraph
+from .twitter_cards import TwitterCards
 
 
 class HTMLEnhancer:
     """ HTML Enhancer : get instances of HTML enhancements. """
 
-    def __init__(self, file, output_path, path, open_graph=False):
+    def __init__(self, file, output_path, path, open_graph=False, twitter_cards=False):
         _file_type = "website"  # Default value
         if isinstance(file, Article):
             _file_type = "article"
@@ -63,3 +64,8 @@ class HTMLEnhancer:
                 image=_metadata.get("og_image") or _image,
                 locale=_settings.get("LOCALE"),
             )
+
+            if twitter_cards:
+                self.twitter_cards = TwitterCards(
+                    tw_account=_metadata.get("tw_account"),
+                )
