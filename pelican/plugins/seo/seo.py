@@ -23,6 +23,7 @@ from .settings import (
     SEO_ARTICLES_LIMIT,
     SEO_ENHANCER,
     SEO_ENHANCER_OPEN_GRAPH,
+    SEO_ENHANCER_TWITTER_CARDS,
     SEO_PAGES_LIMIT,
     SEO_REPORT,
 )
@@ -101,10 +102,13 @@ def run_robots_file(generators):
 def run_html_enhancer(path, context):
     """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
 
-    if SEO_ENHANCER_OPEN_GRAPH and not SEO_ENHANCER:
+    if (SEO_ENHANCER_OPEN_GRAPH or SEO_ENHANCER_TWITTER_CARDS) and not SEO_ENHANCER:
         raise Exception(
-            "You must enable SEO_ENHANCER setting to use Open Graph feature."
+            "You must enable SEO_ENHANCER setting to use social medias features."
         )
+
+    if SEO_ENHANCER_TWITTER_CARDS and not SEO_ENHANCER_OPEN_GRAPH:
+        raise Exception("You must enable Open Graph feature to use Twitter Cards.")
 
     content_file = None
     if context.get("article"):
@@ -119,6 +123,7 @@ def run_html_enhancer(path, context):
             output_path=context.get("OUTPUT_PATH"),
             path=path,
             open_graph=SEO_ENHANCER_OPEN_GRAPH,
+            twitter_cards=SEO_ENHANCER_TWITTER_CARDS,
         )
         seo_enhancer.add_html_to_file(
             enhancements=html_enhancements, path=path,

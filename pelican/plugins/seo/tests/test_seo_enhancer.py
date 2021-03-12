@@ -186,3 +186,75 @@ class TestSEOEnhancer:
  </body>
 </html>"""
             )
+
+    def test_add_html_enhancements_to_file_with_twitter_cards(
+        self, fake_article, fake_seo_enhancer
+    ):
+        """
+        Test if add_html_to_file with twitter_cards setting
+        adds Twitter Cards tags to HTML files.
+        It'll also add Open Graph tags as Twitter Cards feature
+        requires them.
+        """
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
+            open_graph=True,
+            twitter_cards=True,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open", mock_open(read_data=fake_article.content)
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+ <head>
+  <title>
+   Fake Title
+  </title>
+  <meta content="Fake description" name="description"/>
+  <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
+  </script>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
+  </script>
+  <meta content="summary" name="twitter:card"/>
+  <meta content="@TestTWCards" name="twitter:site"/>
+  <meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
+  <meta content="website" property="og:type"/>
+  <meta content="OG Title" property="og:title"/>
+  <meta content="OG Description" property="og:description"/>
+  <meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>
+  <meta content="fr_FR" property="og:locale"/>
+ </head>
+ <body>
+  <h1>
+   Fake content title
+  </h1>
+  <p>
+   Fake content 🙃
+  </p>
+  <a href="https://www.fakesite.com">
+   Fake internal link
+  </a>
+ </body>
+</html>"""
+            )

@@ -74,6 +74,7 @@ def fake_article():
         "og_title": "OG Title",
         "og_description": "OG Description",
         "og_image": "https://www.fakesite.com/og-image.jpg",
+        "tw_account": "@TestTWCards",
     }
     title = "Fake Title"
     description = "Fake description"
@@ -118,6 +119,7 @@ def fake_article_missing_elements():
     metadata = {
         "noindex": True,
         "image": "",
+        "tw_account": None,
     }
     title = ""
     description = ""
