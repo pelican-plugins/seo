@@ -194,6 +194,160 @@ def fake_article_multiple_elements():
 
 
 @pytest.fixture()
+def fake_article_save_as():
+    """ Create a fake article with save_as field """
+
+    settings = {
+        "SITEURL": "https://www.fakesite.com",
+        "SITENAME": "Fake Site Name",
+        "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+        "LOCALE": ["fr_FR"],
+    }
+    metadata = {
+        "noindex": True,
+        "disallow": True,
+        "image": "https://www.fakesite.com/fake-image.jpg",
+        "og_title": "OG Title",
+        "og_description": "OG Description",
+        "og_image": "https://www.fakesite.com/og-image.jpg",
+        "tw_account": "@TestTWCards",
+        "save_as": "fake_save_as.html",
+    }
+    title = "Fake Title"
+    description = "Fake description"
+    url = "fake-title.html"
+    date = FakeDate("2019", "04", "03", "23", "49")
+    author = FakeAuthor(name="Fake author")
+    category = FakeCategory(name="Fake category")
+    content = """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta name='description' content='Fake description' />
+                    </head>
+                    <body>
+                        <h1>Fake content title</h1>
+                        <p>Fake content 🙃</p>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
+                    </body>
+                </html>"""
+
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category,
+    )
+
+
+@pytest.fixture()
+def fake_article_custom_canonical():
+    """ Create a fake article with custom canonical tag. """
+
+    settings = {
+        "SITEURL": "https://www.fakesite.com",
+        "SITENAME": "Fake Site Name",
+        "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+        "LOCALE": ["fr_FR"],
+    }
+    metadata = {
+        "noindex": True,
+        "disallow": True,
+        "image": "https://www.fakesite.com/fake-image.jpg",
+        "og_title": "OG Title",
+        "og_description": "OG Description",
+        "og_image": "https://www.fakesite.com/og-image.jpg",
+        "tw_account": "@TestTWCards",
+        "canonical": "https://www.example.com/canonical-fake-article.html",
+    }
+    title = "Fake Title"
+    description = "Fake description"
+    url = "fake-title.html"
+    date = FakeDate("2019", "04", "03", "23", "49")
+    author = FakeAuthor(name="Fake author")
+    category = FakeCategory(name="Fake category")
+    content = """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta name='description' content='Fake description' />
+                    </head>
+                    <body>
+                        <h1>Fake content title</h1>
+                        <p>Fake content 🙃</p>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
+                    </body>
+                </html>"""
+
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category,
+    )
+
+
+@pytest.fixture()
+def fake_article_custom_canonical_and_save_as():
+    """ Create a fake article with custom canonical tag. """
+
+    settings = {
+        "SITEURL": "https://www.fakesite.com",
+        "SITENAME": "Fake Site Name",
+        "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+        "LOCALE": ["fr_FR"],
+    }
+    metadata = {
+        "noindex": True,
+        "disallow": True,
+        "image": "https://www.fakesite.com/fake-image.jpg",
+        "og_title": "OG Title",
+        "og_description": "OG Description",
+        "og_image": "https://www.fakesite.com/og-image.jpg",
+        "tw_account": "@TestTWCards",
+        "canonical": "https://www.example.com/canonical-fake-article.html",
+        "save_as": "fake_save_as.html",
+    }
+    title = "Fake Title"
+    description = "Fake description"
+    url = "fake-title.html"
+    date = FakeDate("2019", "04", "03", "23", "49")
+    author = FakeAuthor(name="Fake author")
+    category = FakeCategory(name="Fake category")
+    content = """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta name='description' content='Fake description' />
+                    </head>
+                    <body>
+                        <h1>Fake content title</h1>
+                        <p>Fake content 🙃</p>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
+                    </body>
+                </html>"""
+
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category,
+    )
+
+
+@pytest.fixture()
 def fake_seo_report():
     """ Create a fake seo report instance. """
 

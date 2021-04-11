@@ -144,6 +144,8 @@ The SEO Enhancer automatically adds canonical link metadata to `<head>` tags in 
 <link rel="canonical" href="<SITEURL>/example.html" />
 ```
 
+If you syndicate content from third parties or include your own posts already hosted elsewhere, it is possible to explicitly assign an external canonical link for an article by adding `:canonical:` (rst) or `Canonical:` (Markdown) metadata fields to an article.
+
 #### Structured Data
 
 The SEO Enhancer automatically adds structured data in the `<head>` tag in order to improve the display of result snippets in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.

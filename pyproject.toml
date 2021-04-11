@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pelican-seo"
-version = "1.1.0"
+version = "1.2.0"
 description = "Pelican plugin to improve SEO (Search Engine Optimization) to reach top positions on search engines."
 authors = ["Maëva Brunelles <contact@tremacorp.fr>"]
 license = "AGPL-3.0"

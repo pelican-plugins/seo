@@ -123,6 +123,188 @@ class TestSEOEnhancer:
 </html>"""
             )
 
+    def test_add_html_enhancements_to_file_with_save_as(
+        self, fake_article_save_as, fake_seo_enhancer
+    ):
+        """
+        Test if add_html_to_file add SEO enhancements
+        to HTML files by mocking open().
+        In this case the save_as metadata field is set to "fake_save_as.html",
+        so we expect the canonical url to be set to this.
+        """
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=fake_article_save_as, output_path="fake_output", path=path,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open", mock_open(read_data=fake_article_save_as.content)
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+ <head>
+  <title>
+   Fake Title
+  </title>
+  <meta content="Fake description" name="description"/>
+  <link href="https://www.fakesite.com/fake_save_as.html" rel="canonical"/>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
+  </script>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
+  </script>
+ </head>
+ <body>
+  <h1>
+   Fake content title
+  </h1>
+  <p>
+   Fake content 🙃
+  </p>
+  <a href="https://www.fakesite.com">
+   Fake internal link
+  </a>
+ </body>
+</html>"""
+            )
+
+    def test_add_html_enhancements_to_file_with_custom_canonical(
+        self, fake_article_custom_canonical, fake_seo_enhancer
+    ):
+        """
+        Test if add_html_to_file add SEO enhancements
+        to HTML files by mocking open().
+        In this case the canonical metadata field is set,
+        so we expect the canonical url to be set to this.
+        """
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=fake_article_custom_canonical, output_path="fake_output", path=path,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open",
+            mock_open(read_data=fake_article_custom_canonical.content),
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+ <head>
+  <title>
+   Fake Title
+  </title>
+  <meta content="Fake description" name="description"/>
+  <link href="https://www.example.com/canonical-fake-article.html" rel="canonical"/>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
+  </script>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
+  </script>
+ </head>
+ <body>
+  <h1>
+   Fake content title
+  </h1>
+  <p>
+   Fake content 🙃
+  </p>
+  <a href="https://www.fakesite.com">
+   Fake internal link
+  </a>
+ </body>
+</html>"""
+            )
+
+    def test_add_html_enhancements_to_file_with_custom_canonical_and_save_as(
+        self, fake_article_custom_canonical, fake_seo_enhancer
+    ):
+        """
+        Test if add_html_to_file add SEO enhancements
+        to HTML files by mocking open().
+        In this case both canonical and save_as metadata fields are set,
+        so we expect the canonical url to be prevail.
+        """
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=fake_article_custom_canonical, output_path="fake_output", path=path,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open",
+            mock_open(read_data=fake_article_custom_canonical.content),
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+ <head>
+  <title>
+   Fake Title
+  </title>
+  <meta content="Fake description" name="description"/>
+  <link href="https://www.example.com/canonical-fake-article.html" rel="canonical"/>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
+  </script>
+  <script type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
+  </script>
+ </head>
+ <body>
+  <h1>
+   Fake content title
+  </h1>
+  <p>
+   Fake content 🙃
+  </p>
+  <a href="https://www.fakesite.com">
+   Fake internal link
+  </a>
+ </body>
+</html>"""
+            )
+
     def test_add_html_enhancements_to_file_with_open_graph(
         self, fake_article, fake_seo_enhancer
     ):
