@@ -40,7 +40,7 @@ class HTMLEnhancer:
         # The canonical URL must be built with custom metadata if filled.
         # This can come from either the canonical or save_as field.
         # If both are absent, fallback to the default URL name
-        canonical = _metadata.get("canonical")
+        canonical = _metadata.get("external_canonical")
         save_as = _metadata.get("save_as")
 
         if canonical:

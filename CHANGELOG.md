@@ -1,11 +1,6 @@
 CHANGELOG
 =========
 
-1.2.0 - 2021-04-11
-------------------
-
-Add support for external canonical URL
-
 1.1.0 - 2021-03-12
 ------------------
 
