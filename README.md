@@ -166,7 +166,6 @@ In all other cases the SEO Enhancer will generate the following:
 <link rel="canonical" href="<SITEURL>/example.html" />
 ```
 
-
 #### Structured Data
 
 The SEO Enhancer automatically adds structured data in the `<head>` tag in order to improve the display of result snippets in search engines. Articles will have both article schema and breadcrumb schema, while pages will only have breadcrumb schema.
