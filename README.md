@@ -141,7 +141,7 @@ Noindex: other-example.html
 The SEO Enhancer automatically adds canonical link metadata to `<head>` tags in order to avoid presenting duplicate content to search engines:
 
 1. If you have declared the `:external_canonical:` metadata field, the SEO enhancer will use this. It expects a URL, e.g. https://www.example.com/external_canonical_article.html. It can be used if you syndicate content from third parties or want to include your own posts that are already hosted elsewhere. The SEO enhancer will prefer `:external_canonical:` over the `:save_as:` metadata field.
-2. If you have declared the `:save_as:` metadata field, the SEO enhancer will use this to contruct a canonical link. However if the `:external_canonical:` is set, the `:save_as:` field will be ignored.
+2. If you have declared the `:save_as:` metadata field, the SEO Enhancer will use it to construct a canonical link. However if the `:external_canonical:` is set, the `:save_as:` field will be ignored.
 3. If both `:external_canonical:` or `:save_as:` metadata fields are absent, it will construct the canonical link using the output filename created.
 
 Example:
