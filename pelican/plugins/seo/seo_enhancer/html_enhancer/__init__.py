@@ -41,11 +41,10 @@ class HTMLEnhancer:
         # This can come from either the canonical or save_as field.
         # If both are absent, fallback to the default URL name
         canonical = _metadata.get("external_canonical")
-        save_as = _metadata.get("save_as")
-
         if canonical:
             self.canonical_link = CanonicalURLCreator(siteurl=canonical, fileurl=None,)
         else:
+            save_as = _metadata.get("save_as")
             _fileurl = save_as if save_as else getattr(file, "url")
             self.canonical_link = CanonicalURLCreator(
                 siteurl=_settings.get("SITEURL"), fileurl=_fileurl,
