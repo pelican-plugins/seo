@@ -160,7 +160,7 @@ will result in the following addition to `<head>` tags:
 <link rel="canonical" href="https://www.example.com/external_canonical_article.html" />
 ```
 
-In all other cases the SEO enhancer will generate the following:
+In all other cases the SEO Enhancer will generate the following:
 
 ```html
 <link rel="canonical" href="<SITEURL>/example.html" />
