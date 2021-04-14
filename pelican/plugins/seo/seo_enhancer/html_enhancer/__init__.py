@@ -37,14 +37,18 @@ class HTMLEnhancer:
             sitename=_settings.get("SITENAME"),
         )
 
-        # The canonical URL must be built with custom metadata if filled
-        # If not, fallback to the default URL name
-        save_as = _metadata.get("save_as")
-        _fileurl = save_as if save_as else getattr(file, "url")
-
-        self.canonical_link = CanonicalURLCreator(
-            siteurl=_settings.get("SITEURL"), fileurl=_fileurl,
-        )
+        # The canonical URL must be built with custom metadata if filled.
+        # This can come from either the canonical or save_as field.
+        # If both are absent, fallback to the default URL name
+        canonical = _metadata.get("external_canonical")
+        if canonical:
+            self.canonical_link = CanonicalURLCreator(siteurl=canonical, fileurl=None,)
+        else:
+            save_as = _metadata.get("save_as")
+            _fileurl = save_as if save_as else getattr(file, "url")
+            self.canonical_link = CanonicalURLCreator(
+                siteurl=_settings.get("SITEURL"), fileurl=_fileurl,
+            )
 
         self.breadcrumb_schema = BreadcrumbSchemaCreator(
             output_path=output_path,

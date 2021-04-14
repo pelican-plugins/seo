@@ -31,4 +31,3 @@ Fix schemas generated in wrong script tags
 ------------------
 
 Initial release as namespace plugin
-
