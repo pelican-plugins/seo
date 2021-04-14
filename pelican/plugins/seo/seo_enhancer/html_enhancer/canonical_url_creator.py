@@ -12,6 +12,8 @@ class CanonicalURLCreator:
 
     def create_url(self):
         """ Join site URL and file URL to create canonical link. """
-
-        canonical_url = os.path.join(self._siteurl, self._fileurl)
+        if self._fileurl is None:
+            canonical_url = self._siteurl
+        else:
+            canonical_url = os.path.join(self._siteurl, self._fileurl)
         return canonical_url
