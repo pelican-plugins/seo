@@ -194,6 +194,52 @@ def fake_article_multiple_elements():
 
 
 @pytest.fixture()
+def fake_article_with_multiple_inline_elements():
+    """ Create a fake article with <code> element. """
+    settings = {
+        "SITEURL": "https://www.fakesite.com",
+        "SITENAME": "Fake Site Name",
+        "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+        "LOCALE": ["fr_FR"],
+    }
+    metadata = {}
+    title = "Fake Title"
+    description = "Fake description"
+    url = "fake-title.html"
+    date = FakeDate("2019", "04", "03", "23", "49")
+    author = FakeAuthor(name="Fake author")
+    category = FakeCategory(name="Fake category")
+    content = """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta name='description' content='Fake description' />
+                    </head>
+                    <body>
+                        <h1>Content title</h1>
+                        <p>Fake content</p>
+                        <h1>Article with inline elements</h1>
+                        <p>A sentence that contains <code>an inline code</code>.</p>
+                        <pre>Verbatim text.
+Verbatim text.</pre>
+                        <p>This paragraph contains a link to a
+                        "<a href="http://cool.site/">cool site</a>".</p>
+                    </body>
+                </html>"""
+
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category,
+    )
+
+
+@pytest.fixture()
 def fake_seo_report():
     """ Create a fake seo report instance. """
 
