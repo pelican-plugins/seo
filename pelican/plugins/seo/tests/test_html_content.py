@@ -27,7 +27,7 @@ class TestHTMLContent:
             mocked_file_handle = mocked_open.return_value
 
             fake_seo_enhancer.add_html_to_file(
-                enhancements=fake_html_enhancements, path=path
+                enhancements=fake_html_enhancements, path=path, pretty_print=False
             )
             assert len(mocked_open.call_args_list) == 2
             mocked_file_handle.read.assert_called_once()

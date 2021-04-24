@@ -2,7 +2,6 @@
 
 from unittest.mock import mock_open, patch
 
-from bs4 import BeautifulSoup
 import pytest
 
 
@@ -95,7 +94,7 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
  <head>
   <title>
@@ -153,7 +152,7 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
  <head>
   <title>
@@ -223,7 +222,7 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
  <head>
   <title>

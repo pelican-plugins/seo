@@ -111,6 +111,8 @@ The SEO Enhancer module generates the following for you:
 * Open Graph tags (if enabled)
 * Twitter Cards tags (if enabled)
 
+Please note that enabling SEO Enhancer will by default "beautify" HTML output produced by Pelican. To disable this behaviour set `SEO_ENHANCER_PRETTY_PRINT = False` in your Pelican settings.
+
 #### Robots.txt File
 
 The generated `robots.txt` file indicates to search engines which pages they should index. By default, search engine bots are allowed to crawl and index all pages.
