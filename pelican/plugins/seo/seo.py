@@ -23,7 +23,6 @@ from .settings import (
     SEO_ARTICLES_LIMIT,
     SEO_ENHANCER,
     SEO_ENHANCER_OPEN_GRAPH,
-    SEO_ENHANCER_PRETTY_PRINT,
     SEO_ENHANCER_TWITTER_CARDS,
     SEO_PAGES_LIMIT,
     SEO_REPORT,
@@ -127,9 +126,7 @@ def run_html_enhancer(path, context):
             twitter_cards=SEO_ENHANCER_TWITTER_CARDS,
         )
         seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements,
-            path=path,
-            pretty_print=SEO_ENHANCER_PRETTY_PRINT,
+            enhancements=html_enhancements, path=path,
         )
 
 

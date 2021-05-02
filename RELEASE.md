@@ -1,3 +1,3 @@
 Release type: patch
 
-Fix addition of undesirable white space in HTML
+Disable HTML pretty printing in SEO Enhancer

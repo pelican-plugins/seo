@@ -2,6 +2,7 @@
 
 from unittest.mock import mock_open, patch
 
+from bs4 import BeautifulSoup
 import pytest
 
 
@@ -94,7 +95,15 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                fake_html_content
+                "<p>Fake content with <code>inline code</code></p>" in fake_html_content
+            )
+            assert (
+                '"<a href="https://www.fakesite.com">Fake inline internal link</a>"'
+                in fake_html_content
+            )
+
+            assert (
+                BeautifulSoup(fake_html_content, features="html.parser").prettify()
                 == """<html>
  <head>
   <title>
@@ -119,6 +128,19 @@ class TestSEOEnhancer:
   <a href="https://www.fakesite.com">
    Fake internal link
   </a>
+  <p>
+   Fake content with
+   <code>
+    inline code
+   </code>
+  </p>
+  <p>
+   Fake content with "
+   <a href="https://www.fakesite.com">
+    Fake inline internal link
+   </a>
+   "
+  </p>
  </body>
 </html>"""
             )
@@ -152,7 +174,7 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                fake_html_content
+                BeautifulSoup(fake_html_content, features="html.parser").prettify()
                 == """<html>
  <head>
   <title>
@@ -183,6 +205,19 @@ class TestSEOEnhancer:
   <a href="https://www.fakesite.com">
    Fake internal link
   </a>
+  <p>
+   Fake content with
+   <code>
+    inline code
+   </code>
+  </p>
+  <p>
+   Fake content with "
+   <a href="https://www.fakesite.com">
+    Fake inline internal link
+   </a>
+   "
+  </p>
  </body>
 </html>"""
             )
@@ -222,7 +257,7 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                fake_html_content
+                BeautifulSoup(fake_html_content, features="html.parser").prettify()
                 == """<html>
  <head>
   <title>
@@ -255,6 +290,19 @@ class TestSEOEnhancer:
   <a href="https://www.fakesite.com">
    Fake internal link
   </a>
+  <p>
+   Fake content with
+   <code>
+    inline code
+   </code>
+  </p>
+  <p>
+   Fake content with "
+   <a href="https://www.fakesite.com">
+    Fake inline internal link
+   </a>
+   "
+  </p>
  </body>
 </html>"""
             )

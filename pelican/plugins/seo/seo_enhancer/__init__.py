@@ -85,7 +85,7 @@ class SEOEnhancer:
 
         logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
-    def add_html_to_file(self, enhancements, path, pretty_print=True):
+    def add_html_to_file(self, enhancements, path):
         """
         Open HTML file, add HTML enhancements with bs4 and create the new HTML files.
         """
@@ -125,9 +125,6 @@ class SEOEnhancer:
                 soup.head.append(open_graph_tag)
 
         with open(path, "w", encoding="utf8") as html_file:
-            if pretty_print:
-                html_file.write(soup.prettify())
-            else:
-                html_file.write(str(soup))
+            html_file.write(str(soup))
 
         logger.info(f"SEO plugin - SEO Enhancement: Done for {path}")
