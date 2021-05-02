@@ -1,7 +1,6 @@
 """ Mocks Pelican objects required for the units tests. """
 
 import pytest
-
 from seo.seo_enhancer import SEOEnhancer
 from seo.seo_report import SEOReport
 
