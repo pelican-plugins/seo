@@ -23,7 +23,7 @@ class ArticleSchemaCreator:
         self._sitename = sitename
 
     def _convert_date(self, date):
-        """ Get SafeDate Pelican object and return date in string. """
+        """Get SafeDate Pelican object and return date in string."""
 
         date_time = datetime.datetime(
             date.year, date.month, date.day, date.hour, date.minute

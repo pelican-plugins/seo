@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 class InternalLinkAnalyzer:
-    """ Analyze internal link of an article. """
+    """Analyze internal link of an article."""
 
     def __init__(self, content, siteurl):
         self._soup = BeautifulSoup(content, features="html.parser")
@@ -28,6 +28,6 @@ class InternalLinkAnalyzer:
 
     @property
     def internal_link_occurrence(self):
-        """ Return the internal link occurrence. """
+        """Return the internal link occurrence."""
 
         return len([link for link in self._links if self._siteurl in link["href"]])

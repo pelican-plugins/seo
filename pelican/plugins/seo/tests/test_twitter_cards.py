@@ -4,7 +4,7 @@ from seo.seo_enhancer.html_enhancer import TwitterCards
 
 
 class TestTwitterCards:
-    """ Unit tests for Twitter Cards. """
+    """Unit tests for Twitter Cards."""
 
     def test_create_tags(self, fake_article):
         """

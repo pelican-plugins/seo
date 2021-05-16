@@ -4,7 +4,7 @@ from seo.seo_report.seo_analyzer import InternalLinkAnalyzer
 
 
 class TestInternalLinkAnalyzer:
-    """ Units tests for InternalLinkAnalyzer. """
+    """Units tests for InternalLinkAnalyzer."""
 
     def test_article_has_internal_link(self, fake_article):
         """
@@ -30,7 +30,7 @@ class TestInternalLinkAnalyzer:
         assert not fake_analysis.has_internal_link()
 
     def test_article_internal_link_occurrence(self, fake_article_multiple_elements):
-        """ Test if internal_link_occurrence returns the rigth length. """
+        """Test if internal_link_occurrence returns the rigth length."""
 
         fake_analysis = InternalLinkAnalyzer(
             content=fake_article_multiple_elements.content,

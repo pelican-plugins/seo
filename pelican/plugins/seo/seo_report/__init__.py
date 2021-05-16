@@ -14,13 +14,13 @@ logger = logging.getLogger(__name__)
 
 
 class SEOReport:
-    """ Generate a SEO report by calling SEO analyzers for each content. """
+    """Generate a SEO report by calling SEO analyzers for each content."""
 
     PAGE_TITLE_RECOMMENDED_LENGTH = range(60, 71)
     PAGE_DESCRIPTION_RECOMMENDED_LENGTH = range(150, 161)
 
     def _convert_date(self, date):
-        """ Get SafeDate Pelican object and return date in string. """
+        """Get SafeDate Pelican object and return date in string."""
 
         date_time = datetime.datetime(
             date.year, date.month, date.day, date.hour, date.minute

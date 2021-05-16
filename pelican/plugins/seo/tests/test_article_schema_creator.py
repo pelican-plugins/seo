@@ -4,10 +4,10 @@ from seo.seo_enhancer.html_enhancer import ArticleSchemaCreator
 
 
 class TestArticleSchemaCreator:
-    """ Unit tests for ArticleSchemaCreator. """
+    """Unit tests for ArticleSchemaCreator."""
 
     def test_create_schema(self, fake_article):
-        """ Test that create_schema returns a valid schema.org (dict). """
+        """Test that create_schema returns a valid schema.org (dict)."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -74,7 +74,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_author_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with author missing. """
+        """Test that create_schema returns a schema.org, with author missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article_missing_elements.author,
@@ -103,7 +103,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_title_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with title missing. """
+        """Test that create_schema returns a schema.org, with title missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -132,7 +132,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_category_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with category missing. """
+        """Test that create_schema returns a schema.org, with category missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -161,7 +161,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_date_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with date missing. """
+        """Test that create_schema returns a schema.org, with date missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -190,7 +190,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_logo_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with logo missing. """
+        """Test that create_schema returns a schema.org, with logo missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -216,7 +216,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_image_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with image missing. """
+        """Test that create_schema returns a schema.org, with image missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,
@@ -245,7 +245,7 @@ class TestArticleSchemaCreator:
     def test_create_schema_with_sitename_missing(
         self, fake_article, fake_article_missing_elements
     ):
-        """ Test that create_schema returns a schema.org, with sitename missing. """
+        """Test that create_schema returns a schema.org, with sitename missing."""
 
         article = ArticleSchemaCreator(
             author=fake_article.author,

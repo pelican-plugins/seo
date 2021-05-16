@@ -10,7 +10,7 @@ from .twitter_cards import TwitterCards
 
 
 class HTMLEnhancer:
-    """ HTML Enhancer : get instances of HTML enhancements. """
+    """HTML Enhancer : get instances of HTML enhancements."""
 
     def __init__(self, file, output_path, path, open_graph=False, twitter_cards=False):
         _file_type = "website"  # Default value
