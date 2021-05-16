@@ -11,10 +11,10 @@ from seo.seo_report.seo_analyzer import (
 
 
 class TestSEOReport:
-    """ Units tests for SEOReport. """
+    """Units tests for SEOReport."""
 
     def test_launch_analysis_returns_dict(self, fake_article, fake_seo_report):
-        """ Test if launch_analysis return a dict with expected keys. """
+        """Test if launch_analysis return a dict with expected keys."""
 
         fake_articles_analysis = fake_seo_report.launch_analysis(fake_article)
 

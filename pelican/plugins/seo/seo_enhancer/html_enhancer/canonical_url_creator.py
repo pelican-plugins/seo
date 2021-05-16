@@ -4,14 +4,14 @@ import os
 
 
 class CanonicalURLCreator:
-    """ Canonical URL creator. """
+    """Canonical URL creator."""
 
     def __init__(self, fileurl, siteurl):
         self._fileurl = fileurl
         self._siteurl = siteurl
 
     def create_url(self):
-        """ Join site URL and file URL to create canonical link. """
+        """Join site URL and file URL to create canonical link."""
         if self._fileurl is None:
             canonical_url = self._siteurl
         else:

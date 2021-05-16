@@ -4,10 +4,10 @@ from seo.seo_enhancer.html_enhancer import CanonicalURLCreator
 
 
 class TestCanonicalURLCreator:
-    """ Unit tests for CanonicalURLCreator. """
+    """Unit tests for CanonicalURLCreator."""
 
     def test_create_url(self, fake_article):
-        """ Test if create_url() returns the join of site URL and article URL. """
+        """Test if create_url() returns the join of site URL and article URL."""
 
         canonical = CanonicalURLCreator(
             fileurl=fake_article.url, siteurl=fake_article.settings["SITEURL"]
@@ -17,7 +17,7 @@ class TestCanonicalURLCreator:
         assert canonical_link == "https://www.fakesite.com/fake-title.html"
 
     def test_create_url_with_save_as_metadata(self, fake_seo_enhancer, fake_article):
-        """ Test that canonical URL is build with save_as metadata when filled. """
+        """Test that canonical URL is build with save_as metadata when filled."""
 
         fake_article.metadata["save_as"] = "custom_file_name.html"
 
@@ -35,7 +35,7 @@ class TestCanonicalURLCreator:
     def test_create_url_with_external_canonical_metadata(
         self, fake_seo_enhancer, fake_article
     ):
-        """ Test that canonical URL is build with save_as metadata when filled. """
+        """Test that canonical URL is build with save_as metadata when filled."""
 
         fake_article.metadata[
             "external_canonical"
@@ -55,7 +55,7 @@ class TestCanonicalURLCreator:
     def test_create_url_with_external_canonical_and_save_as_metadata(
         self, fake_seo_enhancer, fake_article
     ):
-        """ Test that canonical URL is build with save_as metadata when filled. """
+        """Test that canonical URL is build with save_as metadata when filled."""
 
         fake_article.metadata[
             "external_canonical"

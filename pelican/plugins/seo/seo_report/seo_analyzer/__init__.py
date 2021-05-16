@@ -7,7 +7,7 @@ from .page_title_analyzer import PageTitleAnalyzer
 
 
 class SEOAnalyzer:
-    """ Instancy all micro SEO analyzers. """
+    """Instancy all micro SEO analyzers."""
 
     def __init__(self, article):
         self._title = getattr(article, "title", None)

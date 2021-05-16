@@ -4,7 +4,7 @@ from seo.seo_report.seo_analyzer import PageDescriptionAnalyzer
 
 
 class TestPageDescriptionAnalyzer:
-    """ Units tests for PageDescriptionAnalyzer. """
+    """Units tests for PageDescriptionAnalyzer."""
 
     def test_article_has_page_description(self, fake_article):
         """
