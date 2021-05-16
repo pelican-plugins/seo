@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2.1 - 2021-05-16
+------------------
+
+Fix addition of undesirable white space in HTML because of BeautifulSoup.prettify()
+
 1.2.0 - 2021-04-14
 ------------------
 
