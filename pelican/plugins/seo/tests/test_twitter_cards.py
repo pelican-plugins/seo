@@ -12,7 +12,9 @@ class TestTwitterCards:
         if all elements are filled.
         """
 
-        tw = TwitterCards(tw_account=fake_article.metadata["tw_account"],)
+        tw = TwitterCards(
+            tw_account=fake_article.metadata["tw_account"],
+        )
 
         tw_tags = tw.create_tags()
 

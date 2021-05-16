@@ -95,7 +95,8 @@ def run_robots_file(generators):
                 robots_rules.append(page_metadata)
 
     seo_enhancer.generate_robots(
-        rules=robots_rules, output_path=output_path,
+        rules=robots_rules,
+        output_path=output_path,
     )
 
 
@@ -126,7 +127,8 @@ def run_html_enhancer(path, context):
             twitter_cards=SEO_ENHANCER_TWITTER_CARDS,
         )
         seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements, path=path,
+            enhancements=html_enhancements,
+            path=path,
         )
 
 

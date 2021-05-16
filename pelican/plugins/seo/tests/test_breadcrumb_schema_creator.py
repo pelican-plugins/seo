@@ -1,7 +1,6 @@
 """ Units tests for Breadcrumb Schema Creator. """
 
 import pytest
-
 from seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
 
 
@@ -47,7 +46,10 @@ class TestBreadcrumbSchemaCreator:
     @pytest.mark.parametrize(
         "output_path,path",
         [
-            ("fake_output", "fake_output/test/blabla/other/kiwi/fake-file.html",),
+            (
+                "fake_output",
+                "fake_output/test/blabla/other/kiwi/fake-file.html",
+            ),
             (
                 "/home/kiwi/pelican/my-site/fake_output",
                 "/home/kiwi/pelican/my-site/fake_output/test/blabla/other/kiwi/fake-file.html",

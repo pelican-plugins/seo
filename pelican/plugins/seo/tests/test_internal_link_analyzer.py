@@ -13,7 +13,8 @@ class TestInternalLinkAnalyzer:
         """
 
         fake_analysis = InternalLinkAnalyzer(
-            content=fake_article.content, siteurl=fake_article.settings["SITEURL"],
+            content=fake_article.content,
+            siteurl=fake_article.settings["SITEURL"],
         )
         assert fake_analysis.has_internal_link()
 

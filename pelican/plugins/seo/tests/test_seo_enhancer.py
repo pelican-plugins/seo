@@ -75,7 +75,9 @@ class TestSEOEnhancer:
 
         path = "fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            file=fake_article, output_path="fake_output", path=path,
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
         )
 
         with patch(
@@ -127,7 +129,10 @@ class TestSEOEnhancer:
 
         path = "fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            file=fake_article, output_path="fake_output", path=path, open_graph=True,
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
+            open_graph=True,
         )
 
         with patch(
