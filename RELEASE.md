@@ -1,3 +1,3 @@
 Release type: patch
 
-Disable HTML pretty printing in SEO Enhancer
+Fix addition of undesirable white space in HTML because of BeautifulSoup.prettify()

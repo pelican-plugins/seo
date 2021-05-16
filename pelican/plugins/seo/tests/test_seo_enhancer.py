@@ -2,7 +2,6 @@
 
 from unittest.mock import mock_open, patch
 
-from bs4 import BeautifulSoup
 import pytest
 
 
@@ -95,53 +94,26 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                "<p>Fake content with <code>inline code</code></p>" in fake_html_content
-            )
-            assert (
-                '"<a href="https://www.fakesite.com">Fake inline internal link</a>"'
-                in fake_html_content
-            )
-
-            assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
- <head>
-  <title>
-   Fake Title
-  </title>
-  <meta content="Fake description" name="description"/>
-  <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
-  </script>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
-  </script>
- </head>
- <body>
-  <h1>
-   Fake content title
-  </h1>
-  <p>
-   Fake content 🙃
-  </p>
-  <a href="https://www.fakesite.com">
-   Fake internal link
-  </a>
-  <p>
-   Fake content with
-   <code>
-    inline code
-   </code>
-  </p>
-  <p>
-   Fake content with "
-   <a href="https://www.fakesite.com">
-    Fake inline internal link
-   </a>
-   "
-  </p>
- </body>
+<head>
+<title>Fake Title</title>
+<meta content="Fake description" name="description"/>
+<link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}\
+</script>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}\
+</script>\
+</head>
+<body>
+<h1>Fake content title</h1>
+<p>Fake content 🙃</p>
+<a href="https://www.fakesite.com">Fake internal link</a>
+<p>Fake content with <code>inline code</code></p>
+<p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
+</body>
 </html>"""
             )
 
@@ -174,51 +146,32 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
- <head>
-  <title>
-   Fake Title
-  </title>
-  <meta content="Fake description" name="description"/>
-  <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
-  </script>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
-  </script>
-  <meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
-  <meta content="website" property="og:type"/>
-  <meta content="OG Title" property="og:title"/>
-  <meta content="OG Description" property="og:description"/>
-  <meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>
-  <meta content="fr_FR" property="og:locale"/>
- </head>
- <body>
-  <h1>
-   Fake content title
-  </h1>
-  <p>
-   Fake content 🙃
-  </p>
-  <a href="https://www.fakesite.com">
-   Fake internal link
-  </a>
-  <p>
-   Fake content with
-   <code>
-    inline code
-   </code>
-  </p>
-  <p>
-   Fake content with "
-   <a href="https://www.fakesite.com">
-    Fake inline internal link
-   </a>
-   "
-  </p>
- </body>
+<head>
+<title>Fake Title</title>
+<meta content="Fake description" name="description"/>
+<link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}\
+</script>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}\
+</script>\
+<meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>\
+<meta content="website" property="og:type"/>\
+<meta content="OG Title" property="og:title"/>\
+<meta content="OG Description" property="og:description"/>\
+<meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>\
+<meta content="fr_FR" property="og:locale"/>\
+</head>
+<body>
+<h1>Fake content title</h1>
+<p>Fake content 🙃</p>
+<a href="https://www.fakesite.com">Fake internal link</a>
+<p>Fake content with <code>inline code</code></p>
+<p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
+</body>
 </html>"""
             )
 
@@ -257,52 +210,33 @@ class TestSEOEnhancer:
             fake_html_content = write_args[0]
 
             assert (
-                BeautifulSoup(fake_html_content, features="html.parser").prettify()
+                fake_html_content
                 == """<html>
- <head>
-  <title>
-   Fake Title
-  </title>
-  <meta content="Fake description" name="description"/>
-  <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}
-  </script>
-  <script type="application/ld+json">
-   {"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}
-  </script>
-  <meta content="summary" name="twitter:card"/>
-  <meta content="@TestTWCards" name="twitter:site"/>
-  <meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
-  <meta content="website" property="og:type"/>
-  <meta content="OG Title" property="og:title"/>
-  <meta content="OG Description" property="og:description"/>
-  <meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>
-  <meta content="fr_FR" property="og:locale"/>
- </head>
- <body>
-  <h1>
-   Fake content title
-  </h1>
-  <p>
-   Fake content 🙃
-  </p>
-  <a href="https://www.fakesite.com">
-   Fake internal link
-  </a>
-  <p>
-   Fake content with
-   <code>
-    inline code
-   </code>
-  </p>
-  <p>
-   Fake content with "
-   <a href="https://www.fakesite.com">
-    Fake inline internal link
-   </a>
-   "
-  </p>
- </body>
+<head>
+<title>Fake Title</title>
+<meta content="Fake description" name="description"/>
+<link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}\
+</script>\
+<script type="application/ld+json">\
+{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}\
+</script>\
+<meta content="summary" name="twitter:card"/>\
+<meta content="@TestTWCards" name="twitter:site"/>\
+<meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>\
+<meta content="website" property="og:type"/>\
+<meta content="OG Title" property="og:title"/>\
+<meta content="OG Description" property="og:description"/>\
+<meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>\
+<meta content="fr_FR" property="og:locale"/>\
+</head>
+<body>
+<h1>Fake content title</h1>
+<p>Fake content 🙃</p>
+<a href="https://www.fakesite.com">Fake internal link</a>
+<p>Fake content with <code>inline code</code></p>
+<p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
+</body>
 </html>"""
             )
