@@ -125,6 +125,6 @@ class SEOEnhancer:
                 soup.head.append(open_graph_tag)
 
         with open(path, "w", encoding="utf8") as html_file:
-            html_file.write(soup.prettify())
+            html_file.write(str(soup))
 
         logger.info(f"SEO plugin - SEO Enhancement: Done for {path}")

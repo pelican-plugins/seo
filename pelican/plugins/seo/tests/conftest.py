@@ -1,7 +1,6 @@
 """ Mocks Pelican objects required for the units tests. """
 
 import pytest
-
 from seo.seo_enhancer import SEOEnhancer
 from seo.seo_report import SEOReport
 
@@ -91,6 +90,8 @@ def fake_article():
                         <h1>Fake content title</h1>
                         <p>Fake content 🙃</p>
                         <a href='https://www.fakesite.com'>Fake internal link</a>
+                        <p>Fake content with <code>inline code</code></p>
+                        <p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
                     </body>
                 </html>"""
 
