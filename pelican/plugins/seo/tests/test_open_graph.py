@@ -3,6 +3,7 @@
 import locale
 
 import pytest
+
 from seo.seo_enhancer.html_enhancer import OpenGraph
 
 
