@@ -1,7 +1,6 @@
 """ Units tests for Breadcrumb Schema Creator. """
 
 import pytest
-
 from seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
 
 
