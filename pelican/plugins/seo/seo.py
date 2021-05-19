@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 def plugin_initializer(settings):
-    """ Raises if SITEURL parameter is not set in Pelican settings """
+    """Raises if SITEURL parameter is not set in Pelican settings"""
 
     if not settings.settings.get("SITEURL"):
         raise Exception(
@@ -44,7 +44,7 @@ def plugin_initializer(settings):
 
 
 def run_seo_report(generators):
-    """ Run SEO report creation if SEO_REPORT is enabled in settings. """
+    """Run SEO report creation if SEO_REPORT is enabled in settings."""
 
     seo_report = SEOReport()
     documents_analysis = []
@@ -95,12 +95,13 @@ def run_robots_file(generators):
                 robots_rules.append(page_metadata)
 
     seo_enhancer.generate_robots(
-        rules=robots_rules, output_path=output_path,
+        rules=robots_rules,
+        output_path=output_path,
     )
 
 
 def run_html_enhancer(path, context):
-    """ Run HTML enhancements if SEO_ENHANCER is enabled in settings. """
+    """Run HTML enhancements if SEO_ENHANCER is enabled in settings."""
 
     if (SEO_ENHANCER_OPEN_GRAPH or SEO_ENHANCER_TWITTER_CARDS) and not SEO_ENHANCER:
         raise Exception(
@@ -126,7 +127,8 @@ def run_html_enhancer(path, context):
             twitter_cards=SEO_ENHANCER_TWITTER_CARDS,
         )
         seo_enhancer.add_html_to_file(
-            enhancements=html_enhancements, path=path,
+            enhancements=html_enhancements,
+            path=path,
         )
 
 

@@ -8,7 +8,7 @@ from seo.seo_enhancer.html_enhancer import OpenGraph
 
 
 class TestOpenGraph:
-    """ Unit tests for OpenGraph. """
+    """Unit tests for OpenGraph."""
 
     def test_create_absolute_fileurl(self, fake_article):
         """

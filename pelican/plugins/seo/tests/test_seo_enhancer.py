@@ -6,7 +6,7 @@ import pytest
 
 
 class TestSEOEnhancer:
-    """ Units tests for SEOEnhancer. """
+    """Units tests for SEOEnhancer."""
 
     def test_populate_robots_return_dict_with_rules_for_an_url(
         self, fake_seo_enhancer, fake_article
@@ -23,7 +23,7 @@ class TestSEOEnhancer:
         assert fake_robots_rules["disallow"]
 
     def test_generate_robots_file(self, fake_seo_enhancer, fake_robots_rules):
-        """ Test if generate_robots create a robots.txt file by mocking open(). """
+        """Test if generate_robots create a robots.txt file by mocking open()."""
 
         with patch("os.mkdir"):
             with patch("seo.seo_enhancer.open", mock_open()) as mocked_open:
@@ -75,7 +75,9 @@ class TestSEOEnhancer:
 
         path = "fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            file=fake_article, output_path="fake_output", path=path,
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
         )
 
         with patch(
@@ -127,7 +129,10 @@ class TestSEOEnhancer:
 
         path = "fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            file=fake_article, output_path="fake_output", path=path, open_graph=True,
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
+            open_graph=True,
         )
 
         with patch(
