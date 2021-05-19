@@ -40,9 +40,9 @@ markdown = {version = "^3.2.2", optional = true}
 beautifulsoup4 = "^4.9"
 
 [tool.poetry.dev-dependencies]
-black = {version = "^19.10b0", allow-prereleases = true}
-flake8 = "^3.8"
-flake8-black = "^0.1.0"
+black = {version = "^21.5b1", allow-prereleases = true}
+flake8 = "^3.9"
+flake8-black = "^0.2"
 invoke = "^1.3"
 isort = "^5.4"
 livereload = "^2.6"
