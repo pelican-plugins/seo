@@ -18,20 +18,14 @@ classifiers = [
     "Framework :: Pelican",
     "Framework :: Pelican :: Plugins",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: GNU Affero General Public License v3",
     "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [tool.poetry.urls]
 "Funding" = "https://donate.getpelican.com/"
-"Tracker" = "https://github.com/pelican-plugins/seo/issues"
+"Issue Tracker" = "https://github.com/pelican-plugins/seo/issues"
 
 [tool.poetry.dependencies]
 python = "^3.6"
