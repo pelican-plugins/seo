@@ -55,7 +55,7 @@ class TestCanonicalURLCreator:
     def test_create_url_with_external_canonical_and_save_as_metadata(
         self, fake_seo_enhancer, fake_article
     ):
-        """ Test that canonical URL is build with :external_canonical: metadata value, even when :save_as: metadata is filled. """
+        """Test that canonical URL is build with :external_canonical: metadata value, even when :save_as: metadata is filled."""
 
         fake_article.metadata[
             "external_canonical"

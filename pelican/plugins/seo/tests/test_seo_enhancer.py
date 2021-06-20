@@ -156,7 +156,9 @@ class TestSEOEnhancer:
         fake_article.metadata.update(metadata)
 
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
-            file=fake_article, output_path="fake_output", path=path,
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
         )
 
         with patch(
