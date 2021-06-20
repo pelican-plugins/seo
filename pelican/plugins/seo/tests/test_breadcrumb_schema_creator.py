@@ -6,7 +6,7 @@ from seo.seo_enhancer.html_enhancer import BreadcrumbSchemaCreator
 
 
 class TestBreadcrumbSchemaCreator:
-    """ Unit tests for BreadcrumbSchemaCreator. """
+    """Unit tests for BreadcrumbSchemaCreator."""
 
     def test_create_schema(self, fake_article):
         """
@@ -47,7 +47,10 @@ class TestBreadcrumbSchemaCreator:
     @pytest.mark.parametrize(
         "output_path,path",
         [
-            ("fake_output", "fake_output/test/blabla/other/kiwi/fake-file.html",),
+            (
+                "fake_output",
+                "fake_output/test/blabla/other/kiwi/fake-file.html",
+            ),
             (
                 "/home/kiwi/pelican/my-site/fake_output",
                 "/home/kiwi/pelican/my-site/fake_output/test/blabla/other/kiwi/fake-file.html",
@@ -74,7 +77,7 @@ class TestBreadcrumbSchemaCreator:
         assert len(fake_breadcrumb_schema["itemListElement"]) == 6
 
     def test_create_schema_with_no_sitename_no_siteurl(self, fake_article):
-        """ Test that create_schema returns incomplete schema.org. """
+        """Test that create_schema returns incomplete schema.org."""
 
         breadcrumb = BreadcrumbSchemaCreator(
             output_path="fake_output",

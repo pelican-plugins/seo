@@ -7,7 +7,7 @@ from seo.seo_report import SEOReport
 
 
 class FakeArticle:
-    """ Mock Pelican Article object. """
+    """Mock Pelican Article object."""
 
     def __init__(
         self,
@@ -33,7 +33,7 @@ class FakeArticle:
 
 
 class FakeDate:
-    """ Mock Pelican SafeDate object. """
+    """Mock Pelican SafeDate object."""
 
     def __init__(self, year, month, day, hour, minute):
         self.year = int(year)
@@ -44,14 +44,14 @@ class FakeDate:
 
 
 class FakeAuthor:
-    """ Mock Pelican Author object. """
+    """Mock Pelican Author object."""
 
     def __init__(self, name):
         self.name = name
 
 
 class FakeCategory:
-    """ Mock Pelican Category object. """
+    """Mock Pelican Category object."""
 
     def __init__(self, name):
         self.name = name
@@ -59,7 +59,7 @@ class FakeCategory:
 
 @pytest.fixture()
 def fake_article():
-    """ Create a fake article. """
+    """Create a fake article."""
 
     settings = {
         "SITEURL": "https://www.fakesite.com",
@@ -111,7 +111,7 @@ def fake_article():
 
 @pytest.fixture()
 def fake_article_missing_elements():
-    """ Create a fake article with missing elements. """
+    """Create a fake article with missing elements."""
 
     settings = {
         "SITEURL": "https://www.fakesite.com",
@@ -152,7 +152,7 @@ def fake_article_missing_elements():
 
 @pytest.fixture()
 def fake_article_multiple_elements():
-    """ Create a fake article with multiple elements. """
+    """Create a fake article with multiple elements."""
 
     settings = {
         "SITEURL": "https://www.fakesite.com",
@@ -197,7 +197,7 @@ def fake_article_multiple_elements():
 
 @pytest.fixture()
 def fake_seo_report():
-    """ Create a fake seo report instance. """
+    """Create a fake seo report instance."""
 
     return SEOReport()
 
@@ -209,7 +209,7 @@ def fake_robots_rules(
     fake_article_multiple_elements,
     fake_article_missing_elements,
 ):
-    """ Create a fake robots rules. """
+    """Create a fake robots rules."""
 
     robots_rules = []
 
@@ -231,7 +231,7 @@ def fake_articles_analysis(
     fake_article_multiple_elements,
     fake_article_missing_elements,
 ):
-    """ Create a fake articles analysis. """
+    """Create a fake articles analysis."""
 
     articles_analysis = []
 
@@ -248,6 +248,6 @@ def fake_articles_analysis(
 
 @pytest.fixture()
 def fake_seo_enhancer():
-    """ Create a fake seo enhancer instance. """
+    """Create a fake seo enhancer instance."""
 
     return SEOEnhancer()

@@ -20,7 +20,7 @@ class OpenGraph:
         self.locale = locale
 
     def _create_absolute_fileurl(self):
-        """ Join site URL and file path."""
+        """Join site URL and file path."""
 
         file_url = parse.urljoin(self.siteurl, self.fileurl)
         return file_url

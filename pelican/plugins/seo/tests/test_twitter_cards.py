@@ -4,7 +4,7 @@ from seo.seo_enhancer.html_enhancer import TwitterCards
 
 
 class TestTwitterCards:
-    """ Unit tests for Twitter Cards. """
+    """Unit tests for Twitter Cards."""
 
     def test_create_tags(self, fake_article):
         """
@@ -12,7 +12,9 @@ class TestTwitterCards:
         if all elements are filled.
         """
 
-        tw = TwitterCards(tw_account=fake_article.metadata["tw_account"],)
+        tw = TwitterCards(
+            tw_account=fake_article.metadata["tw_account"],
+        )
 
         tw_tags = tw.create_tags()
 

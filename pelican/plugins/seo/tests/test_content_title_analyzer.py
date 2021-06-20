@@ -4,7 +4,7 @@ from seo.seo_report.seo_analyzer import ContentTitleAnalyzer
 
 
 class TestContentTitleAnalyzer:
-    """ Units tests for ContentTitleAnalyzer. """
+    """Units tests for ContentTitleAnalyzer."""
 
     def test_article_has_content_title(self, fake_article):
         """
@@ -27,7 +27,7 @@ class TestContentTitleAnalyzer:
         assert not fake_analysis.has_content_title()
 
     def test_article_content_title_is_unique(self, fake_article):
-        """ Test if is_content_title_unique returns True if content title is unique. """
+        """Test if is_content_title_unique returns True if content title is unique."""
 
         fake_analysis = ContentTitleAnalyzer(content=fake_article.content)
         assert fake_analysis.is_content_title_unique
