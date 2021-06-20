@@ -119,6 +119,65 @@ class TestSEOEnhancer:
 </html>"""
             )
 
+    @pytest.mark.parametrize(
+        "metadata,expected_tag",
+        [
+            (
+                {},
+                '<link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>',
+            ),
+            (
+                {"save_as": "custom_file_name.html"},
+                '<link href="https://www.fakesite.com/custom_file_name.html" rel="canonical"/>',
+            ),
+            (
+                {
+                    "external_canonical": "https://www.example.com/external_canonical_article.html"
+                },
+                '<link href="https://www.example.com/external_canonical_article.html" rel="canonical"/>',
+            ),
+            (
+                {
+                    "save_as": "custom_file_name.html",
+                    "external_canonical": "https://www.example.com/external_canonical_article.html",
+                },
+                '<link href="https://www.example.com/external_canonical_article.html" rel="canonical"/>',
+            ),
+        ],
+    )
+    def test_html_output_with_canonical_url(
+        self, fake_article, fake_seo_enhancer, metadata, expected_tag
+    ):
+        """
+        Test the HTML output for canonical url tag according to the article metadata.
+        If no metadata are filled, default canonical URL is SITEURL/file_name.
+        """
+        path = "fake_output/fake_file.html"
+        fake_article.metadata.update(metadata)
+
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=fake_article,
+            output_path="fake_output",
+            path=path,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open", mock_open(read_data=fake_article.content)
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert expected_tag in fake_html_content
+
     def test_add_html_enhancements_to_file_with_open_graph(
         self, fake_article, fake_seo_enhancer
     ):
