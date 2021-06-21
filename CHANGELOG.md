@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2.2 - 2021-06-21
+------------------
+
+Improve test for canonical feature and update linters.
+
 1.2.1 - 2021-05-16
 ------------------
 
