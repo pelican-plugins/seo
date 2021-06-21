@@ -1,4 +1,3 @@
-Release type: minor
+Release type: patch
 
-* Linter updates. Refs #42
-* Better test for canonical feature. Refs #43
+Improve test for canonical feature and update linters.
