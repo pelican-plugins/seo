@@ -7,6 +7,7 @@ repos:
       - id: check-added-large-files
       - id: check-ast
       - id: check-case-conflict
+      - id: check-docstring-first
       - id: check-merge-conflict
       - id: check-toml
       - id: check-yaml
@@ -17,24 +18,24 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/psf/black
-    rev: 21.7b0
+    rev: 21.10b0
     hooks:
       - id: black
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 4.0.1
     hooks:
       - id: flake8
         args: [--max-line-length=88]
         language_version: python3
 
   - repo: https://github.com/PyCQA/isort
-    rev: 5.9.3
+    rev: 5.10.1
     hooks:
       - id: isort
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.23.3
+    rev: v2.29.0
     hooks:
       - id: pyupgrade
         args: [--py36-plus]
