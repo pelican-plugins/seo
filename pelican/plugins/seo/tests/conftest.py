@@ -196,6 +196,51 @@ def fake_article_multiple_elements():
 
 
 @pytest.fixture()
+def fake_article_multiple_elements_with_seo():
+    """Create a fake article with multiple elements that has all SOE rules met."""
+
+    settings = {
+        "SITEURL": "https://www.fakesite.com",
+        "SITENAME": "Fake Site Name",
+        "LOGO": "https://www.fakesite.com/fake-logo.jpg",
+    }
+    metadata = {}
+    title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam morbi."
+    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lectus ante. Phasellus nec augue neque. Curabitur aliquet sem sed quam libero."
+    url = "fake-title.html"
+    date = FakeDate("2019", "04", "03", "23", "49")
+    author = FakeAuthor(name="Fake author")
+    category = FakeCategory(name="Fake category")
+    content = """<html>
+                    <head>
+                        <title>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam morbi.</title>
+                        <meta name='description' content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lectus ante. Phasellus nec augue neque. Curabitur aliquet sem sed quam libero.' />
+                    </head>
+                    <body>
+                        <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam morbi.</h1>
+                        <p>Fake content 🙃</p>
+                        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lectus ante. Phasellus nec augue neque. Curabitur aliquet sem sed quam libero.</h2>
+                        <a href='https://www.fakesite.com'>Fake internal link</a>
+                        <a href='https://www.test.com'>Fake external link</a>
+                        <a href='https://www.fakesite.com/test/'>Fake internal path link</a>
+                        <a>a tag without href attribute</a>
+                    </body>
+                </html>"""
+
+    return FakeArticle(
+        settings=settings,
+        metadata=metadata,
+        title=title,
+        description=description,
+        url=url,
+        date=date,
+        content=content,
+        author=author,
+        category=category,
+    )
+
+
+@pytest.fixture()
 def fake_seo_report():
     """Create a fake seo report instance."""
 
@@ -230,6 +275,7 @@ def fake_articles_analysis(
     fake_article,
     fake_article_multiple_elements,
     fake_article_missing_elements,
+    fake_article_multiple_elements_with_seo,
 ):
     """Create a fake articles analysis."""
 
@@ -241,6 +287,9 @@ def fake_articles_analysis(
     )
     articles_analysis.append(
         fake_seo_report.launch_analysis(fake_article_multiple_elements)
+    )
+    articles_analysis.append(
+        fake_seo_report.launch_analysis(fake_article_multiple_elements_with_seo)
     )
 
     return articles_analysis

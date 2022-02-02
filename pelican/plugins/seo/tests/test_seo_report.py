@@ -75,3 +75,47 @@ class TestSEOReport:
             args, _ = mocked_file_handle.write.call_args_list[0]
             output = args[0]
             assert "<h1>SEO report - Fake site</h1>" in output
+
+            # title
+            # 4 out of 4 articles have included a title
+            assert output.count("You have declared a title. Nice job!") == 4
+            # 1 out of 4 articles has a correct title
+            assert output.count("Your title has a good length.") == 1
+            # 3 out of 4 articles have a title that is too short
+            assert (
+                output.count(
+                    "Your title is too short. The recommended length is 70 characters."
+                )
+                == 3
+            )
+
+            # description
+            # 3 out of 4 articles have included a description
+            assert output.count("You have declared a description. Nice job!") == 3
+            # 1 out of 4 articles has a correct description
+            assert output.count("Your description has a good length.") == 1
+            # 2 out of 4 articles have a title that is too short
+            assert (
+                output.count(
+                    "Your description is too short. The minimum recommended length is 150 characters."
+                )
+                == 2
+            )
+            # 1 out of 4 articles is missing a description
+            assert (
+                output.count("You need to declare a description to improve SEO.") == 1
+            )
+
+            # content title
+            # 3 out of 4 articles have included a content title
+            assert output.count("You have declared a content title. Nice job!") == 3
+            # 1 out of 4 articles has a non-unique content title
+            assert output.count("Your content title must be unique.") == 1
+            # 1 out of 4 articles is missing the content title
+            assert output.count("You're missing a content title.")
+
+            # internal links
+            # 3 out of 4 articles have 2 internal links
+            assert output.count("You've included 2 internal links. Nice job!") == 3
+            # 1 out of 4 articles is missing internal links
+            assert output.count("It's better to include internal links.") == 1
