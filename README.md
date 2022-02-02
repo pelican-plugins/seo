@@ -41,20 +41,22 @@ Please keep in mind that the `SITEURL` Pelican setting must be defined in order 
 
 ## Usage
 
-You can enable/disable parents features by setting them to `True` or `False` in your Pelican settings. The default is `True` for both.
+You can enable/disable parent features by setting them to `True` or `False` in your Pelican settings.
+The **default configuration is as stated below**:
 
 ```python
-# settings.py
-SEO_REPORT = True  # To enable this feature
-SEO_ENHANCER = False  # To disable this feature
-SEO_ENHANCER_OPEN_GRAPH = False # The default value for this feature
-SEO_ENHANCER_TWITTER_CARDS = False # The default value for this feature
+# pelicanconf.py or publishconf.py
+SEO_REPORT = True  # SEO report is enabled by default
+SEO_ENHANCER = False  # SEO enhancer is disabled by default
+SEO_ENHANCER_OPEN_GRAPH = False # Subfeature of SEO enhancer
+SEO_ENHANCER_TWITTER_CARDS = False # Subfeature of SEO enhancer
 ```
 
 Open Graph and Twitter Cards options are part of the SEO enhancer feature, and may be enabled to generate social tags.
 Please note that :
  * `SEO_ENHANCER` setting must be enabled in order to use this feature
- * `SEO_ENHANCER_OPEN_GRAPH` setting must be enabled in order to use `SEO_ENHANCER_TWITTER_CARDS` (see [why](#twitter-cards)
+ * `SEO_ENHANCER_OPEN_GRAPH` setting must be enabled in order to use
+  `SEO_ENHANCER_TWITTER_CARDS` (see [why](#twitter-cards))
 
 The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
 
