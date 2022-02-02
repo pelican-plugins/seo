@@ -110,11 +110,9 @@ def run_robots_file(generators):
 
     seo_enhancer = SEOEnhancer()
     robots_rules = []
+    output_path = generators[0].output_path
 
     for generator in generators:
-
-        output_path = generator.output_path
-
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
                 article_metadata = seo_enhancer.populate_robots(document=article)
