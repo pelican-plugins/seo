@@ -17,16 +17,10 @@ import logging
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
+from . import settings
 from .seo_enhancer import SEOEnhancer
 from .seo_report import SEOReport
-from .settings import (
-    SEO_ARTICLES_LIMIT,
-    SEO_ENHANCER,
-    SEO_ENHANCER_OPEN_GRAPH,
-    SEO_ENHANCER_TWITTER_CARDS,
-    SEO_PAGES_LIMIT,
-    SEO_REPORT,
-)
+
 
 logger = logging.getLogger(__name__)
 
@@ -43,28 +37,62 @@ def plugin_initializer(settings):
     logger.info("SEO plugin initialized")
 
 
+def get_plugin_settings(context):
+    """Get settings in the pelican config file from the given context
+
+    .. note:: Pelican's settings take precedence over the plugin's default settings.
+
+    SEO report settings:
+
+        - SEO_REPORT
+        - SEO_ARTICLES_LIMIT
+        - SEO_PAGES_LIMIT
+
+    SEO enhancer settings:
+
+        - SEO_ENHANCER
+        - SEO_ENHANCER_OPEN_GRAPH
+        - SEO_ENHANCER_TWITTER_CARDS
+
+    :return: Dictionary of settings for the plugin
+    :rtype: <dict>
+    """
+
+    def get_seo_variables(data):
+        """Get variables starting with 'SEO_' & values in the given dictionary
+        :rtype: <dict>
+        """
+        return {
+            var_name: value for var_name, value in data.items()
+            if var_name.startswith("SEO_")
+        }
+
+    plugin_settings = get_seo_variables(vars(settings))
+    plugin_settings.update(get_seo_variables(context))
+    return plugin_settings
+
+
 def run_seo_report(generators):
     """Run SEO report creation if SEO_REPORT is enabled in settings."""
 
+    plugin_settings = get_plugin_settings(generators[0].context)
+    if not plugin_settings["SEO_REPORT"]:
+        return
+
     seo_report = SEOReport()
     documents_analysis = []
-
-    site_name = None
+    site_name = generators[0].context.get("SITENAME")
 
     for generator in generators:
-
-        if not site_name:
-            site_name = generator.settings.get("SITENAME")
-
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
-            for _, article in zip(range(SEO_ARTICLES_LIMIT), generator.articles):
+            for _, article in zip(range(plugin_settings["SEO_ARTICLES_LIMIT"]), generator.articles):
                 analysis = seo_report.launch_analysis(document=article)
                 documents_analysis.append(analysis)
 
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
-            for _, page in zip(range(SEO_PAGES_LIMIT), generator.pages):
+            for _, page in zip(range(plugin_settings["SEO_PAGES_LIMIT"]), generator.pages):
                 analysis = seo_report.launch_analysis(document=page)
                 documents_analysis.append(analysis)
 
@@ -76,6 +104,9 @@ def run_robots_file(generators):
     Run robots.txt file creation if SEO_ENHANCER
     is enabled in settings.
     """
+    plugin_settings = get_plugin_settings(generators[0].context)
+    if not plugin_settings["SEO_ENHANCER"]:
+        return
 
     seo_enhancer = SEOEnhancer()
     robots_rules = []
@@ -102,13 +133,17 @@ def run_robots_file(generators):
 
 def run_html_enhancer(path, context):
     """Run HTML enhancements if SEO_ENHANCER is enabled in settings."""
+    plugin_settings = get_plugin_settings(context)
+    seo_enhancer_flag = plugin_settings["SEO_ENHANCER"]
+    seo_enhancer_open_graph = plugin_settings["SEO_ENHANCER_OPEN_GRAPH"]
+    seo_enhancer_twitter_cards = plugin_settings["SEO_ENHANCER_TWITTER_CARDS"]
 
-    if (SEO_ENHANCER_OPEN_GRAPH or SEO_ENHANCER_TWITTER_CARDS) and not SEO_ENHANCER:
+    if (seo_enhancer_open_graph or seo_enhancer_twitter_cards) and not seo_enhancer_flag:
         raise Exception(
             "You must enable SEO_ENHANCER setting to use social medias features."
         )
 
-    if SEO_ENHANCER_TWITTER_CARDS and not SEO_ENHANCER_OPEN_GRAPH:
+    if seo_enhancer_twitter_cards and not seo_enhancer_open_graph:
         raise Exception("You must enable Open Graph feature to use Twitter Cards.")
 
     content_file = None
@@ -123,8 +158,8 @@ def run_html_enhancer(path, context):
             file=content_file,
             output_path=context.get("OUTPUT_PATH"),
             path=path,
-            open_graph=SEO_ENHANCER_OPEN_GRAPH,
-            twitter_cards=SEO_ENHANCER_TWITTER_CARDS,
+            open_graph=seo_enhancer_open_graph,
+            twitter_cards=seo_enhancer_twitter_cards,
         )
         seo_enhancer.add_html_to_file(
             enhancements=html_enhancements,
@@ -136,9 +171,9 @@ def register():
 
     signals.initialized.connect(plugin_initializer)
 
-    if SEO_REPORT:
-        signals.all_generators_finalized.connect(run_seo_report)
+    # Seo report
+    signals.all_generators_finalized.connect(run_seo_report)
 
-    if SEO_ENHANCER:
-        signals.all_generators_finalized.connect(run_robots_file)
-        signals.content_written.connect(run_html_enhancer)
+    # Seo enhancer
+    signals.all_generators_finalized.connect(run_robots_file)
+    signals.content_written.connect(run_html_enhancer)
