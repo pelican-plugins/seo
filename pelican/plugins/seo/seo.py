@@ -21,7 +21,6 @@ from . import settings
 from .seo_enhancer import SEOEnhancer
 from .seo_report import SEOReport
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -63,7 +62,8 @@ def get_plugin_settings(context):
         :rtype: <dict>
         """
         return {
-            var_name: value for var_name, value in data.items()
+            var_name: value
+            for var_name, value in data.items()
             if var_name.startswith("SEO_")
         }
 
@@ -86,13 +86,17 @@ def run_seo_report(generators):
     for generator in generators:
         if isinstance(generator, ArticlesGenerator):
             # Launch analysis for each article. User can limit this number.
-            for _, article in zip(range(plugin_settings["SEO_ARTICLES_LIMIT"]), generator.articles):
+            for _, article in zip(
+                range(plugin_settings["SEO_ARTICLES_LIMIT"]), generator.articles
+            ):
                 analysis = seo_report.launch_analysis(document=article)
                 documents_analysis.append(analysis)
 
         if isinstance(generator, PagesGenerator):
             # Launch analysis each page. User can limit this number.
-            for _, page in zip(range(plugin_settings["SEO_PAGES_LIMIT"]), generator.pages):
+            for _, page in zip(
+                range(plugin_settings["SEO_PAGES_LIMIT"]), generator.pages
+            ):
                 analysis = seo_report.launch_analysis(document=page)
                 documents_analysis.append(analysis)
 
@@ -136,7 +140,9 @@ def run_html_enhancer(path, context):
     seo_enhancer_open_graph = plugin_settings["SEO_ENHANCER_OPEN_GRAPH"]
     seo_enhancer_twitter_cards = plugin_settings["SEO_ENHANCER_TWITTER_CARDS"]
 
-    if (seo_enhancer_open_graph or seo_enhancer_twitter_cards) and not seo_enhancer_flag:
+    if (
+        seo_enhancer_open_graph or seo_enhancer_twitter_cards
+    ) and not seo_enhancer_flag:
         raise Exception(
             "You must enable SEO_ENHANCER setting to use social medias features."
         )
