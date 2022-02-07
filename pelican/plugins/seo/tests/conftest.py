@@ -160,16 +160,18 @@ def fake_article_multiple_elements():
         "LOGO": "https://www.fakesite.com/fake-logo.jpg",
     }
     metadata = {}
-    title = "Fake Title"
-    description = "Fake description"
+    # 70 character long title, needed for SEO report
+    title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam morbi."
+    # 150 character long description, needed for SEO report
+    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lectus ante. Phasellus nec augue neque. Curabitur aliquet sem sed quam libero."
     url = "fake-title.html"
     date = FakeDate("2019", "04", "03", "23", "49")
     author = FakeAuthor(name="Fake author")
     category = FakeCategory(name="Fake category")
     content = """<html>
                     <head>
-                        <title>Fake Title</title>
-                        <meta name='description' content='Fake description' />
+                        <title>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam morbi.</title>
+                        <meta name='description' content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lectus ante. Phasellus nec augue neque. Curabitur aliquet sem sed quam libero.' />
                     </head>
                     <body>
                         <h1>Content title</h1>

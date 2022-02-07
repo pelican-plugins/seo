@@ -64,13 +64,13 @@ class SEOReport:
         }
 
         if page_title_analysis.has_page_title:
-            report["content"]["good"].append("You have declared a title. Nice job !")
+            report["content"]["good"].append("You have declared a title. Nice job!")
 
             if (
                 page_title_analysis.page_title_length
                 in SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH
             ):
-                report["content"]["good"].append("Your title has a good longer.")
+                report["content"]["good"].append("Your title has a good length.")
 
             elif (
                 page_title_analysis.page_title_length
@@ -85,13 +85,13 @@ class SEOReport:
                 > SEOReport.PAGE_TITLE_RECOMMENDED_LENGTH[-1]
             ):
                 report["content"]["to_improve"].append(
-                    "Your title is too long. The maximum recommended \
-                        length is 70 characters."
+                    "Your title is too long. The maximum recommended "
+                    "length is 70 characters."
                 )
 
         else:
             report["content"]["problems"].append(
-                "Title is missing. Create one to improve your SEO."
+                "The title is missing. Create one to improve your SEO."
             )
 
         return report
@@ -109,22 +109,22 @@ class SEOReport:
 
         if page_description_analysis.has_page_description():
             report["content"]["good"].append(
-                "You have declared a description. Nice job !"
+                "You have declared a description. Nice job!"
             )
 
             if (
                 page_description_analysis.page_description_length
                 in SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH
             ):
-                report["content"]["good"].append("Your description has a good longer")
+                report["content"]["good"].append("Your description has a good length.")
 
             elif (
                 page_description_analysis.page_description_length
                 < SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[0]
             ):
                 report["content"]["to_improve"].append(
-                    "Your description is too short. The minimum recommended \
-                        length is 150 characters."
+                    "Your description is too short. The minimum recommended "
+                    "length is 150 characters."
                 )
 
             elif (
@@ -132,8 +132,8 @@ class SEOReport:
                 > SEOReport.PAGE_DESCRIPTION_RECOMMENDED_LENGTH[-1]
             ):
                 report["content"]["to_improve"].append(
-                    "Your description is too long. The maximum recommended \
-                        length is 160 characters."
+                    "Your description is too long. The maximum recommended "
+                    "length is 160 characters."
                 )
 
         else:
@@ -156,7 +156,7 @@ class SEOReport:
 
         if content_title_analysis.has_content_title():
             report["content"]["good"].append(
-                "You have declared a content title. Nice job !"
+                "You have declared a content title. Nice job!"
             )
 
             if not content_title_analysis.is_content_title_unique():
@@ -185,8 +185,7 @@ class SEOReport:
             report["content"]["good"].append(
                 "You've included "
                 + str(internal_link_occurrence)
-                + " internal \
-                    links. Nice job !"
+                + " internal links. Nice job!"
             )
 
         else:
@@ -198,7 +197,7 @@ class SEOReport:
 
     def _launch_report(self, document_analysis):
         """
-        Get all adocuments analysis and launch dedicated report for each.
+        Get all documents analysis and launch dedicated report for each.
         Return a dict with all micro-reports.
         """
         seo_analysis = document_analysis["seo_analysis"]
@@ -250,7 +249,7 @@ class SEOReport:
             seo_reports.append(documents_reports)
 
         # Sort documents by publication date, from recent to oldest.
-        # Document whithout a date are sorted at the end of the report.
+        # Document without a date are sorted at the end of the report.
         seo_reports = sorted(
             seo_reports, key=lambda k: (k["date"] is not None, k["date"]), reverse=True
         )
