@@ -62,9 +62,7 @@ def get_plugin_settings(context):
         :rtype: <dict>
         """
         return {
-            name: value
-            for name, value in settings.items()
-            if name.startswith("SEO_")
+            name: value for name, value in settings.items() if name.startswith("SEO_")
         }
 
     plugin_settings = _get_seo_variables(settings=vars(default_plugin_settings))
@@ -137,15 +135,15 @@ def run_robots_file(generators):
 def run_html_enhancer(path, context):
     """Run HTML enhancements if SEO_ENHANCER is enabled in settings."""
     plugin_settings = get_plugin_settings(context)
-    if not (seo_enhancer_flag := plugin_settings["SEO_ENHANCER"]):
+
+    seo_enhancer_setting = plugin_settings["SEO_ENHANCER"]
+    if not seo_enhancer_setting:
         return
-    
+
     open_graph_setting = plugin_settings["SEO_ENHANCER_OPEN_GRAPH"]
     twitter_cards_setting = plugin_settings["SEO_ENHANCER_TWITTER_CARDS"]
 
-    if (
-        open_graph_setting or twitter_cards_setting
-    ) and not seo_enhancer_flag:
+    if (open_graph_setting or twitter_cards_setting) and not seo_enhancer_setting:
         raise Exception(
             "You must enable SEO_ENHANCER setting to use social medias features."
         )
