@@ -58,7 +58,6 @@ class BreadcrumbSchemaCreator:
         position = 2
 
         for item in range(1, len(file_path) + 1):
-
             name = file_path[item - 1]
             name = name.replace("-", " ").capitalize()
             if name.endswith(".html"):

@@ -237,7 +237,6 @@ class SEOReport:
 
         seo_reports = []
         for document_analysis in documents_analysis:
-
             document_report = self._launch_report(document_analysis)
 
             documents_reports = {
