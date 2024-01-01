@@ -173,7 +173,6 @@ def run_html_enhancer(path, context):
 
 
 def register():
-
     signals.initialized.connect(plugin_initializer)
 
     # Seo report
