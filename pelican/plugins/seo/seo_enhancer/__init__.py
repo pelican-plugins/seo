@@ -46,9 +46,9 @@ class SEOEnhancer:
             html_enhancements["open_graph"] = html_enhancer.open_graph.create_tags()
 
         if twitter_cards:
-            html_enhancements[
-                "twitter_cards"
-            ] = html_enhancer.twitter_cards.create_tags()
+            html_enhancements["twitter_cards"] = (
+                html_enhancer.twitter_cards.create_tags()
+            )
 
         return html_enhancements
 
