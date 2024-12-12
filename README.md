@@ -39,6 +39,14 @@ The above installation step should automatically install Beautiful Soup 4, which
 
 Please keep in mind that the `SITEURL` Pelican setting must be defined in order for this plugin to function as intended.
 
+## Configuration
+
+If you have already defined a `PLUGINS` list in your `pelicanconf.py`, you have to
+add the SEO plugin to this list to enable it.
+The entry must be named `seo`.
+If you have not defined a `PLUGINS` list in your config, this step is not needed,
+the plugin will be found automatically.
+
 ## Usage
 
 You can enable/disable parent features by setting them to `True` or `False` in your Pelican settings.
