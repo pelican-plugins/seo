@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.3.0 - 2025-01-15
+------------------
+
+- Add ability to configure the plugin via the Pelican settings file
+
 1.2.2 - 2021-06-21
 ------------------
 
