@@ -1,92 +1,106 @@
+from inspect import cleandoc
+import logging
 import os
 from pathlib import Path
 from shutil import which
 
 from invoke import task
 
+logger = logging.getLogger(__name__)
+
 PKG_NAME = "seo"
 PKG_PATH = Path(f"pelican/plugins/{PKG_NAME}")
-BIN_DIR = "bin" if os.name != "nt" else "Scripts"
+
 ACTIVE_VENV = os.environ.get("VIRTUAL_ENV", None)
 VENV_HOME = Path(os.environ.get("WORKON_HOME", "~/.local/share/virtualenvs"))
-VENV_PATH = Path(ACTIVE_VENV) if ACTIVE_VENV else (VENV_HOME / PKG_NAME)
+VENV_PATH = Path(ACTIVE_VENV) if ACTIVE_VENV else (VENV_HOME.expanduser() / PKG_NAME)
 VENV = str(VENV_PATH.expanduser())
+BIN_DIR = "bin" if os.name != "nt" else "Scripts"
 VENV_BIN = Path(VENV) / Path(BIN_DIR)
-TOOLS = ["black", "flake8", "isort", "poetry", "pre-commit", "pytest"]
 
-
-def find_tool(tool):
-    """Locate a tool and return its path, preferring the local virtual environment"""
-    t = VENV_BIN / tool
-    t = t if t.is_file() else which(tool)
-
-    return t
+TOOLS = ("pdm", "pre-commit")
+PDM = which("pdm") if which("pdm") else (VENV_BIN / "pdm")
+CMD_PREFIX = f"{VENV_BIN}/" if ACTIVE_VENV else f"{PDM} run "
+PRECOMMIT = which("pre-commit") if which("pre-commit") else f"{CMD_PREFIX}pre-commit"
+PTY = os.name != "nt"
 
 
 @task
-def tests(c):
-    """Run the test suite"""
-    pytest = find_tool("pytest")
-    c.run(f"{pytest}", pty=True)
+def tests(c, deprecations=False):
+    """Run the test suite, optionally with `--deprecations`."""
+    deprecations_flag = "" if deprecations else "-W ignore::DeprecationWarning"
+    c.run(f"{CMD_PREFIX}pytest {deprecations_flag}", pty=PTY)
 
 
 @task
-def black(c, check=False, diff=False):
-    """Run Black auto-formatter, optionally with --check and/or --diff"""
+def format(c, check=False, diff=False):
+    """Run Ruff's auto-formatter, optionally with `--check` or `--diff`."""
     check_flag, diff_flag = "", ""
     if check:
         check_flag = "--check"
     if diff:
         diff_flag = "--diff"
-    black = find_tool("black")
-    c.run(f"{black} {check_flag} {diff_flag} {PKG_PATH} tasks.py")
+    c.run(
+        f"{CMD_PREFIX}ruff format {check_flag} {diff_flag} {PKG_PATH} tasks.py", pty=PTY
+    )
 
 
 @task
-def isort(c, check=False, diff=False):
-    """Run isort import sorter, optionally with -c and/or --diff"""
-    check_flag, diff_flag = "", ""
-    if check:
-        check_flag = "-c"
+def ruff(c, concise=False, fix=False, diff=False):
+    """Run Ruff to ensure code meets project standards."""
+    concise_flag, fix_flag, diff_flag = "", "", ""
+    if concise:
+        concise_flag = "--output-format=concise"
+    if fix:
+        fix_flag = "--fix"
     if diff:
         diff_flag = "--diff"
-    isort = find_tool("isort")
-    c.run(f"{isort} {check_flag} {diff_flag} .")
+    c.run(
+        f"{CMD_PREFIX}ruff check {concise_flag} {diff_flag} {fix_flag} {PKG_PATH}",
+        pty=PTY,
+    )
 
 
 @task
-def flake8(c):
-    flake8 = find_tool("flake8")
-    c.run(f"{flake8} {PKG_PATH} tasks.py")
-
-
-@task
-def lint(c, diff=False):
+def lint(c, concise=False, fix=False, diff=False):
     """Check code style via linting tools."""
-    isort(c, check=True, diff=diff)
-    black(c, check=True, diff=diff)
-    flake8(c)
+    ruff(c, concise=concise, fix=fix, diff=diff)
+    format(c, check=(not fix), diff=diff)
 
 
 @task
 def tools(c):
-    """Install tools in the virtual environment if not already on PATH"""
+    """Install development tools in the virtual environment if not already on PATH."""
     for tool in TOOLS:
         if not which(tool):
-            c.run(f"{VENV_BIN}/pip install {tool}")
+            logger.info(f"** Installing {tool} **")
+            c.run(f"{CMD_PREFIX}pip install {tool}")
 
 
 @task
 def precommit(c):
-    """Install pre-commit hooks to .git/hooks/pre-commit"""
-    precommit = find_tool("pre-commit")
-    c.run(f"{precommit} install")
+    """Install pre-commit hooks to .git/hooks/pre-commit."""
+    logger.info("** Installing pre-commit hooks **")
+    c.run(f"{PRECOMMIT} install")
 
 
 @task
 def setup(c):
-    c.run(f"{VENV_BIN}/pip install -U pip")
-    tools(c)
-    poetry = find_tool("poetry")
-    c.run(f"{poetry} install")
-    precommit(c)
+    """Set up the development environment."""
+    if which("pdm") or ACTIVE_VENV:
+        tools(c)
+        c.run(f"{CMD_PREFIX}python -m pip install --upgrade pip", pty=PTY)
+        c.run(f"{PDM} update --dev", pty=PTY)
+        precommit(c)
+        logger.info("\nDevelopment environment should now be set up and ready!\n")
+    else:
+        error_message = """
+            PDM is not installed, and there is no active virtual environment available.
+            You can either manually create and activate a virtual environment, or you can
+            install PDM via:
+
+            curl -sSL https://raw.githubusercontent.com/pdm-project/pdm/main/install-pdm.py | python3 -
+
+            Once you have taken one of the above two steps, run `invoke setup` again.
+            """  # noqa: E501
+        raise SystemExit(cleandoc(error_message))
