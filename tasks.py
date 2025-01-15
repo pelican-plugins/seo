@@ -18,9 +18,10 @@ VENV = str(VENV_PATH.expanduser())
 BIN_DIR = "bin" if os.name != "nt" else "Scripts"
 VENV_BIN = Path(VENV) / Path(BIN_DIR)
 
-TOOLS = ("pdm", "pre-commit")
+TOOLS = ("cruft", "pdm", "pre-commit")
 PDM = which("pdm") if which("pdm") else (VENV_BIN / "pdm")
 CMD_PREFIX = f"{VENV_BIN}/" if ACTIVE_VENV else f"{PDM} run "
+CRUFT = which("cruft") if which("cruft") else f"{CMD_PREFIX}cruft"
 PRECOMMIT = which("pre-commit") if which("pre-commit") else f"{CMD_PREFIX}pre-commit"
 PTY = os.name != "nt"
 
@@ -55,10 +56,7 @@ def ruff(c, concise=False, fix=False, diff=False):
         fix_flag = "--fix"
     if diff:
         diff_flag = "--diff"
-    c.run(
-        f"{CMD_PREFIX}ruff check {concise_flag} {diff_flag} {fix_flag} {PKG_PATH}",
-        pty=PTY,
-    )
+    c.run(f"{CMD_PREFIX}ruff check {concise_flag} {diff_flag} {fix_flag} .", pty=PTY)
 
 
 @task
@@ -82,6 +80,17 @@ def precommit(c):
     """Install pre-commit hooks to .git/hooks/pre-commit."""
     logger.info("** Installing pre-commit hooks **")
     c.run(f"{PRECOMMIT} install")
+
+
+@task
+def update(c, check=False):
+    """Apply upstream plugin template changes to this project."""
+    if check:
+        logger.info("** Checking for upstream template changes **")
+        c.run(f"{CRUFT} check", pty=PTY)
+    else:
+        logger.info("** Updating project from upstream template **")
+        c.run(f"{CRUFT} update", pty=PTY)
 
 
 @task
