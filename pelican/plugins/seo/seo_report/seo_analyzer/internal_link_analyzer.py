@@ -1,4 +1,4 @@
-""" Analyze the internal link of an article. """
+"""Analyze the internal link of an article."""
 
 from bs4 import BeautifulSoup
 

@@ -1,4 +1,4 @@
-""" Unit tests for Page Description Analyzer. """
+"""Unit tests for Page Description Analyzer."""
 
 from seo.seo_report.seo_analyzer import PageDescriptionAnalyzer
 

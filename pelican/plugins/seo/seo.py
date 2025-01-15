@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 def plugin_initializer(settings):
-    """Raises if SITEURL parameter is not set in Pelican settings"""
+    """Raise if SITEURL parameter is not set in Pelican settings."""
 
     if not settings.settings.get("SITEURL"):
         raise Exception(
@@ -37,7 +37,7 @@ def plugin_initializer(settings):
 
 
 def get_plugin_settings(context):
-    """Get settings in the Pelican configuration file from the given context
+    """Get settings in the Pelican configuration file from the given context.
 
     .. note:: Pelican's settings take precedence over the plugin's default settings.
 
@@ -58,7 +58,8 @@ def get_plugin_settings(context):
     """
 
     def _get_seo_variables(settings):
-        """Get variables starting with 'SEO_' & values in the given dictionary
+        """Get variables starting with 'SEO_' & values in the given dictionary.
+
         :rtype: <dict>
         """
         return {
@@ -173,6 +174,7 @@ def run_html_enhancer(path, context):
 
 
 def register():
+    """Register the plugin."""
 
     signals.initialized.connect(plugin_initializer)
 

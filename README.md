@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/pelican-plugins/seo/main.yml?branch=main)](https://github.com/pelican-plugins/seo/actions)
 [![PyPI Version](https://img.shields.io/pypi/v/pelican-seo)](https://pypi.org/project/pelican-seo/)
+[![Downloads](https://img.shields.io/pypi/dm/pelican-seo)](https://pypi.org/project/pelican-seo/)
 ![License](https://img.shields.io/pypi/l/pelican-seo?color=blue)
 
 This plugin helps you improve your Pelican site SEO (Search Engine Optimization) to reach the top positions on search engines. To see what this SEO plugin can do for you, visit the [Usage](#usage) section.
@@ -30,6 +31,8 @@ SEO comes with two features to help you:
 This plugin can be installed via:
 
     python -m pip install pelican-seo
+
+As long as you have not explicitly added a `PLUGINS` setting to your Pelican settings file, then the newly-installed plugin should be automatically detected and enabled. Otherwise, you must add `seo` to your existing `PLUGINS` list. For more information, please see the [How to Use Plugins](https://docs.getpelican.com/en/latest/plugins.html#how-to-use-plugins) documentation.
 
 ## Requirements
 
@@ -314,3 +317,8 @@ To start contributing to this plugin, review the [Contributing to Pelican][] doc
 
 [existing issues]: https://github.com/pelican-plugins/seo/issues
 [Contributing to Pelican]: https://docs.getpelican.com/en/latest/contribute.html
+
+License
+-------
+
+This project is licensed under the AGPL-3.0 license.

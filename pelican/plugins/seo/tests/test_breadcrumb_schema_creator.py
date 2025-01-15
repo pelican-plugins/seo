@@ -1,4 +1,4 @@
-""" Units tests for Breadcrumb Schema Creator. """
+"""Units tests for Breadcrumb Schema Creator."""
 
 import pytest
 

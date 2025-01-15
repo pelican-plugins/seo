@@ -1,4 +1,4 @@
-""" Canonical URL creator. """
+"""Canonical URL creator."""
 
 import os
 

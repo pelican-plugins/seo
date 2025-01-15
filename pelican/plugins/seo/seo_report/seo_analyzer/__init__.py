@@ -1,4 +1,4 @@
-""" Launch micro SEO analysis. """
+"""Launch micro SEO analysis."""
 
 from .content_title_analyzer import ContentTitleAnalyzer
 from .internal_link_analyzer import InternalLinkAnalyzer

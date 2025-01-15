@@ -1,4 +1,4 @@
-""" Analyze the page description. """
+"""Analyze the page description."""
 
 
 class PageDescriptionAnalyzer:

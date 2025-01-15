@@ -1,4 +1,4 @@
-""" Units tests for Twitter Cards. """
+"""Units tests for Twitter Cards."""
 
 from seo.seo_enhancer.html_enhancer import TwitterCards
 

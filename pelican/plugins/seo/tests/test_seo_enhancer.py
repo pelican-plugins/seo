@@ -1,4 +1,4 @@
-""" Units tests for SEO Enhancer. """
+"""Units tests for SEO Enhancer."""
 
 from unittest.mock import mock_open, patch
 

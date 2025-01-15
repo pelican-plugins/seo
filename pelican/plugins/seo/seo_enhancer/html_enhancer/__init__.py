@@ -1,4 +1,4 @@
-""" HTML Enhancer : get instances of HTML enhancements. """
+"""HTML Enhancer : get instances of HTML enhancements."""
 
 from pelican.contents import Article, Page
 
@@ -19,7 +19,7 @@ class HTMLEnhancer:
         elif isinstance(file, Page):
             _file_type = "page"
 
-        _settings = getattr(file, "settings")
+        _settings = file.settings
         _author = getattr(file, "author", None)
         _date = getattr(file, "date", None)
         _title = getattr(file, "title", None)
@@ -48,7 +48,7 @@ class HTMLEnhancer:
             )
         else:
             save_as = _metadata.get("save_as")
-            _fileurl = save_as if save_as else getattr(file, "url")
+            _fileurl = save_as if save_as else file.url
             self.canonical_link = CanonicalURLCreator(
                 siteurl=_settings.get("SITEURL"),
                 fileurl=_fileurl,

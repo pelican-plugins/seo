@@ -34,8 +34,8 @@ class BreadcrumbSchemaCreator:
         return file_path.parts
 
     def _create_paths(self):
-        """
-        Build all paths for the breadcrumb.
+        """Build all paths for the breadcrumb.
+
         Example with a file_path == ("category", "file.html")
         Position begins at 2, as number 1 is dedicated to the index page.
         Returns list of dicts :
@@ -58,7 +58,6 @@ class BreadcrumbSchemaCreator:
         position = 2
 
         for item in range(1, len(file_path) + 1):
-
             name = file_path[item - 1]
             name = name.replace("-", " ").capitalize()
             if name.endswith(".html"):
@@ -74,7 +73,8 @@ class BreadcrumbSchemaCreator:
         return breadcrumb_paths
 
     def create_schema(self):
-        """
+        """Create the schema.
+
         Schema = {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",

@@ -1,4 +1,4 @@
-""" Unit tests for Internal Link Analyzer. """
+"""Unit tests for Internal Link Analyzer."""
 
 from seo.seo_report.seo_analyzer import InternalLinkAnalyzer
 

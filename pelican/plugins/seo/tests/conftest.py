@@ -1,4 +1,4 @@
-""" Mocks Pelican objects required for the units tests. """
+"""Mocks Pelican objects required for the units tests."""
 
 import pytest
 

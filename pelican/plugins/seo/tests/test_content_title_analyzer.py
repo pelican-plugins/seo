@@ -1,4 +1,4 @@
-""" Unit tests for Content Title Analyzer. """
+"""Unit tests for Content Title Analyzer."""
 
 from seo.seo_report.seo_analyzer import ContentTitleAnalyzer
 

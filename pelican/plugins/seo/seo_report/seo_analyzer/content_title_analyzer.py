@@ -1,4 +1,4 @@
-""" Analyze the content title. """
+"""Analyze the content title."""
 
 from bs4 import BeautifulSoup
 

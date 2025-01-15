@@ -1,0 +1,28 @@
+{
+  "template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+  "commit": "8a4f543e999c7a2b4ab49c724bf84ff4192f4c94",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "plugin_name": "SEO",
+      "repo_name": "seo",
+      "package_name": "seo",
+      "distribution_name": "pelican-seo",
+      "version": "1.2.2",
+      "description": "Pelican plugin to improve search engine optimization (SEO)",
+      "authors": "{name = \"Maëva Brunelles\", email = \"contact@tremacorp.fr\"}, {name = \"Justin Mayer\", email = \"entroP@gmail.com\"}",
+      "keywords": "\"pelican\", \"plugin\", \"seo\", \"search\", \"optimization\"",
+      "readme": "README.md",
+      "contributing": "CONTRIBUTING.md",
+      "license": "GNU Affero General Public License v3|AGPL-3.0",
+      "repo_url": "https://github.com/pelican-plugins/seo",
+      "dev_status": "5 - Production/Stable",
+      "tests_exist": true,
+      "python_version": "~=3.9",
+      "pelican_version": ">=4.5",
+      "_template": "https://github.com/getpelican/cookiecutter-pelican-plugin",
+      "_commit": "f51b3c4a5160fc8f36cff3baf9da7e2b5f59e8d7"
+    }
+  },
+  "directory": null
+}

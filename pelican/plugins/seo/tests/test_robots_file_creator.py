@@ -1,4 +1,4 @@
-""" Units tests for Robots File Creator. """
+"""Units tests for Robots File Creator."""
 
 from seo.seo_enhancer.robots_file_creator import RobotsFileCreator
 

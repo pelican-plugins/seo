@@ -1,4 +1,4 @@
-""" Improve SEO technical for each article and page : HTML code and robots.txt file. """
+"""Improve SEO technical for each article and page : HTML code and robots.txt file."""
 
 import json
 import logging
@@ -13,9 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class SEOEnhancer:
-    """
-    Improve SEO technical for each article and page : HTML code and robots.txt file.
-    """
+    """Improve SEO for each article and page : HTML code and robots.txt file."""
 
     def launch_html_enhancer(
         self, file, output_path, path, open_graph=False, twitter_cards=False
@@ -46,9 +44,9 @@ class SEOEnhancer:
             html_enhancements["open_graph"] = html_enhancer.open_graph.create_tags()
 
         if twitter_cards:
-            html_enhancements[
-                "twitter_cards"
-            ] = html_enhancer.twitter_cards.create_tags()
+            html_enhancements["twitter_cards"] = (
+                html_enhancer.twitter_cards.create_tags()
+            )
 
         return html_enhancements
 
@@ -67,9 +65,7 @@ class SEOEnhancer:
         }
 
     def generate_robots(self, rules, output_path):
-        """
-        Create robots.txt file, with noindex and disallow rules for each document URL.
-        """
+        """Create robots.txt, with noindex and disallow rules for each document URL."""
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
 
@@ -86,9 +82,7 @@ class SEOEnhancer:
         logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
     def add_html_to_file(self, enhancements, path):
-        """
-        Open HTML file, add HTML enhancements with bs4 and create the new HTML files.
-        """
+        """Open HTML file, add enhancements with bs4 and create the new HTML files."""
 
         with open(path, encoding="utf8") as html_file:
             html_content = html_file.read()
