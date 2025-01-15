@@ -1,4 +1,4 @@
-""" Units tests for Canonical URL Creator. """
+"""Units tests for Canonical URL Creator."""
 
 import pytest
 
@@ -57,9 +57,9 @@ class TestCanonicalURLCreator:
     ):
         """Test that canonical URL is build with :external_canonical: metadata value, even when :save_as: metadata is filled."""
 
-        fake_article.metadata[
-            "external_canonical"
-        ] = "https://www.example.com/external_canonical_article.html"
+        fake_article.metadata["external_canonical"] = (
+            "https://www.example.com/external_canonical_article.html"
+        )
         fake_article.metadata["save_as"] = "custom_file_name.html"
 
         html_enhancements = fake_seo_enhancer.launch_html_enhancer(

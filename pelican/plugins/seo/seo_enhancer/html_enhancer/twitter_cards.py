@@ -1,6 +1,5 @@
 class TwitterCards:
-    """
-    Add specifics Twitter tags according to
+    """Add specific Twitter tags according to
     https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary.
     Missing tags are filled by Open Graph feature as Twitter falls back on it.
     """
@@ -9,9 +8,7 @@ class TwitterCards:
         self.tw_account = tw_account
 
     def create_tags(self) -> dict:
-        """
-        Compute all Twitter Cards elements and return them in a ready-to-use dict.
-        """
+        """Compute all Twitter Cards elements and return them in a ready-to-use dict."""
         twitter_tags = {}
 
         twitter_tags["card"] = "summary"

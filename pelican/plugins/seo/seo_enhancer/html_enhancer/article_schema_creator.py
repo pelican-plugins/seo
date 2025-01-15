@@ -31,8 +31,8 @@ class ArticleSchemaCreator:
         return date_time.strftime("%Y-%m-%d %H:%M")
 
     def create_schema(self):
-        """
-        Create Article schema.
+        """Create Article schema.
+
         Schema : {
             "@context": "https://schema.org",
             "@type": "Article",

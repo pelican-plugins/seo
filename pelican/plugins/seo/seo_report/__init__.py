@@ -1,6 +1,4 @@
-"""
-Generate a SEO report by calling SEO analyzers for each content.
-"""
+"""Generate a SEO report by calling SEO analyzers for each content."""
 
 import datetime
 import logging
@@ -237,7 +235,6 @@ class SEOReport:
 
         seo_reports = []
         for document_analysis in documents_analysis:
-
             document_report = self._launch_report(document_analysis)
 
             documents_reports = {

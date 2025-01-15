@@ -1,4 +1,4 @@
-""" Return elements to build the robots.txt file. """
+"""Return elements to build the robots.txt file."""
 
 
 class RobotsFileCreator:

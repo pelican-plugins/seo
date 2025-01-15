@@ -1,4 +1,4 @@
-""" Units tests for Article Schema Creator. """
+"""Units tests for Article Schema Creator."""
 
 from seo.seo_enhancer.html_enhancer import ArticleSchemaCreator
 

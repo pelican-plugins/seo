@@ -1,4 +1,4 @@
-""" Analyze the page title. """
+"""Analyze the page title."""
 
 
 class PageTitleAnalyzer:

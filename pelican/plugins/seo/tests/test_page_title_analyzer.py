@@ -1,4 +1,4 @@
-""" Unit tests for Page Title Analyzer. """
+"""Unit tests for Page Title Analyzer."""
 
 from seo.seo_report.seo_analyzer import PageTitleAnalyzer
 

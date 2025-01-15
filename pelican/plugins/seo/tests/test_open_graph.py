@@ -1,4 +1,4 @@
-""" Units tests for OpenGraph. """
+"""Units tests for OpenGraph."""
 
 import locale
 
