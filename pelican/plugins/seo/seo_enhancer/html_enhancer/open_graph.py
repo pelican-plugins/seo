@@ -21,6 +21,11 @@ class OpenGraph:
 
     def _create_absolute_fileurl(self):
         """Join site URL and file path."""
+        if not self.siteurl.endswith("/"):
+            self.siteurl += "/"
+
+        if self.fileurl.startswith("/"):
+            self.fileurl = self.fileurl[1:]
 
         file_url = parse.urljoin(self.siteurl, self.fileurl)
         return file_url

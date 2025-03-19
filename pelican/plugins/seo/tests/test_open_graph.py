@@ -30,6 +30,28 @@ class TestOpenGraph:
         assert fileurl == "https://www.fakesite.com/fake-title.html"
 
     @pytest.mark.parametrize(
+        "site_url", ["https://fake.github.io/blog", "https://fake.github.io/blog/"]
+    )
+    @pytest.mark.parametrize("file_url", ["fake-title.html", "/fake-title.html"])
+    def test_create_absolute_fileurl_with_site_url_with_path(self, site_url, file_url):
+        """
+        Test if create_absolute_fileurl() joins a site URL with or without a trailing
+        slash and a file URL with or without a leading slash properly.
+        """
+        og = OpenGraph(
+            siteurl=site_url,
+            fileurl=file_url,
+            file_type=None,
+            title=None,
+            description=None,
+            image=None,
+            locale=None,
+        )
+        fileurl = og._create_absolute_fileurl()
+
+        assert fileurl == "https://fake.github.io/blog/fake-title.html"
+
+    @pytest.mark.parametrize(
         "locale,expected_result",
         [
             (["fr_FR", "en_US"], "fr_FR"),
