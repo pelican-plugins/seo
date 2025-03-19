@@ -1,6 +1,4 @@
 .vscode/
-.idea
 *__pycache__
 .pdm-python
 pdm.lock
-.venv
