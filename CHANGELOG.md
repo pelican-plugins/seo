@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.3.1 - 2025-03-19
+------------------
+
+Support `SITEURL` values that contain slugs after the domain
+
+Contributed by [Max Pfeiffer](https://github.com/max-pfeiffer) via [PR #74](https://github.com/pelican-plugins/seo/pull/74/)
+
+
 1.3.0 - 2025-01-15
 ------------------
 
