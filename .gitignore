@@ -1,4 +1,19 @@
-.vscode/
+#Python
 *__pycache__
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PDM
 .pdm-python
 pdm.lock
+
+# IDEs
+.vscode/
+.idea
