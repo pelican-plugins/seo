@@ -64,7 +64,7 @@ class SEOEnhancer:
             "disallow": robots_file.get_disallow,
         }
 
-    def generate_robots(self, rules, output_path):
+    def generate_robots(self, rules, output_path, sitemap_url=None):
         """Create robots.txt, with noindex and disallow rules for each document URL."""
         if not os.path.isdir(output_path):
             os.mkdir(output_path)
@@ -78,6 +78,8 @@ class SEOEnhancer:
                     robots_file.write("\n" + "Noindex: " + rule.get("document_url"))
                 if rule.get("disallow"):
                     robots_file.write("\n" + "Disallow: " + rule.get("document_url"))
+            if sitemap_url:
+                robots_file.write("\n" + "Sitemap: " + sitemap_url)
 
         logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
