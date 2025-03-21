@@ -52,6 +52,7 @@ def get_plugin_settings(context):
         - SEO_ENHANCER
         - SEO_ENHANCER_OPEN_GRAPH
         - SEO_ENHANCER_TWITTER_CARDS
+        - SEO_ENHANCER_SITEMAP_URL
 
     :return: Dictionary of settings for the plugin
     :rtype: <dict>
@@ -130,6 +131,7 @@ def run_robots_file(generators):
     seo_enhancer.generate_robots(
         rules=robots_rules,
         output_path=output_path,
+        sitemap_url=plugin_settings["SEO_ENHANCER_SITEMAP_URL"],
     )
 
 

@@ -12,7 +12,7 @@ def test_get_settings():
     settings = get_plugin_settings(context=pelican_context)
 
     assert (
-        len(settings) == 8
+        len(settings) == 9
     )  # 6 in the plugin settings file + 2 from the Pelican context
 
     # Let's define a setting in Pelican context that
@@ -21,5 +21,5 @@ def test_get_settings():
 
     settings = get_plugin_settings(context={"SEO_REPORT": False})
 
-    assert len(settings) == 6
+    assert len(settings) == 7
     assert settings["SEO_REPORT"] is False
