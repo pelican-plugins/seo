@@ -1,6 +1,6 @@
 [project]
 name = "pelican-seo"
-version = "1.3.1"
+version = "1.4.0"
 description = "Pelican plugin to improve search engine optimization (SEO)"
 authors = [{name = "Maëva Brunelles", email = "contact@tremacorp.fr"}, {name = "Justin Mayer", email = "entroP@gmail.com"}]
 license = {text = "AGPL-3.0"}

@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.4.0 - 2025-04-25
+------------------
+
+Add setting to add site map to `robots.txt`
+
+Contributed by [Max Pfeiffer](https://github.com/max-pfeiffer) via [PR #76](https://github.com/pelican-plugins/seo/pull/76/)
+
+
 1.3.1 - 2025-03-19
 ------------------
 
