@@ -1,5 +1,7 @@
 """Units tests for SEO Enhancer."""
 
+from pathlib import Path
+from tempfile import TemporaryDirectory
 from unittest.mock import mock_open, patch
 
 import pytest
@@ -41,6 +43,23 @@ class TestSEOEnhancer:
                 args, _ = mocked_file_handle.write.call_args_list[1]
                 fake_rule = args[0]
                 assert "Noindex: fake-title.html" in fake_rule
+
+    def test_generate_robots_file_with_sitemap_url(
+        self, fake_seo_enhancer, fake_robots_rules
+    ):
+        """Test if generate_robots create a robots.txt file by mocking open()."""
+        sitemap_url = "https://www.example.com/sitemap.xml"
+
+        with TemporaryDirectory() as tmp_dir_name:
+            fake_seo_enhancer.generate_robots(
+                rules=fake_robots_rules,
+                output_path=tmp_dir_name,
+                sitemap_url=sitemap_url,
+            )
+            robots_txt_path = Path(tmp_dir_name) / "robots.txt"
+            contents = robots_txt_path.read_text()
+
+            assert sitemap_url in contents
 
     @pytest.mark.parametrize("open_graph", (True, False))
     def test_launch_html_enhancer_returns_dict(

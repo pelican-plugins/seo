@@ -73,6 +73,13 @@ $ pelican content --verbose
 Done: Processed 1 articles, 0 drafts, 0 pages, 0 hidden pages and 0 draft pages in 0.17 seconds.
 ```
 
+If you want to include a site map in your `robots.txt` file, which
+[Google recommends](https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt),
+you can specify the appropriate URL for your site map XML file via the following setting:
+```python
+SEO_ENHANCER_SITEMAP_URL = "https://www.example.com/sitemap.xml"
+```
+
 ### SEO Report
 
 The SEO plugin analyzes all your articles and pages and generate an SEO HTML report in your Pelican project root: `seo-report.html`
