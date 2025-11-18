@@ -97,7 +97,9 @@ class SEOEnhancer:
 
         with open(path, encoding="utf8") as html_file:
             html_content = html_file.read()
-            soup = BeautifulSoup(html_content, features="html.parser", preserve_whitespace_tags={"html"})
+            soup = BeautifulSoup(
+                html_content, features="html.parser", preserve_whitespace_tags={"html"}
+            )
 
         canonical_tag = soup.new_tag(
             "link", rel="canonical", href=enhancements.get("canonical_tag")
