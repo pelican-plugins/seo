@@ -17,6 +17,7 @@ class TestOpenGraph:
         """
 
         og = OpenGraph(
+            sitename=None,
             siteurl=fake_article.settings["SITEURL"],
             fileurl=fake_article.url,
             file_type=None,
@@ -39,6 +40,7 @@ class TestOpenGraph:
         slash and a file URL with or without a leading slash properly.
         """
         og = OpenGraph(
+            sitename=None,
             siteurl=site_url,
             fileurl=file_url,
             file_type=None,
@@ -67,6 +69,7 @@ class TestOpenGraph:
         """
 
         og = OpenGraph(
+            sitename=None,
             siteurl=None,
             fileurl=None,
             file_type=None,
@@ -86,6 +89,7 @@ class TestOpenGraph:
         """
 
         og = OpenGraph(
+            sitename=fake_article.settings["SITENAME"],
             siteurl=fake_article.settings["SITEURL"],
             fileurl=fake_article.url,
             file_type="article",
@@ -97,6 +101,7 @@ class TestOpenGraph:
 
         og_tags = og.create_tags()
 
+        assert og_tags["site_name"] == "Fake Site Name"
         assert og_tags["url"] == "https://www.fakesite.com/fake-title.html"
         assert og_tags["type"] == "article"
         assert og_tags["title"] == "OG Title"
@@ -111,6 +116,7 @@ class TestOpenGraph:
         """
 
         og = OpenGraph(
+            sitename=fake_article_missing_elements.settings["SITENAME"],
             siteurl=fake_article_missing_elements.settings["SITEURL"],
             fileurl=fake_article_missing_elements.url,
             file_type="article",
@@ -122,6 +128,7 @@ class TestOpenGraph:
 
         og_tags = og.create_tags()
 
+        assert "site_name" not in og_tags
         assert "title" not in og_tags
         assert "description" not in og_tags
         assert "image" not in og_tags

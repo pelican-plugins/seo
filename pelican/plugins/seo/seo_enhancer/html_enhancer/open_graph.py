@@ -58,7 +58,9 @@ class OpenGraph:
         """
         open_graph_tags = {}
 
-        open_graph_tags["site_name"] = self.sitename
+        if self.sitename:
+            open_graph_tags["site_name"] = self.sitename
+
         open_graph_tags["url"] = self._create_absolute_fileurl()
         open_graph_tags["type"] = self.type
 
