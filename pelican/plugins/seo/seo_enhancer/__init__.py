@@ -4,7 +4,7 @@ import json
 import logging
 import os
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 
 from .html_enhancer import HTMLEnhancer
 from .robots_file_creator import RobotsFileCreator
@@ -83,17 +83,27 @@ class SEOEnhancer:
 
         logger.info("SEO plugin - SEO Enhancement: robots.txt file created")
 
+    @staticmethod
+    def _add_meta_tag(soup, attr_name, prefix, name, content):
+        tag = soup.new_tag(
+            name="meta",
+            attrs={attr_name: prefix + ":" + name, "content": content},
+        )
+        soup.head.append(tag)
+        soup.head.append(NavigableString("\n"))
+
     def add_html_to_file(self, enhancements, path):
         """Open HTML file, add enhancements with bs4 and create the new HTML files."""
 
         with open(path, encoding="utf8") as html_file:
             html_content = html_file.read()
-            soup = BeautifulSoup(html_content, features="html.parser")
+            soup = BeautifulSoup(html_content, features="html.parser", preserve_whitespace_tags={"html"})
 
         canonical_tag = soup.new_tag(
             "link", rel="canonical", href=enhancements.get("canonical_tag")
         )
         soup.head.append(canonical_tag)
+        soup.head.append(NavigableString("\n"))
 
         schemas = [e for e in enhancements if e.endswith("_schema")]
         for schema in schemas:
@@ -102,23 +112,16 @@ class SEOEnhancer:
             # Google valids schema only with double quotes
             schema_script.append(json.dumps(enhancements[schema], ensure_ascii=False))
             soup.head.append(schema_script)
+            soup.head.append(NavigableString("\n"))
 
         # Let's add first Twitter Cards tags in the HTML if feature is enabled
         if "twitter_cards" in enhancements:
             for tw_property, tw_content in enhancements["twitter_cards"].items():
-                twitter_cards_tag = soup.new_tag(
-                    name="meta",
-                    attrs={"name": "twitter:" + tw_property, "content": tw_content},
-                )
-                soup.head.append(twitter_cards_tag)
+                self._add_meta_tag(soup, "name", "twitter", tw_property, tw_content)
 
         if "open_graph" in enhancements:
             for og_property, og_content in enhancements["open_graph"].items():
-                open_graph_tag = soup.new_tag(
-                    name="meta",
-                    attrs={"property": "og:" + og_property, "content": og_content},
-                )
-                soup.head.append(open_graph_tag)
+                self._add_meta_tag(soup, "property", "og", og_property, og_content)
 
         with open(path, "w", encoding="utf8") as html_file:
             html_file.write(str(soup))
