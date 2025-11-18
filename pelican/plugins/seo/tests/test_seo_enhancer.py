@@ -233,6 +233,7 @@ class TestSEOEnhancer:
                     <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}</script>
+<meta content="Fake Site Name" property="og:site_name"/>
 <meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
 <meta content="website" property="og:type"/>
 <meta content="OG Title" property="og:title"/>
@@ -295,6 +296,7 @@ class TestSEOEnhancer:
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49"}</script>
 <meta content="summary" name="twitter:card"/>
 <meta content="@TestTWCards" name="twitter:site"/>
+<meta content="Fake Site Name" property="og:site_name"/>
 <meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
 <meta content="website" property="og:type"/>
 <meta content="OG Title" property="og:title"/>

@@ -1,5 +1,7 @@
 """HTML Enhancer : get instances of HTML enhancements."""
 
+from bs4 import BeautifulSoup
+
 from pelican.contents import Article, Page
 
 from .article_schema_creator import ArticleSchemaCreator
@@ -11,7 +13,6 @@ from .twitter_cards import TwitterCards
 
 def _get_plain_text_summary(metadata):
     """Get content from summary, without HTML tags."""
-    from bs4 import BeautifulSoup
 
     soup = BeautifulSoup(
         metadata.get("summary", ""),
@@ -81,8 +82,8 @@ class HTMLEnhancer:
                 file_type=_file_type,
                 title=_metadata.get("og_title") or _title,
                 description=_metadata.get("og_description")
-                            or _metadata.get("description")
-                            or _get_plain_text_summary(_metadata),
+                or _metadata.get("description")
+                or _get_plain_text_summary(_metadata),
                 image=_metadata.get("og_image") or _image,
                 locale=_settings.get("LOCALE"),
             )
