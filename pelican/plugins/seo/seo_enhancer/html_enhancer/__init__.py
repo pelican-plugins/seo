@@ -7,7 +7,7 @@ from pelican.contents import Article, Page
 from .article_schema_creator import ArticleSchemaCreator
 from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 from .canonical_url_creator import CanonicalURLCreator
-from .open_graph import OpenGraph
+from .open_graph import OpenGraph, OpenGraphArticle
 from .twitter_cards import TwitterCards
 
 
@@ -88,7 +88,25 @@ class HTMLEnhancer:
                 locale=_settings.get("LOCALE"),
             )
 
+            if isinstance(file, Article):
+                _modified = getattr(file, "modified", None)
+                _author_profiles = _settings.get(
+                    "SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILE", {}
+                )
+                _author_profile = _author_profiles.get(_author.name, None)
+                self.open_graph_article = OpenGraphArticle(
+                    date=_date,
+                    modified=_modified,
+                    category=_category.name,
+                    tags=getattr(file, "tags", []),
+                    author=_metadata.get("fb_profile") or _author_profile,
+                )
+
             if twitter_cards:
+                _author_profiles = _settings.get(
+                    "SEO_ENHANCER_AUTHOR_TWITTER_PROFILE", {}
+                )
+                _author_profile = _author_profiles.get(_author.name, None)
                 self.twitter_cards = TwitterCards(
-                    tw_account=_metadata.get("tw_account"),
+                    tw_account=_metadata.get("tw_account") or _author_profile,
                 )
