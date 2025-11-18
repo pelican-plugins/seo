@@ -11,7 +11,7 @@ class SEOAnalyzer:
 
     def __init__(self, article):
         self._title = getattr(article, "title", None)
-        self._description = getattr(article, "description", None)
+        self._description = getattr(article, "description", None) or getattr(article, "summary", None)
         self._content = getattr(article, "content", None)
         self._settings = getattr(article, "settings", None)
 
