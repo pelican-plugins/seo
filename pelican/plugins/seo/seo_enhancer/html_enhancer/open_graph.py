@@ -9,8 +9,9 @@ class OpenGraph:
     """
 
     def __init__(
-        self, siteurl, fileurl, file_type, title, description, image, locale
+        self, sitename, siteurl, fileurl, file_type, title, description, image, locale
     ) -> None:
+        self.sitename = sitename
         self.siteurl = siteurl
         self.fileurl = fileurl
         self.type = file_type
@@ -57,6 +58,7 @@ class OpenGraph:
         """
         open_graph_tags = {}
 
+        open_graph_tags["site_name"] = self.sitename
         open_graph_tags["url"] = self._create_absolute_fileurl()
         open_graph_tags["type"] = self.type
 
