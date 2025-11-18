@@ -43,6 +43,11 @@ class SEOEnhancer:
         if open_graph:
             html_enhancements["open_graph"] = html_enhancer.open_graph.create_tags()
 
+        if open_graph and hasattr(html_enhancer, "open_graph_article"):
+            html_enhancements["open_graph_article"] = (
+                html_enhancer.open_graph_article.create_tags()
+            )
+
         if twitter_cards:
             html_enhancements["twitter_cards"] = (
                 html_enhancer.twitter_cards.create_tags()
@@ -124,6 +129,18 @@ class SEOEnhancer:
         if "open_graph" in enhancements:
             for og_property, og_content in enhancements["open_graph"].items():
                 self._add_meta_tag(soup, "property", "og", og_property, og_content)
+
+        if "open_graph_article" in enhancements:
+            for og_property, og_content in enhancements["open_graph_article"].items():
+                if isinstance(og_content, str):
+                    self._add_meta_tag(
+                        soup, "property", "article", og_property, og_content
+                    )
+                elif isinstance(og_content, list):
+                    for element in og_content:
+                        self._add_meta_tag(
+                            soup, "property", "article", og_property, element
+                        )
 
         with open(path, "w", encoding="utf8") as html_file:
             html_file.write(str(soup))
