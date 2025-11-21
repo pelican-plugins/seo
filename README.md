@@ -270,6 +270,11 @@ Image: https://www.example.com/article-image.jpg
 Based on [Open Graph protocol](https://ogp.me), the SEO plugin implements required properties and some aditionnals ones:
 
 ```
+<meta property="og:site_name" content=":sitename:" />
+```
+`:sitename:`: The `SITENAME` from the Pelican settings.
+
+```
 <meta property="og:url" content=":fileurl:" />
 ```
 `:fileurl:`: An absolute URL build with the `SITEURL` setting and the file URL.
@@ -293,6 +298,7 @@ og_image: https://www.example.com/og-image.jpg
 ```
 
 If these metadata are not declared, `:title:`, `:description:`, `:image:` will be filled by the default `Title`, `Description` (Pelican metadata) and `Image` (plugin metadata) if they exist.
+If `Description` is not defined, a plain text version of `Summary` will be used instead.
 
 ```
 <meta property="og:locale" content=":language:">

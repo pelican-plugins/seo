@@ -1,5 +1,7 @@
 """HTML Enhancer : get instances of HTML enhancements."""
 
+from bs4 import BeautifulSoup
+
 from pelican.contents import Article, Page
 
 from .article_schema_creator import ArticleSchemaCreator
@@ -7,6 +9,17 @@ from .breadcrumb_schema_creator import BreadcrumbSchemaCreator
 from .canonical_url_creator import CanonicalURLCreator
 from .open_graph import OpenGraph
 from .twitter_cards import TwitterCards
+
+
+def _get_plain_text_summary(metadata):
+    """Get content from summary, without HTML tags."""
+
+    soup = BeautifulSoup(
+        metadata.get("summary", ""),
+        "html.parser",
+    )
+    text_summary = soup.get_text().strip()
+    return text_summary
 
 
 class HTMLEnhancer:
@@ -63,12 +76,14 @@ class HTMLEnhancer:
 
         if open_graph:
             self.open_graph = OpenGraph(
+                sitename=_settings.get("SITENAME"),
                 siteurl=_settings.get("SITEURL"),
                 fileurl=_fileurl,
                 file_type=_file_type,
                 title=_metadata.get("og_title") or _title,
                 description=_metadata.get("og_description")
-                or _metadata.get("description"),
+                or _metadata.get("description")
+                or _get_plain_text_summary(_metadata),
                 image=_metadata.get("og_image") or _image,
                 locale=_settings.get("LOCALE"),
             )
