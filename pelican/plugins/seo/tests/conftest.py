@@ -75,6 +75,7 @@ def fake_article():
         "og_description": "OG Description",
         "og_image": "https://www.fakesite.com/og-image.jpg",
         "tw_account": "@TestTWCards",
+        "summary": "Fake summary",
     }
     title = "Fake Title"
     description = "Fake description"
