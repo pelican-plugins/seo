@@ -290,7 +290,7 @@ class TestSEOEnhancer:
             # The og:description tag should now contain "Fake summary".
             assert (
                 fake_html_content
-                    == """<html>
+                == """<html>
                     <head>
                         <title>Fake Title</title>
                         <meta content="Fake description" name="description"/>
