@@ -1,10 +1,11 @@
 """Units tests for OpenGraph."""
 
 import locale
+from datetime import datetime
 
 import pytest
 
-from seo.seo_enhancer.html_enhancer import OpenGraph
+from seo.seo_enhancer.html_enhancer import OpenGraph, OpenGraphArticle
 
 
 class TestOpenGraph:
@@ -108,6 +109,37 @@ class TestOpenGraph:
         assert og_tags["description"] == "OG Description"
         assert og_tags["image"] == "https://www.fakesite.com/og-image.jpg"
         assert og_tags["locale"] == "fr_FR"
+
+    def test_create_article_tags(self, fake_article):
+        """
+        Test that create_tags() returns all OG tags for an Article
+        if all elements are filled.
+        """
+
+        def fake_date_to_date(fake_date):
+            return datetime(
+                fake_date.year,
+                fake_date.month,
+                fake_date.day,
+                fake_date.hour,
+                fake_date.minute,
+            )
+
+        og = OpenGraphArticle(
+            date=fake_date_to_date(fake_article.date),
+            modified=fake_date_to_date(fake_article.metadata["modified"]),
+            category=fake_article.category.name,
+            tags=fake_article.metadata["tags"],
+            author=fake_article.author.name,
+        )
+
+        og_tags = og.create_tags()
+
+        assert og_tags["published_time"] == "2019-04-03"
+        assert og_tags["modified_time"] == "2019-07-03"
+        assert og_tags["section"] == "Fake category"
+        assert og_tags["tags"] == ["Fake tag 1", "Fake tag 2"]
+        assert og_tags["author"] == "Fake author"
 
     def test_create_tags_missing_elements(self, fake_article_missing_elements):
         """

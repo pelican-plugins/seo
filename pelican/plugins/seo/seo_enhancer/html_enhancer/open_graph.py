@@ -1,6 +1,8 @@
 import locale
 from urllib import parse
 
+from pelican.utils import strftime
+
 
 class OpenGraph:
     """
@@ -78,3 +80,34 @@ class OpenGraph:
             open_graph_tags["locale"] = locale
 
         return open_graph_tags
+
+
+class OpenGraphArticle:
+    """
+    Get all Open Graph elements for an Article according to
+    https://ogp.me/?#no_vertical.
+    """
+
+    def __init__(self, date, modified, category, tags, author) -> None:
+        self.date = date
+        self.modified = modified
+        self.category = category
+        self.tags = tags
+        self.author = author
+
+    def create_tags(self) -> dict:
+        """
+        Compute all Open Graph elements for Article and return them in a ready-to-use
+        dict.
+        """
+        tags = {}
+        tags["published_time"] = strftime(self.date, "%Y-%m-%d")
+        if self.modified is not None:
+            tags["modified_time"] = strftime(self.modified, "%Y-%m-%d")
+        if self.category is not None:
+            tags["section"] = self.category
+        if self.tags is not None and self.tags:
+            tags["tags"] = self.tags
+        if self.author is not None:
+            tags["author"] = self.author
+        return tags

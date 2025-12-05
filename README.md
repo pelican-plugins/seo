@@ -61,6 +61,26 @@ Please note that :
  * `SEO_ENHANCER_OPEN_GRAPH` setting must be enabled in order to use
   `SEO_ENHANCER_TWITTER_CARDS` (see [why](#twitter-cards))
 
+When Open Graph and Twitter Cards features are enabled, the SEO Enhancer will try to add
+the `article:author` and `twitter:site` meta tags to the articles.  These tags should
+contain links to the Facebook and Twitter/X account of the article author, respectively. SEO Enhancer
+will use the `fb_profile` and `tw_account` metadata from the article to fill these values.
+If `fb_profile` or `tw_account` are not defined, SEO Enhancer will use the
+`SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES` and `SEO_ENHANCER_AUTHOR_TWITTER_PROFILES` dictionaries
+from your Pelican configuration file to map the `author` of the article to their social accounts :
+
+```python
+SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES = {
+    "author1": "https://www.facebook.com/author1profile",
+    "author2": "https://www.facebook.com/author2profile",
+}
+
+SEO_ENHANCER_AUTHOR_TWITTER_PROFILES = {
+    "author1": "https://x.com/author1profile",
+    "author2": "https://x.com/author2profile",
+}
+```
+
 The SEO plugin runs when you [generate your site](https://docs.getpelican.com/en/stable/quickstart.html#generate-your-site). If you want to see SEO logging in your console output, add the `--verbose` option to your `pelican` invocation:
 
 ```bash
