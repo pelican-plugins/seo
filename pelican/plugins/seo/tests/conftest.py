@@ -76,6 +76,8 @@ def fake_article():
         "og_image": "https://www.fakesite.com/og-image.jpg",
         "tw_account": "@TestTWCards",
         "summary": "Fake summary",
+        "modified": FakeDate("2019", "07", "03", "23", "49"),
+        "tags": ["Fake tag 1", "Fake tag 2"],
     }
     title = "Fake Title"
     description = "Fake description"

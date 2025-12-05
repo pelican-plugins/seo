@@ -91,7 +91,7 @@ class HTMLEnhancer:
             if isinstance(file, Article):
                 _modified = getattr(file, "modified", None)
                 _author_profiles = _settings.get(
-                    "SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILE", {}
+                    "SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES", {}
                 )
                 _author_profile = _author_profiles.get(_author.name, None)
                 self.open_graph_article = OpenGraphArticle(
@@ -104,7 +104,7 @@ class HTMLEnhancer:
 
             if twitter_cards:
                 _author_profiles = _settings.get(
-                    "SEO_ENHANCER_AUTHOR_TWITTER_PROFILE", {}
+                    "SEO_ENHANCER_AUTHOR_TWITTER_PROFILES", {}
                 )
                 _author_profile = _author_profiles.get(_author.name, None)
                 self.twitter_cards = TwitterCards(
