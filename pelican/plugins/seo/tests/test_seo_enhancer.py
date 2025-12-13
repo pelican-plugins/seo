@@ -197,7 +197,7 @@ class TestSEOEnhancer:
         self, fake_article, fake_seo_enhancer
     ):
         """
-        Test if add_html_to_file with open_graph setting
+        Test if SEOEnhancer.add_html_to_file() with open_graph setting
         adds Open Graph tags to HTML files.
         """
 
@@ -255,12 +255,13 @@ class TestSEOEnhancer:
         self, fake_article, fake_seo_enhancer
     ):
         """
-        Test if add_html_to_file with open_graph setting
-        adds Open Graph tags to HTML files.
+        Test if SEOEnhancer.add_html_to_file() with open_graph settings correctly uses
+        the article summary for the og:description tag
+        when no higher priority metadata are set.
         """
 
         # Remove higher priority values for the og:description tag to force the use of
-        # the summary from article description.
+        # the summary from article metadata.
         del fake_article.metadata["og_description"]
         del fake_article.description
 
@@ -315,8 +316,148 @@ class TestSEOEnhancer:
                 </html>"""
             )
 
+    def test_add_html_enhancements_to_pelican_article_with_open_graph(
+        self, pelican_article, fake_seo_enhancer
+    ):
+        """
+        Test if SEOEnhancer.add_html_to_file() with open_graph settings correctly
+        adds Open Graph tags to HTML files for Article content type.
+        """
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=pelican_article,
+            output_path="fake_output",
+            path=path,
+            open_graph=True,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open", mock_open(read_data=pelican_article.content)
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta content="Fake description" name="description"/>
+                    <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49", "image": "https://www.fakesite.com/fake-image.jpg"}</script>
+<meta content="Fake Site Name" property="og:site_name"/>
+<meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="OG Title" property="og:title"/>
+<meta content="OG Description" property="og:description"/>
+<meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>
+<meta content="fr_FR" property="og:locale"/>
+<meta content="2019-04-03" property="article:published_time"/>
+<meta content="2019-07-03" property="article:modified_time"/>
+<meta content="Fake category" property="article:section"/>
+<meta content="Fake tag 1" property="article:tags"/>
+<meta content="Fake tag 2" property="article:tags"/>
+</head>
+                    <body>
+                        <h1>Fake content title</h1>
+                        <p>Fake content 🙃</p>
+                        <a href="https://www.fakesite.com">Fake internal link</a>
+                        <p>Fake content with <code>inline code</code></p>
+                        <p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
+                    </body>
+                </html>"""
+            )
+
+    @pytest.mark.parametrize("use_fb_profile", (True, False))
+    def test_add_html_enhancements_to_pelican_article_with_author_with_open_graph(
+        self, pelican_article, fake_seo_enhancer, use_fb_profile
+    ):
+        """
+        Test if SEOEnhancer.add_html_to_file() with open_graph settings adds the
+        article:author Open Graph tag to HTML files when the author's
+        Facebook profile is set either in the article metadata or
+        in the SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES setting.
+        """
+
+        if use_fb_profile:
+            pelican_article.metadata["fb_profile"] = (
+                "https://www.fakesite.com/fake-author-profile"
+            )
+        else:
+            pelican_article.settings["SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES"] = {
+                pelican_article.author.name: "https://www.fakesite.com/fake-author-profile"
+            }
+
+        path = "fake_output/fake_file.html"
+        fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(
+            file=pelican_article,
+            output_path="fake_output",
+            path=path,
+            open_graph=True,
+        )
+
+        with patch(
+            "seo.seo_enhancer.open", mock_open(read_data=pelican_article.content)
+        ) as mocked_open:
+            mocked_file_handle = mocked_open.return_value
+
+            fake_seo_enhancer.add_html_to_file(
+                enhancements=fake_html_enhancements, path=path
+            )
+            assert len(mocked_open.call_args_list) == 2
+            mocked_file_handle.read.assert_called_once()
+            mocked_file_handle.write.assert_called_once()
+
+            write_args, _ = mocked_file_handle.write.call_args_list[0]
+            fake_html_content = write_args[0]
+
+            assert (
+                fake_html_content
+                == """<html>
+                    <head>
+                        <title>Fake Title</title>
+                        <meta content="Fake description" name="description"/>
+                    <link href="https://www.fakesite.com/fake-title.html" rel="canonical"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fake Site Name", "item": "https://www.fakesite.com"}, {"@type": "ListItem", "position": 2, "name": "Fake_file", "item": "https://www.fakesite.com/fake_file.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "author": {"@type": "Person", "name": "Fake author"}, "publisher": {"@type": "Organization", "name": "Fake Site Name", "logo": {"@type": "ImageObject", "url": "https://www.fakesite.com/fake-logo.jpg"}}, "headline": "Fake Title", "about": "Fake category", "datePublished": "2019-04-03 23:49", "image": "https://www.fakesite.com/fake-image.jpg"}</script>
+<meta content="Fake Site Name" property="og:site_name"/>
+<meta content="https://www.fakesite.com/fake-title.html" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="OG Title" property="og:title"/>
+<meta content="OG Description" property="og:description"/>
+<meta content="https://www.fakesite.com/og-image.jpg" property="og:image"/>
+<meta content="fr_FR" property="og:locale"/>
+<meta content="2019-04-03" property="article:published_time"/>
+<meta content="2019-07-03" property="article:modified_time"/>
+<meta content="Fake category" property="article:section"/>
+<meta content="Fake tag 1" property="article:tags"/>
+<meta content="Fake tag 2" property="article:tags"/>
+<meta content="https://www.fakesite.com/fake-author-profile" property="article:author"/>
+</head>
+                    <body>
+                        <h1>Fake content title</h1>
+                        <p>Fake content 🙃</p>
+                        <a href="https://www.fakesite.com">Fake internal link</a>
+                        <p>Fake content with <code>inline code</code></p>
+                        <p>Fake content with "<a href="https://www.fakesite.com">Fake inline internal link</a>"</p>
+                    </body>
+                </html>"""
+            )
+
+    @pytest.mark.parametrize("use_tw_account", (True, False))
     def test_add_html_enhancements_to_file_with_twitter_cards(
-        self, fake_article, fake_seo_enhancer
+        self, fake_article, fake_seo_enhancer, use_tw_account
     ):
         """
         Test if add_html_to_file with twitter_cards setting
@@ -324,6 +465,12 @@ class TestSEOEnhancer:
         It'll also add Open Graph tags as Twitter Cards feature
         requires them.
         """
+
+        if not use_tw_account:
+            del fake_article.metadata["tw_account"]
+            fake_article.settings["SEO_ENHANCER_AUTHOR_TWITTER_PROFILES"] = {
+                fake_article.author.name: "@TestTWCards"
+            }
 
         path = "fake_output/fake_file.html"
         fake_html_enhancements = fake_seo_enhancer.launch_html_enhancer(

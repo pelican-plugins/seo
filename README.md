@@ -309,9 +309,12 @@ If the content is an article, Open Graph tags for article-specific properties ar
 
 ```
 <meta property="article:published_time" content=":publication_date:" />
-<meta property="article:modified_time" content=":modification_date:" />
 ```
 `:publication_date:`: The article publication date, from the `date` metadata field.
+
+```
+<meta property="article:modified_time" content=":modification_date:" />
+```
 `:modification_date:`: The date from the `modified` metadata field, if it exists.
 
 ```
