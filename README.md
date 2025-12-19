@@ -267,7 +267,7 @@ Image: https://www.example.com/article-image.jpg
 
 #### Open Graph
 
-Based on [Open Graph protocol](https://ogp.me), the SEO plugin implements required properties and some aditionnals ones:
+Based on [Open Graph protocol](https://ogp.me), the SEO plugin implements required properties and some additional ones:
 
 ```
 <meta property="og:site_name" content=":sitename:" />
@@ -305,6 +305,52 @@ If `Description` is not defined, a plain text version of `Summary` will be used 
 ```
 `:language:`: The site language as defined in `LOCALE` Pelican setting. If not filled, it will try to get the default system locale.
 
+If the content is an article, Open Graph tags for article-specific properties are added:
+
+```
+<meta property="article:published_time" content=":publication_date:" />
+```
+`:publication_date:`: The article publication date, from the `date` metadata field.
+
+```
+<meta property="article:modified_time" content=":modification_date:" />
+```
+`:modification_date:`: The date from the `modified` metadata field, if it exists.
+
+```
+<meta property="article:section" content=":category:" />
+```
+`:category:`: The article category, as determined by Pelican (either from the file location or from the `category` metadata field).
+
+```
+<meta property="article:tag" content=":tag1:" />
+<meta property="article:tag" content=":tag2:" />
+...
+<meta property="article:tag" content=":tagN:" />
+```
+`:tag1:`, `:tag2:`, ..., `:tagN:`: The article tags, from the `tags` metadata field.
+
+```
+<meta property="article:author" content=":author:" />
+```
+`:author:`: The article author, from the `fb_profile` or `author` metadata field.
+
+The `article:author` should contain a link to the Facebook account of the article author. SEO Enhancer
+will use the `fb_profile` metadata from the article to fill its value. If `fb_profile`
+is not defined, SEO Enhancer will use the `SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES` dictionary
+from the Pelican configuration file to map the `author` of the article to their Facebook account.
+The dictionary should be defined as follows:
+
+```python
+SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES = {
+    "Author Name 1": "https://www.facebook.com/author1profile",
+    "Author Name 2": "https://www.facebook.com/author2profile",
+}
+```
+
+If neither `fb_profile` metadata nor `SEO_ENHANCER_AUTHOR_FACEBOOK_PROFILES` mapping is defined, the `article:author` tag will not be added.
+
+
 #### Twitter Cards
 
 The Twitter Cards feature requires Open Graph feature to be functional. To avoid the duplication of similar tags, [Twitter falls back on some Open Graph tags](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started#opengraph) if Twitter's are not present.
@@ -319,6 +365,21 @@ Based on [Twitter guide](https://developer.twitter.com/en/docs/twitter-for-websi
 <meta name="twitter:site" content=":tw_account:" />
 ```
 `:tw_account:`: The Twitter @account to link to the card. You can fill in the file metadata, but it's not a required property.
+
+This tags should contain a link to Twitter/X account of the article author. SEO Enhancer
+will use the `tw_account` metadata from the article to fill its value.
+If `tw_account` is not defined, SEO Enhancer will use the `SEO_ENHANCER_AUTHOR_TWITTER_PROFILES` dictionary
+from the Pelican configuration file to map the `author` of the article to its Twitter/X account.
+The dictionary should be defined as follows:
+
+```python
+SEO_ENHANCER_AUTHOR_TWITTER_PROFILES = {
+    "Author Name 1": "https://x.com/author1profile",
+    "Author Name 2": "https://x.com/author2profile",
+}
+```
+
+If neither `tw_account` metadata nor `SEO_ENHANCER_AUTHOR_TWITTER_PROFILES` mapping is defined, the `twitter:site` tag will not be added.
 
 The other properties required by Twitter are created thanks to Open Graph feature.
 
