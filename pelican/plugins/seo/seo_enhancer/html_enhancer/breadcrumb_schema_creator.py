@@ -82,20 +82,30 @@ class BreadcrumbSchemaCreator:
                 {
                     "@type": "ListItem",
                     "position": :n=1:,
-                    "name": :Sitename:,
-                    "item": :SITEURL:
+                    "item":
+                    {
+                        "@id": :SITEURL:,
+                        "name": :Sitename:
+                    }
                 },
                 {
                     "@type": "ListItem",
                     "position": :n+1:,
                     "name": :name:,
-                    "item": :url:
+                    "item":
+                    {
+                        "@id": :url:,
+                        "name": :name:
+                    }
                 },
                 {
                     "@type": "ListItem",
                     "position": :n+x:,
-                    "name": :name:,
-                    "item": :url:
+                    "item":
+                    {
+                        "@id": :url:,
+                        "name": :name:
+                    }
                 }
             ]
         }
@@ -114,8 +124,11 @@ class BreadcrumbSchemaCreator:
                 {
                     "@type": "ListItem",
                     "position": 1,
-                    "name": self._sitename,
-                    "item": self._siteurl,
+                    "item":
+                    {
+                        "@id": self._siteurl,
+                        "name": self._sitename
+                    }
                 }
             )
 
@@ -124,8 +137,11 @@ class BreadcrumbSchemaCreator:
                 {
                     "@type": "ListItem",
                     "position": item["position"],
-                    "name": item["name"],
-                    "item": item["url"],
+                    "item":
+                    {
+                        "@id": item["url"],
+                        "name": item["name"]
+                    }
                 }
             )
 
